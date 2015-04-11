@@ -76,6 +76,7 @@ cp ~/.dotfiles/.tmux.conf ~/.tmux.conf  # modify to include powerline
 cp ~/.dotfiles/.zpreztorc ~/.zpreztorc
 mkdir ~/.config
 ditto ~/.dotfiles/powerline ~/.config/powerline
+mkdir ~/.vim/backup
 
 ##  Update vim
 brew install vim
