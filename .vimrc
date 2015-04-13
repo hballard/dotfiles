@@ -68,7 +68,7 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'rking/ag.vim'
 Plugin 'mileszs/ack.vim'
-
+Plugin 'marijnh/tern_for_vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -243,8 +243,10 @@ let g:syntastic_style_warning_symbol = '⚠'
 " let g:gundo_preview_height = 15
 map <leader>g :GundoToggle<CR>
 
-" CtrlP ------------------------------
-
+" Tern------------------------------
+autocmd FileType javascript setlocal omnifunc=tern#Complete
+let g:tern_map_keys=1
+let g:tern_show_argument_hints='on hold'
 
  " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
 
@@ -252,6 +254,8 @@ let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping = 0
+let g:ycm_autoclose_preview_window_after_insertion = 1
+" let g:ycm_autoclose_preview_window_after_completion = 1
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
