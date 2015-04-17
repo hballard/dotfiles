@@ -37,9 +37,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'Shougo/unite.vim'
 Plugin 'tpope/vim-repeat'
-Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'scrooloose/nerdtree'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -51,10 +49,10 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'honza/vim-snippets'
 Plugin 'majutsushi/tagbar'
 Plugin 'klen/python-mode'
-Plugin 't9md/vim-choosewin'
-Plugin 'fisadev/dragvisuals.vim'
+" Plugin 't9md/vim-choosewin'
+Plugin 'shinokada/dragvisuals.vim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'tpope/vim-surround'
+" Plugin 'tpope/vim-surround'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'othree/html5.vim'
 Plugin 'hail2u/vim-css3-syntax'
@@ -69,6 +67,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'rking/ag.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'marijnh/tern_for_vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -104,8 +103,6 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 
-" tab length exceptions on some file types
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
@@ -113,6 +110,9 @@ autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 set incsearch
 " highlighted search results
 set hlsearch
+
+" Force Saving Files that Require Root Permission ('w!!')
+cmap w!! %!sudo tee > /dev/null %
 
 " tab navigation mappings
 map tn :tabn<CR>
@@ -135,6 +135,10 @@ let g:html_indent_tags = 'li\|p'
 " Make it obvious where 80 characters is
 set textwidth=80
 set colorcolumn=+1
+" highlight ColorColumn ctermbg=7
+
+" Clear search highlights
+noremap <silent><Leader>/ :nohls<CR>
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
@@ -187,6 +191,18 @@ autocmd FileType markdown setlocal spell
 
 " ============================================================================
 " Plugins settings and mappings
+
+" Drag Visuals----------------------------
+runtime plugin/dragvisuals.vim
+
+vmap  <expr>  <LEFT>   DVB_Drag('left')
+vmap  <expr>  <RIGHT>  DVB_Drag('right')
+vmap  <expr>  <DOWN>   DVB_Drag('down')
+vmap  <expr>  <UP>     DVB_Drag('up')
+vmap  <expr>  D        DVB_Duplicate()
+
+" Remove any introduced trailing whitespace after moving...
+let g:DVB_TrimWS = 1
 
 "  Ack and Ag-----------------------------
 if executable('ag')
