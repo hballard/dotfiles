@@ -14,7 +14,9 @@ fi
 
 . /Library/Python/2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
-export EDITOR='subl -w'
+export EDITOR='vim'
+
+# alias vi ='/usr/local/bin/vim'
 
 # back up the old path
 export PATH_OLD=$PATH

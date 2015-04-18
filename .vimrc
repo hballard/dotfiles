@@ -21,7 +21,7 @@ Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
+" Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
 " Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
@@ -67,6 +67,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'rking/ag.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'marijnh/tern_for_vim'
+Plugin 'yaroot/vissort'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -88,7 +89,7 @@ filetype plugin indent on    " required
 
 " numbers
 set number
-set numberwidth=5
+set numberwidth=4
 
 " key mappings
 let mapleader = " "
@@ -120,10 +121,6 @@ map tp :tabp<CR>
 map tm :tabm
 map tt :tabnew
 map ts :tab split<CR>
-map <C-S-Right> :tabn<CR>
-imap <C-S-Right> <ESC>:tabn<CR>
-map <C-S-Left> :tabp<CR>
-imap <C-S-Left> <ESC>:tabp<CR>
 
 " autocompletion of files and commands behaves like shell
 " (complete only the common part, list the options that match)
@@ -143,11 +140,20 @@ noremap <silent><Leader>/ :nohls<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
-" " Get off my lawn
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
+" Remap to move blocks of text
+nnoremap <Left> ^i<BS><Esc>
+nnoremap <Right> ^i<Space><Esc>
+nnoremap <Down> ddjp
+nnoremap <Up> ddkkp
+
+" Map for quick pairs
+" inoremap <leader>' ''<Esc>i
+" inoremap <leader>" ""<Esc>i
+" inoremap <leader>( ()<Esc>i
+" inoremap <leader>[ []<Esc>i
+" inoremap <leader>{ {}<Esc>i
+
+iabbr pmail heath.ballard@gmail.com
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
@@ -162,8 +168,6 @@ set foldmethod=indent
 set foldlevel=99
 
 set backspace=2   " Backspace deletes like most programs in insert mode
-" set nobackup
-" set nowritebackup
 set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
 set history=50
 set ruler         " show the cursor position all the time
@@ -188,6 +192,10 @@ endif
 
 " Enable spellchecking for Markdown
 autocmd FileType markdown setlocal spell
+
+" Change Vim's CWD to open file
+autocmd BufEnter * silent! lcd %:p:h
+
 
 " ============================================================================
 " Plugins settings and mappings
@@ -223,8 +231,6 @@ if executable('ag')
 endif
 
 " Omnisharp -----------------------------
-
-let g:OmniSharp_selector_ui = 'unite'  " Use unite.vim
 let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
 
 " TagBar-----------------------------
@@ -246,7 +252,7 @@ let g:syntastic_html_tidy_exec = ['tidy5']
 
 " show list of errors and warnings on the current file
 nmap <leader>e :Errors<CR>
-let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
@@ -254,7 +260,6 @@ let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
 
 " Gundo-----------------------------
-
 " let g:gundo_width = 40
 " let g:gundo_preview_height = 15
 map <leader>g :GundoToggle<CR>
@@ -265,7 +270,6 @@ let g:tern_map_keys=1
 let g:tern_show_argument_hints='on hold'
 
  " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
-
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
@@ -278,7 +282,10 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
+" NerdTree-----------------------------------
 map <F2> :NERDTreeToggle<CR>
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " NerdtreeTab---------------------------------
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
@@ -315,9 +322,9 @@ vmap <expr> D DVB_Duplicate()
 " Window Chooser ------------------------------
 
 " mapping
-nmap  -  <Plug>(choosewin)
+" nmap  -  <Plug>(choosewin)
 " show big letters
-let g:choosewin_overlay_enable = 1
+" let g:choosewin_overlay_enable = 1
 
 "Powerline settings---------------------
 set rtp+=/Library/Python/2.7/site-packages/powerline/bindings/vim
