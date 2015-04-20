@@ -35,7 +35,7 @@ Plugin 'sjl/gundo.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+" Plugin 'plasticboy/vim-markdown'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-repeat'
 Plugin 'scrooloose/nerdtree'
@@ -49,10 +49,8 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'honza/vim-snippets'
 Plugin 'majutsushi/tagbar'
 Plugin 'klen/python-mode'
-" Plugin 't9md/vim-choosewin'
 Plugin 'shinokada/dragvisuals.vim'
 Plugin 'pangloss/vim-javascript'
-" Plugin 'tpope/vim-surround'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'othree/html5.vim'
 Plugin 'hail2u/vim-css3-syntax'
@@ -68,6 +66,12 @@ Plugin 'rking/ag.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'yaroot/vissort'
+Plugin 'tomasr/molokai'
+Plugin 'tpope/vim-sleuth'
+Plugin 'spf13/vim-autoclose'
+Plugin 'tpope/vim-surround'
+Plugin 'suan/vim-instant-markdown'
+" Plugin 't9md/vim-choosewin'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -99,18 +103,21 @@ map <c-l> <c-w>l
 map <c-h> <c-w>h
 
 " tabbing
-set tabstop=4
-set expandtab
-set shiftwidth=4
-set softtabstop=4
-
-autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+" set tabstop=4
+" set expandtab
+" set shiftwidth=4
+" set softtabstop=4
+"
+" autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 softtabstop=2
+" autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 " incremental search
 set incsearch
 " highlighted search results
 set hlsearch
+
+" Autoclose -- this make it not work on " for .vimrc
+let g:autoclose_vim_commentmode = 1
 
 " Force Saving Files that Require Root Permission ('w!!')
 cmap w!! %!sudo tee > /dev/null %
@@ -145,13 +152,6 @@ nnoremap <Left> ^i<BS><Esc>
 nnoremap <Right> ^i<Space><Esc>
 nnoremap <Down> ddjp
 nnoremap <Up> ddkkp
-
-" Map for quick pairs
-" inoremap <leader>' ''<Esc>i
-" inoremap <leader>" ""<Esc>i
-" inoremap <leader>( ()<Esc>i
-" inoremap <leader>[ []<Esc>i
-" inoremap <leader>{ {}<Esc>i
 
 iabbr pmail heath.ballard@gmail.com
 
@@ -196,9 +196,12 @@ autocmd FileType markdown setlocal spell
 " Change Vim's CWD to open file
 autocmd BufEnter * silent! lcd %:p:h
 
+" Markdown syntax change
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 " ============================================================================
 " Plugins settings and mappings
+
 
 " Drag Visuals----------------------------
 runtime plugin/dragvisuals.vim
@@ -353,4 +356,4 @@ set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 syntax on
 syntax enable
 set background=dark
-colorscheme solarized
+colorscheme Solarized
