@@ -71,6 +71,7 @@ Plugin 'tpope/vim-sleuth'
 Plugin 'spf13/vim-autoclose'
 Plugin 'tpope/vim-surround'
 Plugin 'suan/vim-instant-markdown'
+Plugin 'FelikZ/ctrlp-py-matcher'
 " Plugin 't9md/vim-choosewin'
 
 " All of your Plugins must be added before the following line
@@ -202,6 +203,14 @@ au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 " ============================================================================
 " Plugins settings and mappings
 
+" CtrlP mappings
+nnoremap <leader>p :CtrlP<CR>
+nnoremap <leader>b :CtrlPBuffer<CR>
+nnoremap <leader>m :CtrlPMixed<CR>
+nnoremap <leader>M :CtrlPMRUFiles<CR>
+nnoremap <leader>t :CtrlPTag<CR>
+nnoremap <leader>T :CtrlPBufTag<CR>
+nnoremap <leader>l :CtrlPLine<CR>
 
 " Drag Visuals----------------------------
 runtime plugin/dragvisuals.vim
@@ -227,11 +236,21 @@ if executable('ag')
 
     " Use ag in CtrlP for listing files. Lightning fast and respects
     " .gitignore
-    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+    " let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+          \ --ignore .git
+          \ --ignore .svn
+          \ --ignore .hg
+          \ --ignore .DS_Store
+          \ --ignore "**/*.pyc"
+          \ -g ""'
 
     " ag is fast enough that CtrlP doesn't need to cache
     let g:ctrlp_use_caching = 0
-endif
+ endif
+
+" better matching than CtrlP default
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
 " Omnisharp -----------------------------
 let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
