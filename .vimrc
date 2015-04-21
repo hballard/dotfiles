@@ -10,27 +10,12 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
-
 " let Vundle manage Vundle, required
+
 Plugin 'gmarik/Vundle.vim'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
-
 " My Plugins
+Plugin 'tpope/vim-fugitive'
 Plugin 'sjl/gundo.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
@@ -48,7 +33,6 @@ Plugin 'myint/syntastic-extras'
 Plugin 'tpope/vim-dispatch'
 Plugin 'honza/vim-snippets'
 Plugin 'majutsushi/tagbar'
-Plugin 'klen/python-mode'
 Plugin 'shinokada/dragvisuals.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'kchmck/vim-coffee-script'
@@ -72,16 +56,18 @@ Plugin 'spf13/vim-autoclose'
 Plugin 'tpope/vim-surround'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'FelikZ/ctrlp-py-matcher'
-" Plugin 't9md/vim-choosewin'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'andviro/flake8-vim'
+Plugin 'bling/vim-airline'
+Plugin 'fisadev/vim-ctrlp-cmdpalette'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
 
 " Brief help
 " :PluginList       - lists configured plugins
+" filetype plugin on
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
@@ -92,7 +78,6 @@ filetype plugin indent on    " required
 " ============================================================================
 " Vim settings and mappings
 
-" numbers
 set number
 set numberwidth=4
 
@@ -102,15 +87,6 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
-
-" tabbing
-" set tabstop=4
-" set expandtab
-" set shiftwidth=4
-" set softtabstop=4
-"
-" autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 softtabstop=2
-" autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 " incremental search
 set incsearch
@@ -127,8 +103,15 @@ cmap w!! %!sudo tee > /dev/null %
 map tn :tabn<CR>
 map tp :tabp<CR>
 map tm :tabm
-map tt :tabnew
+map tt :tabnew<CR>
 map ts :tab split<CR>
+
+" buffer navigation mappings
+
+map bn :bn<CR>
+map bp :bp<CR>
+map bm :bm
+map sb :sb<CR>
 
 " autocompletion of files and commands behaves like shell
 " (complete only the common part, list the options that match)
@@ -179,6 +162,7 @@ set smartcase     " ... unless they contain at least one capital letter
 
 set undofile
 set undodir=~/.vim/undo " where to save undo history
+" numbers
 set undolevels=1000  " how many undos
 set undoreload=10000 " number of lines to save for undo
 set backupdir=~/.vim/backup/
@@ -195,7 +179,7 @@ endif
 autocmd FileType markdown setlocal spell
 
 " Change Vim's CWD to open file
-autocmd BufEnter * silent! lcd %:p:h
+" autocmd BufEnter * silent! lcd %:p:h
 
 " Markdown syntax change
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
@@ -205,12 +189,19 @@ au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 " CtrlP mappings
 nnoremap <leader>p :CtrlP<CR>
+nnoremap <leader>P :CtrlPCurWD<CR>
 nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>m :CtrlPMixed<CR>
 nnoremap <leader>M :CtrlPMRUFiles<CR>
 nnoremap <leader>t :CtrlPTag<CR>
 nnoremap <leader>T :CtrlPBufTag<CR>
 nnoremap <leader>l :CtrlPLine<CR>
+
+"Ctrlp extension for command line
+nnoremap <leader>c :CtrlPCmdPalette<CR>
+
+" Change CWD to NERDtree root
+let g:ctrlp_working_path_mode = 'rw'
 
 " Drag Visuals----------------------------
 runtime plugin/dragvisuals.vim
@@ -306,65 +297,39 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " NerdTree-----------------------------------
 map <F2> :NERDTreeToggle<CR>
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Change CWD to NERTtree root
+let g:NERDTreeChDirMode = 2
 
 " NerdtreeTab---------------------------------
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 
 " Dash -----------------------------
-:nmap <silent> <leader>d <Plug>DashSearch
+nmap <silent> <leader>D <Plug>DashSearch
 
-" Python-mode ------------------------------
+" Jedi-Vim ------------------------------
+" no completions...using YCM for that (with Jedi)
+let g:jedi#completions_enabled = 0
 
-" don't use linter, we use syntastic for that
-let g:pymode_lint_on_write = 0
-let g:pymode_lint_signs = 0
-" don't fold python code on open
-let g:pymode_folding = 0
-" don't load rope by default. Change to 1 to use rope
-let g:pymode_rope = 0
-" open definitions on same window, and custom mappings for definitions and
-" occurrences
-let g:pymode_rope_goto_definition_bind = ',d'
-let g:pymode_rope_goto_definition_cmd = 'e'
-nmap ,D :tab split<CR>:PymodePython rope.goto()<CR>
-nmap ,o :RopeFindOccurrences<CR>
+" mappings
+let g:jedi#goto_assignments_command = "<leader>a"
+" let g:jedi#goto_definitions_command = "<leader>d"
+" let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>u"
+" let g:jedi#rename_command = "<leader>r"
 
-" DragVisuals ------------------------------
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#use_splits_not_buffers = "bottom"
 
-" mappings to move blocks in 4 directions
-vmap <expr> <S-M-LEFT> DVB_Drag('left')
-vmap <expr> <S-M-RIGHT> DVB_Drag('right')
-vmap <expr> <S-M-DOWN> DVB_Drag('down')
-vmap <expr> <S-M-UP> DVB_Drag('up')
-" mapping to duplicate block
-vmap <expr> D DVB_Duplicate()
+" Flake8-vim-----------------------------
+let g:PyFlakeOnWrite = 0
 
-" Window Chooser ------------------------------
-
-" mapping
-" nmap  -  <Plug>(choosewin)
-" show big letters
-" let g:choosewin_overlay_enable = 1
-
-"Powerline settings---------------------
-set rtp+=/Library/Python/2.7/site-packages/powerline/bindings/vim
-
-let g:minBufExplForceSyntaxEnable = 1
-
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
-
-if ! has('gui_running')
-   set ttimeoutlen=10
-   augroup FastEscape
-      autocmd!
-      au InsertEnter * set timeoutlen=0
-      au InsertLeave * set timeoutlen=1000
-   augroup END
-endif
+" Airline settings-----------------------
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'powerlineish'
 
 set t_Co=256
 set laststatus=2 " Always display the statusline in all windows
