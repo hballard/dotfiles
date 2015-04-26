@@ -18,6 +18,9 @@ export EDITOR='vim'
 
 # alias vi ='/usr/local/bin/vim'
 
+# alias anaconda environment
+alias anaconda='export PATH="/Users/heath/Software/anaconda/bin:$PATH"'
+
 # back up the old path
 export PATH_OLD=$PATH
 

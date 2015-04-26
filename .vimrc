@@ -60,6 +60,7 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'andviro/flake8-vim'
 Plugin 'bling/vim-airline'
 Plugin 'fisadev/vim-ctrlp-cmdpalette'
+Plugin 'dyng/ctrlsf.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -187,13 +188,21 @@ au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 " ============================================================================
 " Plugins settings and mappings
 
+" CtrlsF mappings
+nmap     <C-F>f <Plug>CtrlSFPrompt
+vmap     <C-F>f <Plug>CtrlSFVwordPath
+vmap     <C-F>F <Plug>CtrlSFVwordExec
+nmap     <C-F>n <Plug>CtrlSFCwordPath
+nmap     <C-F>p <Plug>CtrlSFPwordPath
+nnoremap <C-F>o :CtrlSFOpen<CR>
+
+
 " CtrlP mappings
 nnoremap <leader>p :CtrlP<CR>
 nnoremap <leader>P :CtrlPCurWD<CR>
 nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>m :CtrlPMixed<CR>
 nnoremap <leader>M :CtrlPMRUFiles<CR>
-nnoremap <leader>t :CtrlPTag<CR>
 nnoremap <leader>T :CtrlPBufTag<CR>
 nnoremap <leader>l :CtrlPLine<CR>
 
@@ -214,6 +223,7 @@ vmap  <expr>  D        DVB_Duplicate()
 
 " Remove any introduced trailing whitespace after moving...
 let g:DVB_TrimWS = 1
+nnoremap <leader>t :CtrlPTag<CR>
 
 "  Ack and Ag-----------------------------
 if executable('ag')
