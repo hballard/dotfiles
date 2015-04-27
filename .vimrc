@@ -144,6 +144,13 @@ iabbr pmail heath.ballard@gmail.com
 set splitbelow
 set splitright
 
+" mapping for better splits
+nnoremap <leader>j 5<C-W>-
+nnoremap <leader>k 5<C-W>+
+nnoremap <leader>l 5<C-W>>
+nnoremap <leader>h 5<C-W><
+nnoremap <leader>= <C-W>=
+
 " highlighting
 set relativenumber
 set cursorline
@@ -204,7 +211,7 @@ nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>m :CtrlPMixed<CR>
 nnoremap <leader>M :CtrlPMRUFiles<CR>
 nnoremap <leader>T :CtrlPBufTag<CR>
-nnoremap <leader>l :CtrlPLine<CR>
+nnoremap <leader>L :CtrlPLine<CR>
 
 "Ctrlp extension for command line
 nnoremap <leader>c :CtrlPCmdPalette<CR>
