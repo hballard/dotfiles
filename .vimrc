@@ -50,7 +50,6 @@ Plugin 'rking/ag.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'yaroot/vissort'
-Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-sleuth'
 Plugin 'spf13/vim-autoclose'
 Plugin 'tpope/vim-surround'
@@ -61,6 +60,7 @@ Plugin 'andviro/flake8-vim'
 Plugin 'bling/vim-airline'
 Plugin 'fisadev/vim-ctrlp-cmdpalette'
 Plugin 'dyng/ctrlsf.vim'
+Plugin 'sickill/vim-monokai'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -362,3 +362,4 @@ syntax on
 syntax enable
 set background=dark
 colorscheme Solarized
+"colorscheme monokai

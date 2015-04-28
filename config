@@ -14,9 +14,11 @@ brew install zsh
 chsh -s /bin/zsh
 exit
 
-# Install tmux
+# Install tmux and dependecies
 
 brew install tmux
+brew install reattach-to-user-namespace
+pip install psutil
 
 ## Install Ipython
 
