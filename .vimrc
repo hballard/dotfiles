@@ -299,16 +299,17 @@ autocmd FileType javascript setlocal omnifunc=tern#Complete
 let g:tern_map_keys=1
 let g:tern_show_argument_hints='on hold'
 
- " YouCompleteMe and UltiSnips compatibility, with the helper of supertab
+" YouCompleteMe and UltiSnips compatibility, with the help of supertab
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
 " let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
 
 " better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsExpandTrigger = "<CR>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
@@ -329,6 +330,9 @@ nmap <silent> <leader>D <Plug>DashSearch
 " Jedi-Vim ------------------------------
 " no completions...using YCM for that (with Jedi)
 let g:jedi#completions_enabled = 0
+
+" set which version of python to use (option = 2 or 3)
+"let g:jedi#force_py_version = 3
 
 " mappings
 let g:jedi#goto_assignments_command = "<leader>a"
