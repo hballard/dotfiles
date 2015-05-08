@@ -61,6 +61,8 @@ Plugin 'bling/vim-airline'
 Plugin 'fisadev/vim-ctrlp-cmdpalette'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'sickill/vim-monokai'
+Plugin 'mitsuhiko/vim-jinja'
+Plugin 'henrik/vim-qargs'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -192,6 +194,9 @@ autocmd FileType markdown setlocal spell
 " Markdown syntax change
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
+set pastetoggle=<F5>
+"set clipboard=unnamed
+
 " ============================================================================
 " Plugins settings and mappings
 
@@ -304,8 +309,8 @@ let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping = 0
-let g:ycm_autoclose_preview_window_after_insertion = 1
-" let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
 " let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
 
 " better key bindings for UltiSnipsExpandTrigger
@@ -330,10 +335,10 @@ nmap <silent> <leader>D <Plug>DashSearch
 " Jedi-Vim ------------------------------
 " no completions...using YCM for that (with Jedi)
 let g:jedi#completions_enabled = 0
-
 " set which version of python to use (option = 2 or 3)
 "let g:jedi#force_py_version = 3
 
+let g:jedi#show_call_signatures = 1
 " mappings
 let g:jedi#goto_assignments_command = "<leader>a"
 " let g:jedi#goto_definitions_command = "<leader>d"
