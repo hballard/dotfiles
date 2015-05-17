@@ -63,6 +63,8 @@ Plugin 'dyng/ctrlsf.vim'
 Plugin 'sickill/vim-monokai'
 Plugin 'mitsuhiko/vim-jinja'
 Plugin 'henrik/vim-qargs'
+Plugin 'mxw/vim-jsx'
+Plugin 'justinj/vim-react-snippets'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -200,6 +202,8 @@ set pastetoggle=<F5>
 " ============================================================================
 " Plugins settings and mappings
 
+" Allow JSX in normal JS files
+let g:jsx_ext_required = 0
 " CtrlsF mappings
 nmap     <C-F>f <Plug>CtrlSFPrompt
 vmap     <C-F>f <Plug>CtrlSFVwordPath
@@ -282,7 +286,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers = ['jshint', 'eslint']
 let g:syntastic_html_tidy_exec = ['tidy5']
 
 " show list of errors and warnings on the current file
@@ -306,7 +310,7 @@ let g:tern_show_argument_hints='on hold'
 
 " YouCompleteMe and UltiSnips compatibility, with the help of supertab
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping = 0
 " let g:ycm_autoclose_preview_window_after_insertion = 1
@@ -316,7 +320,7 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<C-j>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
 
 " NerdTree-----------------------------------
 map <F2> :NERDTreeToggle<CR>
