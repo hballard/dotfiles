@@ -192,6 +192,11 @@
             "bg": "gray2",
             "attrs": []
         },
+        "mode": {
+            "fg": "darkestgreen",
+            "bg": "brightgreen",
+            "attrs": ["bold"]
+        },
         "branch:divider": {
             "fg": "gray7",
             "bg": "gray2",

@@ -31,6 +31,8 @@ export EDITOR='vim'
 PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
 export PATH
 
-#alias chrome='open -a "Google Chrome"'
-
-
+# Set GOPATH
+export GOPATH=$HOME/Code/go
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin

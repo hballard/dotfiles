@@ -65,6 +65,7 @@ Plugin 'mitsuhiko/vim-jinja'
 Plugin 'henrik/vim-qargs'
 Plugin 'mxw/vim-jsx'
 Plugin 'justinj/vim-react-snippets'
+Plugin 'mattn/livestyle-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
