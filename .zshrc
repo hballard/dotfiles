@@ -20,7 +20,7 @@ alias anacondainit='export PATH="/Users/heath/Software/anaconda/bin:$PATH"'
 # # turn anaconda off by restoring the backed up path
 alias anacondaexit='export PATH=$PATH_OLD'
 
-. /Library/Python/2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 export EDITOR='vim'
 
@@ -36,3 +36,13 @@ export GOPATH=$HOME/Code/go
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
+
+# Add tmuxinator completions support
+source ~/.bin/tmuxinator.zsh
+
+
+# Put these lines after the tmux startup command
+
+if [[ -f /usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf ]]; then
+    tmux source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+fi
