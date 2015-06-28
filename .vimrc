@@ -66,8 +66,9 @@ Plugin 'henrik/vim-qargs'
 Plugin 'mxw/vim-jsx'
 Plugin 'justinj/vim-react-snippets'
 Plugin 'mattn/livestyle-vim'
-"Plugin 'klen/python-mode'
 Plugin 'tell-k/vim-autopep8'
+Plugin 'loremipsum'
+Plugin 'ryanoasis/vim-webdevicons'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -338,15 +339,6 @@ map <Leader>n <plug>NERDTreeTabsToggle<CR>
 
 " Dash -----------------------------
 nmap <silent> <leader>D <Plug>DashSearch
-
-" Pymode --------------------------------
-"let g:pymode_rope_goto_definition_bind = "<leader>d"
-"let g:pymode_doc_bind = "K"
-"let g:pymode_lint = 0
-"let g:pymode_syntax = 0
-"let g:pymode_rope_completion = 0
-"let g:pymode_rope_rename_bind = '<leader>r'
-"let g:pymode_run_bind = '<leader>R'
 
 
 " Jedi-Vim ------------------------------
