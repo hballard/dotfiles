@@ -51,7 +51,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'yaroot/vissort'
 Plugin 'tpope/vim-sleuth'
-Plugin 'spf13/vim-autoclose'
+Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-surround'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'FelikZ/ctrlp-py-matcher'
@@ -69,6 +69,8 @@ Plugin 'mattn/livestyle-vim'
 Plugin 'tell-k/vim-autopep8'
 Plugin 'loremipsum'
 Plugin 'ryanoasis/vim-webdevicons'
+Plugin 'docunext/closetag.vim'
+Plugin 'edsono/vim-matchit'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -101,9 +103,6 @@ map <c-h> <c-w>h
 set incsearch
 " highlighted search results
 set hlsearch
-
-" Autoclose -- this make it not work on " for .vimrc
-let g:autoclose_vim_commentmode = 1
 
 " Force Saving Files that Require Root Permission ('w!!')
 cmap w!! %!sudo tee > /dev/null %
@@ -175,7 +174,7 @@ set showcmd       " display incomplete commands
 set autowrite     " Automatically :write before running commands
 set ignorecase    " searches are case insensitive...
 set smartcase     " ... unless they contain at least one capital letter
-
+set autoread
 set undofile
 set undodir=~/.vim/undo " where to save undo history
 " numbers
@@ -205,9 +204,17 @@ set pastetoggle=<F5>
 
 " ============================================================================
 " Plugins settings and mappings
+"Delimitemate config
+let delimitMate_matchpairs = "(:),[:],{:},<:>"
+au FileType vim,html,javascript let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
+
+" Closetag configuration
+autocmd FileType html,htmldjango,jinjahtml,javascript let b:closetag_html_style=1
+autocmd Filetype html,xml,xsl,htm,htmldjango,jinjahtml,javascript source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
+
 " CtrlsF mappings
 nmap     <C-F>f <Plug>CtrlSFPrompt
 vmap     <C-F>f <Plug>CtrlSFVwordPath
@@ -308,13 +315,14 @@ let g:syntastic_style_warning_symbol = '⚠'
 map <leader>g :GundoToggle<CR>
 
 " Tern------------------------------
-autocmd FileType javascript setlocal omnifunc=tern#Complete
+autocmd FileType javascript,html setlocal omnifunc=tern#Complete
 let g:tern_map_keys=1
-let g:tern_show_argument_hints='on hold'
+let g:tern_show_argument_hints='on_move'
+let g:tern_show_signature_in_pum=1
 
 " YouCompleteMe and UltiSnips compatibility, with the help of supertab
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping = 0
 " let g:ycm_autoclose_preview_window_after_insertion = 1
@@ -322,9 +330,9 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 " let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
 
 " better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<C-j>"
+let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " NerdTree-----------------------------------
 map <F2> :NERDTreeToggle<CR>
