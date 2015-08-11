@@ -71,6 +71,7 @@ Plugin 'loremipsum'
 Plugin 'ryanoasis/vim-webdevicons'
 Plugin 'docunext/closetag.vim'
 Plugin 'edsono/vim-matchit'
+Plugin 'bonsaiben/bootstrap-snippets'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -92,12 +93,22 @@ filetype plugin indent on    " required
 set number
 set numberwidth=4
 
+" javascript indentation settings
+autocmd FileType javascript,html setlocal shiftwidth=2 tabstop=2
+
 " key mappings
 let mapleader = " "
 map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
+
+" Press i to enter insert mode, and ii to exit.
+inoremap ii <Esc>
+
+" Change to j,k to move exactly up, down vs linewise wrap
+nnoremap j gj
+nnoremap k gk
 
 " incremental search
 set incsearch
@@ -204,13 +215,15 @@ set pastetoggle=<F5>
 
 " ============================================================================
 " Plugins settings and mappings
+
 "Delimitemate config
+let delimitMate_expand_cr=1
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
 au FileType vim,html,javascript let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
 
 " Closetag configuration
-autocmd FileType html,htmldjango,jinjahtml,javascript let b:closetag_html_style=1
-autocmd Filetype html,xml,xsl,htm,htmldjango,jinjahtml,javascript source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+autocmd FileType html,htmldjango,htmljinja,javascript let b:closetag_html_style=1
+autocmd Filetype html,xml,xsl,htm,htmldjango,htmljinja,javascript source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
@@ -315,9 +328,9 @@ let g:syntastic_style_warning_symbol = '⚠'
 map <leader>g :GundoToggle<CR>
 
 " Tern------------------------------
-autocmd FileType javascript,html setlocal omnifunc=tern#Complete
+autocmd FileType javascript setlocal omnifunc=tern#Complete
 let g:tern_map_keys=1
-let g:tern_show_argument_hints='on_move'
+let g:tern_show_argument_hints='on_hold'
 let g:tern_show_signature_in_pum=1
 
 " YouCompleteMe and UltiSnips compatibility, with the help of supertab

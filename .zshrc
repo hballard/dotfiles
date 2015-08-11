@@ -23,8 +23,7 @@ alias anacondaexit='export PATH=$PATH_OLD'
 . /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 export EDITOR='vim'
-
-# alias vi ='/usr/local/bin/vim'
+alias vi='/usr/local/bin/vim'
 
 # Setting PATH for Python 3.4
 # The orginal version is saved in .bash_profile.pysave
