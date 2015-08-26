@@ -1,4 +1,3 @@
-#
 # Executes commands at the start of an interactive session.
 #
 #
@@ -13,15 +12,15 @@ fi
 # back up the old path
 export PATH_OLD=$PATH
 
-
 alias anacondainit='export PATH="/Users/heath/Software/anaconda/bin:$PATH"'
-
 
 # # turn anaconda off by restoring the backed up path
 alias anacondaexit='export PATH=$PATH_OLD'
 
+# Powerline settings
 . /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
+# set vim as default editor and also alias vi command
 export EDITOR='vim'
 alias vi='/usr/local/bin/vim'
 
@@ -39,6 +38,8 @@ export PATH=$PATH:$GOROOT/bin
 # Add tmuxinator completions support
 source ~/.bin/tmuxinator.zsh
 
+# Add mamp to end of path
+export PATH="${PATH}:/Applications/MAMP/Library/bin"
 
 # Put these lines after the tmux startup command
 

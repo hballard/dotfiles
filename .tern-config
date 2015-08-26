@@ -1,11 +1,17 @@
 {
-      "libs": [
-                "browser",
-                      "ecma5",
-                            "jquery",
-                                  "react"
-                                    ],
-                                      "plugins": {
-                                              "node": {}
-                                                }
+  "libs": [
+    "browser",
+    "ecma5",
+    "ecma6",
+    "jquery"
+  ],
+  "plugins": {
+    "complete_strings": {},
+    "node": {},
+    "lint": {},
+    "requirejs": {},
+    "doc_comment": {
+      "fullDocs": true
+    }
+  }
 }
