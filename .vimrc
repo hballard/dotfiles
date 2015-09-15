@@ -39,7 +39,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'othree/html5.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'Yggdroot/indentLine'
-Plugin 'bronson/vim-trailing-whitespace'
+"Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'rizzatti/dash.vim'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -49,7 +49,6 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'rking/ag.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'marijnh/tern_for_vim'
-Plugin 'yaroot/vissort'
 Plugin 'tpope/vim-sleuth'
 Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-surround'
@@ -60,7 +59,6 @@ Plugin 'andviro/flake8-vim'
 Plugin 'bling/vim-airline'
 Plugin 'fisadev/vim-ctrlp-cmdpalette'
 Plugin 'dyng/ctrlsf.vim'
-Plugin 'sickill/vim-monokai'
 Plugin 'mitsuhiko/vim-jinja'
 Plugin 'henrik/vim-qargs'
 Plugin 'mxw/vim-jsx'
@@ -72,6 +70,9 @@ Plugin 'ryanoasis/vim-webdevicons'
 Plugin 'docunext/closetag.vim'
 Plugin 'edsono/vim-matchit'
 Plugin 'bonsaiben/bootstrap-snippets'
+Plugin 'dbext.vim'
+Plugin 'SQLUtilities'
+Plugin 'SQLComplete.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -94,7 +95,7 @@ set number
 set numberwidth=4
 
 " javascript indentation settings
-autocmd FileType javascript,html setlocal shiftwidth=2 tabstop=2
+autocmd FileType javascript,html setlocal shiftwidth=4 tabstop=4
 
 " key mappings
 let mapleader = " "
@@ -109,6 +110,9 @@ inoremap ii <Esc>
 " Change to j,k to move exactly up, down vs linewise wrap
 nnoremap j gj
 nnoremap k gk
+
+" Open up current file in chrome
+nnoremap <silent> <leader>z :!open -a 'Google Chrome'.app %<CR><CR>
 
 " incremental search
 set incsearch
@@ -151,10 +155,10 @@ noremap <silent><Leader>/ :nohls<CR>
 nnoremap <leader><leader> <c-^>
 
 " Remap to move blocks of text
-nnoremap <Left> ^i<BS><Esc>
-nnoremap <Right> ^i<Space><Esc>
-nnoremap <Down> ddjp
-nnoremap <Up> ddkkp
+"nnoremap <left> ^i<bs><esc>
+"nnoremap <right> ^i<space><esc>
+"nnoremap <down> ddjp
+"nnoremap <up> ddkkp
 
 iabbr pmail heath.ballard@gmail.com
 
@@ -221,6 +225,9 @@ let delimitMate_expand_cr=1
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
 au FileType vim,html,javascript let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
 
+" To be used with Delimitemate - inserts space between two lines
+inoremap <C-c> <CR><Esc>O
+
 " Closetag configuration
 autocmd FileType html,htmldjango,htmljinja,javascript let b:closetag_html_style=1
 autocmd Filetype html,xml,xsl,htm,htmldjango,htmljinja,javascript source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
@@ -245,6 +252,7 @@ nnoremap <leader>m :CtrlPMixed<CR>
 nnoremap <leader>M :CtrlPMRUFiles<CR>
 nnoremap <leader>T :CtrlPBufTag<CR>
 nnoremap <leader>L :CtrlPLine<CR>
+nnoremap <leader>t :CtrlPTag<CR>
 
 "Ctrlp extension for command line
 nnoremap <leader>c :CtrlPCmdPalette<CR>
@@ -263,7 +271,6 @@ vmap  <expr>  D        DVB_Duplicate()
 
 " Remove any introduced trailing whitespace after moving...
 let g:DVB_TrimWS = 1
-nnoremap <leader>t :CtrlPTag<CR>
 
 "  Ack and Ag-----------------------------
 if executable('ag')
@@ -397,4 +404,4 @@ syntax on
 syntax enable
 set background=dark
 colorscheme Solarized
-"colorscheme monokai
+"colorscheme base16-default

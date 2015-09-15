@@ -1,11 +1,20 @@
 {
-      "libs": [
-                "browser",
-                      "ecma5",
-                            "jquery",
-                                  "react"
-                                    ],
-                                      "plugins": {
-                                              "node": {}
-                                                }
+  "libs": [
+    "browser",
+    "underscore",
+    "ecma5",
+    "ecma6",
+    "jquery"
+  ],
+  "loadEagerly": [ "*.js", "*/*.js", "*/*/*.js", "*/*/*/*.js" ],
+  "plugins": {
+    "complete_strings": {},
+    "node": {},
+    "gulp": {},
+    "lint": {},
+    "requirejs": {},
+    "doc_comment": {
+      "fullDocs": true
+    }
+  }
 }
