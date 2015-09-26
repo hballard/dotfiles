@@ -101,3 +101,4 @@ fi
 ###-end-npm-completion-###
 
 . /usr/local/etc/profile.d/z.sh
+#source /usr/local/opt/nvm/nvm.sh

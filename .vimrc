@@ -34,7 +34,8 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'honza/vim-snippets'
 Plugin 'majutsushi/tagbar'
 Plugin 'shinokada/dragvisuals.vim'
-Plugin 'pangloss/vim-javascript'
+"Plugin 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'othree/html5.vim'
 Plugin 'hail2u/vim-css3-syntax'
@@ -73,6 +74,13 @@ Plugin 'bonsaiben/bootstrap-snippets'
 Plugin 'dbext.vim'
 Plugin 'SQLUtilities'
 Plugin 'SQLComplete.vim'
+Plugin 'moll/vim-node'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'myusuf3/numbers.vim'
+Plugin 'benmills/vimux'
+Plugin 'tomasr/molokai'
+Plugin 'nanotech/jellybeans.vim'
+Plugin 'chriskempson/base16-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -403,5 +411,6 @@ set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 syntax on
 syntax enable
 set background=dark
-colorscheme Solarized
-"colorscheme base16-default
+"colorscheme Solarized
+"colorscheme molokai
+colorscheme jellybeans
