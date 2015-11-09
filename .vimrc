@@ -81,6 +81,13 @@ Plugin 'benmills/vimux'
 Plugin 'tomasr/molokai'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'chriskempson/base16-vim'
+Plugin 'Align'
+Plugin 'sqlserver.vim'
+Plugin 'jmcantrell/vim-virtualenv'
+Plugin 'chrisbra/csv.vim'
+Plugin 'vivkin/flatland.vim'
+Plugin 'rosenfeld/conque-term'
+Plugin 'ap/vim-css-color'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -101,9 +108,6 @@ filetype plugin indent on    " required
 
 set number
 set numberwidth=4
-
-" javascript indentation settings
-autocmd FileType javascript,html setlocal shiftwidth=4 tabstop=4
 
 " key mappings
 let mapleader = " "
@@ -138,7 +142,6 @@ map tt :tabnew<CR>
 map ts :tab split<CR>
 
 " buffer navigation mappings
-
 map bn :bn<CR>
 map bp :bp<CR>
 map bm :bm
@@ -162,12 +165,6 @@ noremap <silent><Leader>/ :nohls<CR>
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 
-" Remap to move blocks of text
-"nnoremap <left> ^i<bs><esc>
-"nnoremap <right> ^i<space><esc>
-"nnoremap <down> ddjp
-"nnoremap <up> ddkkp
-
 iabbr pmail heath.ballard@gmail.com
 
 " Open new split panes to right and bottom, which feels more natural
@@ -180,6 +177,21 @@ nnoremap <leader>k 5<C-W>+
 nnoremap <leader>l 5<C-W>>
 nnoremap <leader>h 5<C-W><
 nnoremap <leader>= <C-W>=
+
+"Font and colors cleanup-----------------------------
+set t_Co=256
+set laststatus=2 " Always display the statusline in all windows
+set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
+
+" Syntax highlighting-----------------------------
+syntax on
+syntax enable
+set background=dark
+"colorscheme Solarized
+"colorscheme molokai
+"colorscheme flatland
+colorscheme jellybeans
 
 " highlighting
 set relativenumber
@@ -200,11 +212,28 @@ set smartcase     " ... unless they contain at least one capital letter
 set autoread
 set undofile
 set undodir=~/.vim/undo " where to save undo history
-" numbers
 set undolevels=1000  " how many undos
 set undoreload=10000 " number of lines to save for undo
 set backupdir=~/.vim/backup/
 set directory=~/.vim/backup/
+
+" Enable spellchecking for Markdown
+autocmd FileType markdown setlocal spell
+
+" Default SQL language to be used ('mysql' or 'sqlserver')
+let g:sql_type_default = 'sqlserver'
+
+" set indentation for sql
+autocmd FileType sql setlocal shiftwidth=4 tabstop=4
+
+" javascript indentation settings
+autocmd FileType javascript,html setlocal shiftwidth=4 tabstop=4
+
+" Markdown syntax change
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
+set pastetoggle=<F5>
+"set clipboard=unnamed
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -213,22 +242,14 @@ if has("autocmd")
         \| exe "normal! g'\"" | endif
 endif
 
-" Enable spellchecking for Markdown
-autocmd FileType markdown setlocal spell
-
-" Change Vim's CWD to open file
-" autocmd BufEnter * silent! lcd %:p:h
-
-" Markdown syntax change
-au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
-
-set pastetoggle=<F5>
-"set clipboard=unnamed
-
 " ============================================================================
 " Plugins settings and mappings
 
-"Delimitemate config
+"SQLUtilities change some defaults-------------
+let g:sqlutil_align_where=0
+let g:sqlutil_align_comma=1
+
+"Delimitemate config----------------------
 let delimitMate_expand_cr=1
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
 au FileType vim,html,javascript let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
@@ -236,23 +257,23 @@ au FileType vim,html,javascript let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
 " To be used with Delimitemate - inserts space between two lines
 inoremap <C-c> <CR><Esc>O
 
-" Closetag configuration
+" Closetag configuration------------------
 autocmd FileType html,htmldjango,htmljinja,javascript let b:closetag_html_style=1
 autocmd Filetype html,xml,xsl,htm,htmldjango,htmljinja,javascript source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
 
-" CtrlsF mappings
-nmap     <C-F>f <Plug>CtrlSFPrompt
-vmap     <C-F>f <Plug>CtrlSFVwordPath
-vmap     <C-F>F <Plug>CtrlSFVwordExec
-nmap     <C-F>n <Plug>CtrlSFCwordPath
-nmap     <C-F>p <Plug>CtrlSFPwordPath
-nnoremap <C-F>o :CtrlSFOpen<CR>
+" CtrlsF mappings------------------------
+nmap     <leader>f <Plug>CtrlSFPrompt
+vmap     <leader>f <Plug>CtrlSFVwordPath
+vmap     <leader>F <Plug>CtrlSFVwordExec
+"nmap     <leader>f <Plug>CtrlSFCwordPath
+"nmap     <leader>F <Plug>CtrlSFPwordPath
+nnoremap <leader>fo :CtrlSFOpen<CR>
 
 
-" CtrlP mappings
+" CtrlP mappings--------------------------
 nnoremap <leader>p :CtrlP<CR>
 nnoremap <leader>P :CtrlPCurWD<CR>
 nnoremap <leader>b :CtrlPBuffer<CR>
@@ -264,9 +285,6 @@ nnoremap <leader>t :CtrlPTag<CR>
 
 "Ctrlp extension for command line
 nnoremap <leader>c :CtrlPCmdPalette<CR>
-
-" Change CWD to NERDtree root
-let g:ctrlp_working_path_mode = 'rw'
 
 " Drag Visuals----------------------------
 runtime plugin/dragvisuals.vim
@@ -348,7 +366,17 @@ let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
 let g:tern_show_signature_in_pum=1
 
-" YouCompleteMe and UltiSnips compatibility, with the help of supertab
+" python with virtualenv support--------------------------
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+" YouCompleteMe and UltiSnips compatibility, with the help of supertab-----
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
@@ -363,33 +391,28 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " NerdTree-----------------------------------
-map <F2> :NERDTreeToggle<CR>
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Change CWD to NERTtree root
-let g:NERDTreeChDirMode = 2
-
-" NerdtreeTab---------------------------------
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
+
+" Change CWD to NERTtree root and ctrlp root to NERTtree
+let g:NERDTreeChDirMode = 2
+let g:ctrlp_working_path_mode = 'rw'
 
 " Dash -----------------------------
 nmap <silent> <leader>D <Plug>DashSearch
 
-
 " Jedi-Vim ------------------------------
 " no completions...using YCM for that (with Jedi)
 let g:jedi#completions_enabled = 0
-" set which version of python to use (option = 2 or 3)
+" set which version of python to use (option = 2 or 3, default=2)
 "let g:jedi#force_py_version = 3
-
 let g:jedi#show_call_signatures = 1
+
 " mappings
 let g:jedi#goto_assignments_command = "<leader>a"
-" let g:jedi#goto_definitions_command = "<leader>d"
-" let g:jedi#documentation_command = "K"
+let g:jedi#goto_definitions_command = "<leader>d"
+let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>u"
-" let g:jedi#rename_command = "<leader>r"
+let g:jedi#rename_command = "<leader>r"
 
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_splits_not_buffers = "bottom"
@@ -401,16 +424,3 @@ let g:PyFlakeOnWrite = 0
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme = 'powerlineish'
-
-set t_Co=256
-set laststatus=2 " Always display the statusline in all windows
-set guifont=Source\ Code\ Pro\ for\ Powerline:h14
-set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
-
-" Solarized-----------------------------
-syntax on
-syntax enable
-set background=dark
-"colorscheme Solarized
-"colorscheme molokai
-colorscheme jellybeans
