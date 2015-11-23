@@ -1,108 +1,91 @@
-" ============================================================================
-" Vundle initialization
-" Avoid modify this section, unless you are very sure of what you are doing
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-" let Vundle manage Vundle, required
-
-Plugin 'gmarik/Vundle.vim'
-
+call plug#begin()
 " My Plugins
-Plugin 'tpope/vim-fugitive'
-Plugin 'sjl/gundo.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'tpope/vim-repeat'
-Plugin 'scrooloose/nerdtree'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'ervandew/supertab'
-Plugin 'myint/syntastic-extras'
-Plugin 'tpope/vim-dispatch'
-Plugin 'honza/vim-snippets'
-Plugin 'majutsushi/tagbar'
-Plugin 'shinokada/dragvisuals.vim'
-"Plugin 'pangloss/vim-javascript'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'othree/html5.vim'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'Yggdroot/indentLine'
-"Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'rizzatti/dash.vim'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'rking/ag.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'marijnh/tern_for_vim'
-Plugin 'tpope/vim-sleuth'
-Plugin 'Raimondi/delimitMate'
-Plugin 'tpope/vim-surround'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'FelikZ/ctrlp-py-matcher'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'andviro/flake8-vim'
-Plugin 'bling/vim-airline'
-Plugin 'fisadev/vim-ctrlp-cmdpalette'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'mitsuhiko/vim-jinja'
-Plugin 'henrik/vim-qargs'
-Plugin 'mxw/vim-jsx'
-Plugin 'justinj/vim-react-snippets'
-Plugin 'mattn/livestyle-vim'
-Plugin 'tell-k/vim-autopep8'
-Plugin 'loremipsum'
-Plugin 'ryanoasis/vim-webdevicons'
-Plugin 'docunext/closetag.vim'
-Plugin 'edsono/vim-matchit'
-Plugin 'bonsaiben/bootstrap-snippets'
-Plugin 'dbext.vim'
-Plugin 'SQLUtilities'
-Plugin 'SQLComplete.vim'
-Plugin 'moll/vim-node'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'myusuf3/numbers.vim'
-Plugin 'benmills/vimux'
-Plugin 'tomasr/molokai'
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'chriskempson/base16-vim'
-Plugin 'Align'
-Plugin 'sqlserver.vim'
-Plugin 'jmcantrell/vim-virtualenv'
-Plugin 'chrisbra/csv.vim'
-Plugin 'vivkin/flatland.vim'
-Plugin 'ap/vim-css-color'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plug 'tpope/vim-fugitive'
+Plug 'simnalamburt/vim-mundo'
+Plug 'Valloric/YouCompleteMe'
+Plug 'scrooloose/syntastic'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-repeat'
+Plug 'scrooloose/nerdtree'
+Plug 'altercation/vim-colors-solarized'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'SirVer/ultisnips'
+Plug 'ervandew/supertab'
+Plug 'myint/syntastic-extras'
+Plug 'tpope/vim-dispatch'
+Plug 'honza/vim-snippets'
+Plug 'majutsushi/tagbar'
+Plug 'shinokada/dragvisuals.vim'
+"Plug 'pangloss/vim-javascript'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'kchmck/vim-coffee-script'
+Plug 'othree/html5.vim'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'Yggdroot/indentLine'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'airblade/vim-gitgutter'
+Plug 'rizzatti/dash.vim'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'scrooloose/nerdcommenter'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
+Plug 'marijnh/tern_for_vim'
+Plug 'tpope/vim-sleuth'
+Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-surround'
+Plug 'suan/vim-instant-markdown'
+Plug 'JazzCore/ctrlp-cmatcher'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'davidhalter/jedi-vim'
+Plug 'andviro/flake8-vim'
+Plug 'bling/vim-airline'
+Plug 'fisadev/vim-ctrlp-cmdpalette'
+Plug 'dyng/ctrlsf.vim'
+Plug 'mitsuhiko/vim-jinja'
+Plug 'henrik/vim-qargs'
+Plug 'mxw/vim-jsx'
+Plug 'justinj/vim-react-snippets'
+Plug 'mattn/livestyle-vim'
+Plug 'tell-k/vim-autopep8'
+Plug 'loremipsum'
+Plug 'ryanoasis/vim-webdevicons'
+Plug 'docunext/closetag.vim'
+Plug 'edsono/vim-matchit'
+Plug 'bonsaiben/bootstrap-snippets'
+Plug 'dbext.vim'
+Plug 'SQLUtilities'
+Plug 'SQLComplete.vim'
+Plug 'moll/vim-node'
+Plug 'tmhedberg/SimpylFold'
+Plug 'myusuf3/numbers.vim'
+Plug 'benmills/vimux'
+Plug 'tomasr/molokai'
+Plug 'nanotech/jellybeans.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'Align'
+Plug 'sqlserver.vim'
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'chrisbra/csv.vim'
+Plug 'ap/vim-css-color'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
-" Brief help
-" :PluginList       - lists configured plugins
-" filetype plugin on
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
+call plug#end()
 " ============================================================================
+
+" Set the specific python interpreter
+"let g:loaded_python_provider = 1
+"let g:loaded_python3_provider = 1
+"let g:python3_host_prog = '/usr/local/bin'
+"let g:python_host_prog = '/usr/local/bin'
+
 " Vim settings and mappings
 
 set number
@@ -110,25 +93,23 @@ set numberwidth=4
 
 " key mappings
 let mapleader = " "
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
+nnoremap <c-h> <c-w>h
 
 " Press i to enter insert mode, and ii to exit.
 inoremap ii <Esc>
 
 " Change to j,k to move exactly up, down vs linewise wrap
-nnoremap j gj
+
 nnoremap k gk
+
+" Remap terminal escape keys
+tnoremap <Esc> <c-\><c-n>
 
 " Open up current file in chrome
 nnoremap <silent> <leader>z :!open -a 'Google Chrome'.app %<CR><CR>
-
-" incremental search
-set incsearch
-" highlighted search results
-set hlsearch
 
 " Force Saving Files that Require Root Permission ('w!!')
 cmap w!! %!sudo tee > /dev/null %
@@ -179,7 +160,6 @@ nnoremap <leader>= <C-W>=
 
 "Font and colors cleanup-----------------------------
 set t_Co=256
-set laststatus=2 " Always display the statusline in all windows
 set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 
@@ -189,7 +169,6 @@ syntax enable
 set background=dark
 "colorscheme Solarized
 "colorscheme molokai
-"colorscheme flatland
 colorscheme jellybeans
 
 " highlighting
@@ -200,15 +179,14 @@ set cursorline
 set foldmethod=indent
 set foldlevel=99
 
-set backspace=2   " Backspace deletes like most programs in insert mode
+"set backspace=2   " Backspace deletes like most programs in insert mode
 set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
-set history=50
+"set history=50
 set ruler         " show the cursor position all the time
 set showcmd       " display incomplete commands
 set autowrite     " Automatically :write before running commands
 set ignorecase    " searches are case insensitive...
 set smartcase     " ... unless they contain at least one capital letter
-set autoread
 set undofile
 set undodir=~/.vim/undo " where to save undo history
 set undolevels=1000  " how many undos
@@ -244,6 +222,19 @@ endif
 " ============================================================================
 " Plugins settings and mappings
 
+" fzf settings
+let g:fzf_command_prefix = 'Fzf'
+" fzf statusline mapping
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
 "SQLUtilities change some defaults-------------
 let g:sqlutil_align_where=0
 let g:sqlutil_align_comma=1
@@ -258,7 +249,7 @@ inoremap <C-c> <CR><Esc>O
 
 " Closetag configuration------------------
 autocmd FileType html,htmldjango,htmljinja,javascript let b:closetag_html_style=1
-autocmd Filetype html,xml,xsl,htm,htmldjango,htmljinja,javascript source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+autocmd Filetype html,xml,xsl,htm,htmldjango,htmljinja,javascript source ~/.config/nvim/plugged/closetag.vim/plugin/closetag.vim
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
@@ -286,7 +277,7 @@ nnoremap <leader>t :CtrlPTag<CR>
 nnoremap <leader>c :CtrlPCmdPalette<CR>
 
 " Drag Visuals----------------------------
-runtime plugin/dragvisuals.vim
+runtime Plug/dragvisuals.vim
 
 vmap  <expr>  <LEFT>   DVB_Drag('left')
 vmap  <expr>  <RIGHT>  DVB_Drag('right')
@@ -323,8 +314,8 @@ if executable('ag')
  endif
 
 " better matching than CtrlP default
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-
+"let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 " Omnisharp -----------------------------
 let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
 
@@ -388,9 +379,10 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsUsePythonVersion=2
 
 " NerdTree-----------------------------------
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
+map <Leader>n <Plug>NERDTreeTabsToggle<CR>
 
 " Change CWD to NERTtree root and ctrlp root to NERTtree
 let g:NERDTreeChDirMode = 2
@@ -402,7 +394,6 @@ nmap <silent> <leader>D <Plug>DashSearch
 " Jedi-Vim ------------------------------
 " no completions...using YCM for that (with Jedi)
 let g:jedi#completions_enabled = 0
-" set which version of python to use (option = 2 or 3, default=2)
 "let g:jedi#force_py_version = 3
 let g:jedi#show_call_signatures = 1
 

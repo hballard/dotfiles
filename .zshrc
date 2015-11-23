@@ -29,8 +29,8 @@ alias mampexit='export PATH=$PATH_OLD'
 . /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # set vim as default editor and also alias vi command
-export EDITOR='vim'
-alias vi='/usr/local/bin/vim'
+export EDITOR='nvim'
+alias vi='/usr/local/bin/nvim'
 
 # Set GOPATH
 export GOPATH=$HOME/Code/go
@@ -102,3 +102,5 @@ fi
 
 . /usr/local/etc/profile.d/z.sh
 #source /usr/local/opt/nvm/nvm.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
