@@ -21,7 +21,6 @@ Plug 'tpope/vim-dispatch'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'shinokada/dragvisuals.vim'
-"Plug 'pangloss/vim-javascript'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'kchmck/vim-coffee-script'
 Plug 'othree/html5.vim'
@@ -42,11 +41,9 @@ Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'suan/vim-instant-markdown'
 Plug 'JazzCore/ctrlp-cmatcher'
-Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'davidhalter/jedi-vim'
 Plug 'andviro/flake8-vim'
 Plug 'bling/vim-airline'
-Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'dyng/ctrlsf.vim'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'henrik/vim-qargs'
@@ -66,9 +63,6 @@ Plug 'moll/vim-node'
 Plug 'tmhedberg/SimpylFold'
 Plug 'myusuf3/numbers.vim'
 Plug 'benmills/vimux'
-Plug 'tomasr/molokai'
-Plug 'nanotech/jellybeans.vim'
-Plug 'chriskempson/base16-vim'
 Plug 'Align'
 Plug 'sqlserver.vim'
 Plug 'jmcantrell/vim-virtualenv'
@@ -76,6 +70,8 @@ Plug 'chrisbra/csv.vim'
 Plug 'ap/vim-css-color'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'https://github.com/vim-scripts/ScrollColors'
+Plug 'flazz/vim-colorschemes'
 
 call plug#end()
 " ============================================================================
@@ -167,8 +163,6 @@ set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 syntax on
 syntax enable
 set background=dark
-"colorscheme Solarized
-"colorscheme molokai
 colorscheme jellybeans
 
 " highlighting
@@ -263,18 +257,16 @@ vmap     <leader>F <Plug>CtrlSFVwordExec
 nnoremap <leader>fo :CtrlSFOpen<CR>
 
 
-" CtrlP mappings--------------------------
-nnoremap <leader>p :CtrlP<CR>
-nnoremap <leader>P :CtrlPCurWD<CR>
-nnoremap <leader>b :CtrlPBuffer<CR>
-nnoremap <leader>m :CtrlPMixed<CR>
-nnoremap <leader>M :CtrlPMRUFiles<CR>
-nnoremap <leader>T :CtrlPBufTag<CR>
-nnoremap <leader>L :CtrlPLine<CR>
-nnoremap <leader>t :CtrlPTag<CR>
-
-"Ctrlp extension for command line
-nnoremap <leader>c :CtrlPCmdPalette<CR>
+" FZF  mappings--------------------------
+nnoremap <leader>p :FZF<CR>
+nnoremap <leader>P :FzfAg<CR>
+nnoremap <leader>b :FzfBuffers<CR>
+nnoremap <leader>s :FzfSnippets<CR>
+nnoremap <leader>h :FzfHistory<CR>
+nnoremap <leader>T :FzfBTags<CR>
+nnoremap <leader>L :FzfLines<CR>
+nnoremap <leader>t :FzfTags<CR>
+nnoremap <leader>c :FzfCommands<CR>
 
 " Drag Visuals----------------------------
 runtime Plug/dragvisuals.vim
@@ -373,7 +365,7 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping = 0
 " let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
-" let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
+let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
@@ -392,8 +384,9 @@ let g:ctrlp_working_path_mode = 'rw'
 nmap <silent> <leader>D <Plug>DashSearch
 
 " Jedi-Vim ------------------------------
-" no completions...using YCM for that (with Jedi)
-let g:jedi#completions_enabled = 0
+" Pyhon completions...using YCM for everything else.
+let g:jedi#completions_enabled = 1
+"Set python version for jedi to use for completions
 "let g:jedi#force_py_version = 3
 let g:jedi#show_call_signatures = 1
 
