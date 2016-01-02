@@ -50,7 +50,6 @@ Plug 'henrik/vim-qargs'
 Plug 'mxw/vim-jsx'
 Plug 'justinj/vim-react-snippets'
 Plug 'mattn/livestyle-vim'
-Plug 'tell-k/vim-autopep8'
 Plug 'loremipsum'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'docunext/closetag.vim'
@@ -72,6 +71,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/vim-scripts/ScrollColors'
 Plug 'flazz/vim-colorschemes'
+Plug 'vim-scripts/BufOnly.vim'
+Plug 'benekastah/neomake'
 
 call plug#end()
 " ============================================================================
@@ -262,7 +263,7 @@ nnoremap <leader>p :FZF<CR>
 nnoremap <leader>P :FzfAg<CR>
 nnoremap <leader>b :FzfBuffers<CR>
 nnoremap <leader>s :FzfSnippets<CR>
-nnoremap <leader>h :FzfHistory<CR>
+nnoremap <leader>H :FzfHistory<CR>
 nnoremap <leader>T :FzfBTags<CR>
 nnoremap <leader>L :FzfLines<CR>
 nnoremap <leader>t :FzfTags<CR>
@@ -313,9 +314,32 @@ let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
 
 " TagBar-----------------------------
 " toggle tagbar display
-map <F4> :TagbarToggle<CR>
+map <leader>r :TagbarToggle<CR>
 " autofocus on tagbar open
 let g:tagbar_autofocus = 1
+
+"" Neomake config----------------------------
+"autocmd! BufWritePost * Neomake
+"let g:neomake_ft_maker_remove_invalid_entries = 0
+"let g:neomake_python_pylint_maker = {
+    "\ 'exe': 'pylint',
+    "\ 'args': ['disable=all', 'enable=W,E']
+    "\ }
+"let g:neomake_python_enabled_makers = ['pylint', 'pep8']
+"let g:neomake_javascript_enabled_makers = ['jshint', 'eslint']
+"let g:neomake_html_enabled_makers = ['tidy5']
+"let g:neomake_open_list = 1
+"let g:neomake_error_sign = {
+    "\ 'text': '✗',
+    "\ 'texthl': 'ErrorMsg',
+    "\ }
+
+"highlight NeomakeWarningMsg ctermfg=227 ctermbg=237
+"let g:neomake_warning_sign = {
+    "\ 'text': '⚠',
+    "\ 'texthl': 'NeomakeWarningMsg',
+    "\ }
+
 
 " Syntastic's -----------------------------
 set statusline+=%#warningmsg#
@@ -324,9 +348,10 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_python_checkers = ['pyflake', 'pep8']
 let g:syntastic_javascript_checkers = ['jshint', 'eslint']
 let g:syntastic_html_tidy_exec = ['tidy5']
+"let g:syntastic_python_python_exec = 'python3'
 
 " show list of errors and warnings on the current file
 nmap <leader>e :Errors<CR>
@@ -365,7 +390,7 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping = 0
 " let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
+"let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
@@ -385,7 +410,7 @@ nmap <silent> <leader>D <Plug>DashSearch
 
 " Jedi-Vim ------------------------------
 " Pyhon completions...using YCM for everything else.
-let g:jedi#completions_enabled = 1
+let g:jedi#completions_enabled = 0
 "Set python version for jedi to use for completions
 "let g:jedi#force_py_version = 3
 let g:jedi#show_call_signatures = 1
@@ -395,7 +420,7 @@ let g:jedi#goto_assignments_command = "<leader>a"
 let g:jedi#goto_definitions_command = "<leader>d"
 let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>u"
-let g:jedi#rename_command = "<leader>r"
+let g:jedi#rename_command = "<leader>re"
 
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_splits_not_buffers = "bottom"
