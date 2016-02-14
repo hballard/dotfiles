@@ -38,6 +38,9 @@ export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 
+# To support Virtualenvwrapper
+source /usr/local/bin/virtualenvwrapper.sh
+
 # Add tmuxinator completions support
 source ~/.bin/tmuxinator.zsh
 
@@ -46,6 +49,7 @@ source ~/.bin/tmuxinator.zsh
 if [[ -f /usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf ]]; then
     tmux source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
 fi
+
 ###-begin-npm-completion-###
 #
 # npm command completion script

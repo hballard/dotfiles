@@ -11,6 +11,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'altercation/vim-colors-solarized'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -43,7 +44,8 @@ Plug 'suan/vim-instant-markdown'
 Plug 'JazzCore/ctrlp-cmatcher'
 Plug 'davidhalter/jedi-vim'
 Plug 'andviro/flake8-vim'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'dyng/ctrlsf.vim'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'henrik/vim-qargs'
@@ -73,6 +75,7 @@ Plug 'https://github.com/vim-scripts/ScrollColors'
 Plug 'flazz/vim-colorschemes'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'benekastah/neomake'
+Plug 'mhinz/vim-startify'
 
 call plug#end()
 " ============================================================================
@@ -216,6 +219,19 @@ endif
 
 " ============================================================================
 " Plugins settings and mappings
+
+" Nerdtree git plugin settings
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 " fzf settings
 let g:fzf_command_prefix = 'Fzf'
