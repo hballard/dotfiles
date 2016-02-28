@@ -378,10 +378,10 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
 
-" Gundo-----------------------------
-" let g:gundo_width = 40
-" let g:gundo_preview_height = 15
-map <leader>g :GundoToggle<CR>
+" Mundo-----------------------------
+" let g:mundo_width = 40
+" let g:mundo_preview_height = 15
+map <leader>g :MundoToggle<CR>
 
 " Tern------------------------------
 autocmd FileType javascript setlocal omnifunc=tern#Complete

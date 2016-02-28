@@ -32,6 +32,9 @@ alias mampexit='export PATH=$PATH_OLD'
 export EDITOR='nvim'
 alias vi='/usr/local/bin/nvim'
 
+# fix docker init path
+alias dockerinit='bash "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"'
+
 # Set GOPATH
 export GOPATH=$HOME/Code/go
 export GOROOT=/usr/local/opt/go/libexec
