@@ -12,7 +12,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'altercation/vim-colors-solarized'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'SirVer/ultisnips'
@@ -51,7 +50,6 @@ Plug 'mitsuhiko/vim-jinja'
 Plug 'henrik/vim-qargs'
 Plug 'mxw/vim-jsx'
 Plug 'justinj/vim-react-snippets'
-Plug 'mattn/livestyle-vim'
 Plug 'loremipsum'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'docunext/closetag.vim'
@@ -168,6 +166,7 @@ syntax on
 syntax enable
 set background=dark
 colorscheme jellybeans
+"colorscheme tomorrow-night
 
 " highlighting
 set relativenumber
@@ -389,24 +388,24 @@ let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
 let g:tern_show_signature_in_pum=1
 
-" python with virtualenv support--------------------------
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
 
 " YouCompleteMe and UltiSnips compatibility, with the help of supertab-----
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping = 0
-" let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
+
+" use this to set the python completion to python3
+"let g:ycm_python_binary_path = '/usr/local/bin/python3'
+
+" use this to turn off YCM python completion...
 "let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
+
+" This is due to a bug w/ the function definition preview
+"let g:ycm_autoclose_preview_window_after_insertion = 1
+"let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_add_preview_to_completeopt = 0
+set completeopt-=preview
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
@@ -425,11 +424,12 @@ let g:ctrlp_working_path_mode = 'rw'
 nmap <silent> <leader>D <Plug>DashSearch
 
 " Jedi-Vim ------------------------------
-" Pyhon completions...using YCM for everything else.
-let g:jedi#completions_enabled = 0
+" Python completions...using YCM for everything else.
+"let g:jedi#completions_enabled = 1
 "Set python version for jedi to use for completions
 "let g:jedi#force_py_version = 3
 let g:jedi#show_call_signatures = 1
+let g:jedi#show_call_signatures_delay = 0
 
 " mappings
 let g:jedi#goto_assignments_command = "<leader>a"

@@ -44,14 +44,14 @@ export PATH=$PATH:$GOROOT/bin
 # To support Virtualenvwrapper
 source /usr/local/bin/virtualenvwrapper.sh
 
-# Add tmuxinator completions support
-source ~/.bin/tmuxinator.zsh
+## Add tmuxinator completions support
+#source ~/.bin/tmuxinator.zsh
 
-# Put these lines after the tmux startup command
+## Put these lines after the tmux startup command
 
-if [[ -f /usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf ]]; then
-    tmux source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
-fi
+#if [[ -f /usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf ]]; then
+    #tmux source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+#fi
 
 ###-begin-npm-completion-###
 #
