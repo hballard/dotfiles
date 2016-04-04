@@ -49,9 +49,9 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 ## Put these lines after the tmux startup command
 
-#if [[ -f /usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf ]]; then
-    #tmux source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
-#fi
+if [ -n "$TMUX" ]; then
+    tmux source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+fi
 
 ###-begin-npm-completion-###
 #

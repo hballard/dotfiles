@@ -6,7 +6,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'simnalamburt/vim-mundo'
 Plug 'Valloric/YouCompleteMe'
 Plug 'scrooloose/syntastic'
-Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-repeat'
@@ -18,10 +17,13 @@ Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
 Plug 'myint/syntastic-extras'
 Plug 'tpope/vim-dispatch'
+"Plug 'radenling/vim-dispatch-neovim'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
-Plug 'shinokada/dragvisuals.vim'
 Plug 'jelera/vim-javascript-syntax'
+Plug 'maksimr/vim-jsbeautify'
+Plug 'elzr/vim-json'
+Plug 'ekalinin/dockerfile.vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
@@ -34,7 +36,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'rking/ag.vim'
-Plug 'mileszs/ack.vim'
 Plug 'marijnh/tern_for_vim'
 Plug 'tpope/vim-sleuth'
 Plug 'Raimondi/delimitMate'
@@ -69,11 +70,14 @@ Plug 'chrisbra/csv.vim'
 Plug 'ap/vim-css-color'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'https://github.com/vim-scripts/ScrollColors'
+Plug 'vim-scripts/ScrollColors'
 Plug 'flazz/vim-colorschemes'
+Plug 'godlygeek/csapprox'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'benekastah/neomake'
 Plug 'mhinz/vim-startify'
+Plug 'kassio/neoterm'
+Plug 'qpkorr/vim-bufkill'
 
 call plug#end()
 " ============================================================================
@@ -165,8 +169,9 @@ set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 syntax on
 syntax enable
 set background=dark
-colorscheme jellybeans
-"colorscheme tomorrow-night
+"colorscheme jellybeans
+colorscheme hybrid
+"colorscheme solarized
 
 " highlighting
 set relativenumber
@@ -218,6 +223,71 @@ endif
 
 " ============================================================================
 " Plugins settings and mappings
+
+
+" Vimux settings--------------------------------------------------------
+
+ " Prompt for a command to run
+ map <Leader>vp :VimuxPromptCommand<CR>
+
+ " Run last command executed by VimuxRunCommand
+ map <Leader>vl :VimuxRunLastCommand<CR>
+
+ " Inspect runner pane
+ map <Leader>vi :VimuxInspectRunner<CR>
+
+ " Close vim tmux runner opened by VimuxRunCommand
+ map <Leader>vq :VimuxCloseRunner<CR>
+
+ " Interrupt any command running in the runner pane
+ map <Leader>vx :VimuxInterruptRunner<CR>
+
+ " Zoom the runner pane (use <bind-key> z to restore runner pane)
+ map <Leader>vz :call VimuxZoomRunner()<CR>
+
+" JsBeautify commands---------------------------------------------------
+map <leader>B :call JsBeautify()<cr>
+autocmd FileType javascript noremap <buffer> <leader>B :call JsBeautify()<cr>
+autocmd FileType json noremap <buffer> <leader>B :call JsonBeautify()<cr>
+autocmd FileType jsx noremap <buffer> <leader>B :call JsxBeautify()<cr>
+autocmd FileType html noremap <buffer> <leader>B :call HtmlBeautify()<cr>
+autocmd FileType css noremap <buffer> <leader>B :call CSSBeautify()<cr>
+
+autocmd FileType javascript vnoremap <buffer> <leader>B :call RangeJsBeautify()<cr>
+autocmd FileType json vnoremap <buffer> <leader>B :call RangeJsonBeautify()<cr>
+autocmd FileType jsx vnoremap <buffer> <leader>B :call RangeJsxBeautify()<cr>
+autocmd FileType html vnoremap <buffer> <leader>B :call RangeHtmlBeautify()<cr>
+autocmd FileType css vnoremap <buffer> <leader>B :call RangeCSSBeautify()<cr>
+
+" Neoterm config--------------------------------------------------------
+let g:neoterm_position = 'horizontal'
+let g:neoterm_automap_keys = ',tt'
+
+nnoremap <silent> <f10> :TREPLSendFile<cr>
+nnoremap <silent> <f9> :TREPLSend<cr>
+vnoremap <silent> <f9> :TREPLSend<cr>
+
+" run set test lib
+ nnoremap <silent> ,rt :call neoterm#test#run('all')<cr>
+ nnoremap <silent> ,rf :call neoterm#test#run('file')<cr>
+ nnoremap <silent> ,rn :call neoterm#test#run('current')<cr>
+ nnoremap <silent> ,rr :call neoterm#test#rerun()<cr>
+
+" Useful maps
+" hide/close terminal
+ nnoremap <silent> ,th :call neoterm#close()<cr>
+" clear terminal
+ nnoremap <silent> ,tl :call neoterm#clear()<cr>
+" kills the current job (send a <c-c>)
+ nnoremap <silent> ,tc :call neoterm#kill()<cr>
+"
+" Git commands
+command! -nargs=+ Tg :T git <args>
+command! -nargs=+ Ti :T ipython <args>
+
+" Indentline settings
+let g:indentLine_color_term = 237
+let g:indentLine_char = '|'
 
 " Nerdtree git plugin settings
 let g:NERDTreeIndicatorMapCustom = {
@@ -272,6 +342,13 @@ vmap     <leader>F <Plug>CtrlSFVwordExec
 "nmap     <leader>F <Plug>CtrlSFPwordPath
 nnoremap <leader>fo :CtrlSFOpen<CR>
 
+
+"dbext connection string settings
+"let g:dbext_default_profile_<profile_name> = '<connection string>'
+
+"" SQLite
+let g:dbext_default_profile_mysqlite = 'type=SQLITE:dbname=~/Dropbox/Code/Python/mycontactapp_flask/test.db'
+let g:dbext_default_profile = 'mysqlite'
 
 " FZF  mappings--------------------------
 nnoremap <leader>p :FZF<CR>
@@ -341,7 +418,7 @@ let g:tagbar_autofocus = 1
     "\ 'args': ['disable=all', 'enable=W,E']
     "\ }
 "let g:neomake_python_enabled_makers = ['pylint', 'pep8']
-"let g:neomake_javascript_enabled_makers = ['jshint', 'eslint']
+"let g:neomake_javascript_enabled_makers = ['eslint']
 "let g:neomake_html_enabled_makers = ['tidy5']
 "let g:neomake_open_list = 1
 "let g:neomake_error_sign = {
@@ -388,6 +465,8 @@ let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
 let g:tern_show_signature_in_pum=1
 
+" Startify confg
+let g:startify_custom_header = []
 
 " YouCompleteMe and UltiSnips compatibility, with the help of supertab-----
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
