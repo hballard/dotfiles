@@ -7,7 +7,6 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'Valloric/YouCompleteMe'
 Plug 'scrooloose/syntastic'
 Plug 'plasticboy/vim-markdown'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -17,7 +16,6 @@ Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
 Plug 'myint/syntastic-extras'
 Plug 'tpope/vim-dispatch'
-"Plug 'radenling/vim-dispatch-neovim'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'jelera/vim-javascript-syntax'
@@ -28,7 +26,6 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'Yggdroot/indentLine'
-Plug 'bronson/vim-trailing-whitespace'
 Plug 'airblade/vim-gitgutter'
 Plug 'rizzatti/dash.vim'
 Plug 'jistr/vim-nerdtree-tabs'
@@ -41,7 +38,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'suan/vim-instant-markdown'
-Plug 'JazzCore/ctrlp-cmatcher'
 Plug 'davidhalter/jedi-vim'
 Plug 'andviro/flake8-vim'
 Plug 'vim-airline/vim-airline'
@@ -224,26 +220,28 @@ endif
 " ============================================================================
 " Plugins settings and mappings
 
-
 " Vimux settings--------------------------------------------------------
 
- " Prompt for a command to run
- map <Leader>vp :VimuxPromptCommand<CR>
+" Config
+let g:VimuxHeight = "30"
 
- " Run last command executed by VimuxRunCommand
- map <Leader>vl :VimuxRunLastCommand<CR>
+" Prompt for a command to run
+map <Leader>vp :VimuxPromptCommand<CR>
 
- " Inspect runner pane
- map <Leader>vi :VimuxInspectRunner<CR>
+" Run last command executed by VimuxRunCommand
+map <Leader>vl :VimuxRunLastCommand<CR>
 
- " Close vim tmux runner opened by VimuxRunCommand
- map <Leader>vq :VimuxCloseRunner<CR>
+" Inspect runner pane
+map <Leader>vi :VimuxInspectRunner<CR>
 
- " Interrupt any command running in the runner pane
- map <Leader>vx :VimuxInterruptRunner<CR>
+" Close vim tmux runner opened by VimuxRunCommand
+map <Leader>vq :VimuxCloseRunner<CR>
 
- " Zoom the runner pane (use <bind-key> z to restore runner pane)
- map <Leader>vz :call VimuxZoomRunner()<CR>
+" Interrupt any command running in the runner pane
+map <Leader>vx :VimuxInterruptRunner<CR>
+
+" Zoom the runner pane (use <bind-key> z to restore runner pane)
+map <Leader>vz :call VimuxZoomRunner()<CR>
 
 " JsBeautify commands---------------------------------------------------
 map <leader>B :call JsBeautify()<cr>
@@ -328,8 +326,8 @@ au FileType vim,html,javascript let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
 inoremap <C-c> <CR><Esc>O
 
 " Closetag configuration------------------
-autocmd FileType html,htmldjango,htmljinja,javascript let b:closetag_html_style=1
-autocmd Filetype html,xml,xsl,htm,htmldjango,htmljinja,javascript source ~/.config/nvim/plugged/closetag.vim/plugin/closetag.vim
+autocmd FileType html,htmljinja,javascript let b:closetag_html_style=1
+autocmd Filetype html,xml,xsl,htm,htmljinja,javascript source ~/.config/nvim/plugged/closetag.vim/plugin/closetag.vim
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
@@ -382,27 +380,7 @@ endif
 if executable('ag')
     " Use Ag over Grep
     set grepprg=ag\ --nogroup\ --nocolor
-
-    " Use ag in CtrlP for listing files. Lightning fast and respects
-    " .gitignore
-    " let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-          \ --ignore .git
-          \ --ignore .svn
-          \ --ignore .hg
-          \ --ignore .DS_Store
-          \ --ignore "**/*.pyc"
-          \ -g ""'
-
-    " ag is fast enough that CtrlP doesn't need to cache
-    let g:ctrlp_use_caching = 0
  endif
-
-" better matching than CtrlP default
-"let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-" Omnisharp -----------------------------
-let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
 
 " TagBar-----------------------------
 " toggle tagbar display
@@ -494,10 +472,6 @@ let g:UltiSnipsUsePythonVersion=2
 
 " NerdTree-----------------------------------
 map <Leader>n <Plug>NERDTreeTabsToggle<CR>
-
-" Change CWD to NERTtree root and ctrlp root to NERTtree
-let g:NERDTreeChDirMode = 2
-let g:ctrlp_working_path_mode = 'rw'
 
 " Dash -----------------------------
 nmap <silent> <leader>D <Plug>DashSearch
