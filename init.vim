@@ -37,9 +37,9 @@ Plug 'marijnh/tern_for_vim'
 Plug 'tpope/vim-sleuth'
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
-Plug 'suan/vim-instant-markdown'
 Plug 'davidhalter/jedi-vim'
 Plug 'andviro/flake8-vim'
+Plug 'euclio/vim-markdown-composer'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'dyng/ctrlsf.vim'
@@ -70,8 +70,6 @@ Plug 'vim-scripts/ScrollColors'
 Plug 'flazz/vim-colorschemes'
 Plug 'godlygeek/csapprox'
 Plug 'vim-scripts/BufOnly.vim'
-Plug 'benekastah/neomake'
-Plug 'mhinz/vim-startify'
 Plug 'kassio/neoterm'
 Plug 'qpkorr/vim-bufkill'
 
@@ -107,7 +105,8 @@ nnoremap k gk
 tnoremap <Esc> <c-\><c-n>
 
 " Open up current file in chrome
-nnoremap <silent> <leader>z :!open -a 'Google Chrome'.app %<CR><CR>
+nnoremap <silent> <leader>z :!open -a 'Google Chrome'.app <CR><CR>
+nnoremap <silent> <leader>Z :!open -a 'Google Chrome'.app %<CR><CR>
 
 " Force Saving Files that Require Root Permission ('w!!')
 cmap w!! %!sudo tee > /dev/null %
@@ -208,7 +207,7 @@ autocmd FileType javascript,html setlocal shiftwidth=4 tabstop=4
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 set pastetoggle=<F5>
-"set clipboard=unnamed
+set clipboard=unnamed
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -259,6 +258,7 @@ autocmd FileType css vnoremap <buffer> <leader>B :call RangeCSSBeautify()<cr>
 
 " Neoterm config--------------------------------------------------------
 let g:neoterm_position = 'horizontal'
+let g:neoterm_size = '10'
 let g:neoterm_automap_keys = ',tt'
 
 nnoremap <silent> <f10> :TREPLSendFile<cr>
@@ -388,28 +388,6 @@ map <leader>r :TagbarToggle<CR>
 " autofocus on tagbar open
 let g:tagbar_autofocus = 1
 
-"" Neomake config----------------------------
-"autocmd! BufWritePost * Neomake
-"let g:neomake_ft_maker_remove_invalid_entries = 0
-"let g:neomake_python_pylint_maker = {
-    "\ 'exe': 'pylint',
-    "\ 'args': ['disable=all', 'enable=W,E']
-    "\ }
-"let g:neomake_python_enabled_makers = ['pylint', 'pep8']
-"let g:neomake_javascript_enabled_makers = ['eslint']
-"let g:neomake_html_enabled_makers = ['tidy5']
-"let g:neomake_open_list = 1
-"let g:neomake_error_sign = {
-    "\ 'text': '✗',
-    "\ 'texthl': 'ErrorMsg',
-    "\ }
-
-"highlight NeomakeWarningMsg ctermfg=227 ctermbg=237
-"let g:neomake_warning_sign = {
-    "\ 'text': '⚠',
-    "\ 'texthl': 'NeomakeWarningMsg',
-    "\ }
-
 
 " Syntastic's -----------------------------
 set statusline+=%#warningmsg#
@@ -443,9 +421,6 @@ let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
 let g:tern_show_signature_in_pum=1
 
-" Startify confg
-let g:startify_custom_header = []
-
 " YouCompleteMe and UltiSnips compatibility, with the help of supertab-----
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -471,6 +446,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsUsePythonVersion=2
 
 " NerdTree-----------------------------------
+let NERDTreeShowHidden=1
 map <Leader>n <Plug>NERDTreeTabsToggle<CR>
 
 " Dash -----------------------------
