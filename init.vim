@@ -6,6 +6,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'simnalamburt/vim-mundo'
 Plug 'Valloric/YouCompleteMe'
 Plug 'scrooloose/syntastic'
+Plug 'suan/vim-instant-markdown'
 Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree'
@@ -18,8 +19,9 @@ Plug 'myint/syntastic-extras'
 Plug 'tpope/vim-dispatch'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
-Plug 'jelera/vim-javascript-syntax'
-Plug 'maksimr/vim-jsbeautify'
+Plug 'jiangmiao/auto-pairs'
+Plug 'pangloss/vim-javascript'
+Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'elzr/vim-json'
 Plug 'ekalinin/dockerfile.vim'
 Plug 'kchmck/vim-coffee-script'
@@ -35,11 +37,10 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'rking/ag.vim'
 Plug 'marijnh/tern_for_vim'
 Plug 'tpope/vim-sleuth'
-Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'davidhalter/jedi-vim'
+Plug 'chiel92/vim-autoformat'
 Plug 'andviro/flake8-vim'
-Plug 'euclio/vim-markdown-composer'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'dyng/ctrlsf.vim'
@@ -58,7 +59,6 @@ Plug 'SQLComplete.vim'
 Plug 'moll/vim-node'
 Plug 'tmhedberg/SimpylFold'
 Plug 'myusuf3/numbers.vim'
-Plug 'benmills/vimux'
 Plug 'Align'
 Plug 'sqlserver.vim'
 Plug 'jmcantrell/vim-virtualenv'
@@ -83,6 +83,7 @@ call plug#end()
 "let g:python_host_prog = '/usr/local/bin'
 
 " Vim settings and mappings
+filetype indent on
 
 set number
 set numberwidth=4
@@ -194,14 +195,8 @@ set directory=~/.vim/backup/
 " Enable spellchecking for Markdown
 autocmd FileType markdown setlocal spell
 
-" Default SQL language to be used ('mysql' or 'sqlserver')
-let g:sql_type_default = 'sqlserver'
-
-" set indentation for sql
-autocmd FileType sql setlocal shiftwidth=4 tabstop=4
-
-" javascript indentation settings
-autocmd FileType javascript,html setlocal shiftwidth=4 tabstop=4
+" Associate javascript files with html for jsx bootstrap snippets
+"autocmd BufFilePre,BufRead,BufNewFile *.js set filetype=javascript.jsx.html
 
 " Markdown syntax change
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
@@ -219,42 +214,12 @@ endif
 " ============================================================================
 " Plugins settings and mappings
 
-" Vimux settings--------------------------------------------------------
+let g:vim_json_syntax_conceal = 0 " Don't hide Json syntax.
 
-" Config
-let g:VimuxHeight = "30"
+" Autoformat mapping
+noremap <F3> :Autoformat<CR>
 
-" Prompt for a command to run
-map <Leader>vp :VimuxPromptCommand<CR>
-
-" Run last command executed by VimuxRunCommand
-map <Leader>vl :VimuxRunLastCommand<CR>
-
-" Inspect runner pane
-map <Leader>vi :VimuxInspectRunner<CR>
-
-" Close vim tmux runner opened by VimuxRunCommand
-map <Leader>vq :VimuxCloseRunner<CR>
-
-" Interrupt any command running in the runner pane
-map <Leader>vx :VimuxInterruptRunner<CR>
-
-" Zoom the runner pane (use <bind-key> z to restore runner pane)
-map <Leader>vz :call VimuxZoomRunner()<CR>
-
-" JsBeautify commands---------------------------------------------------
-map <leader>B :call JsBeautify()<cr>
-autocmd FileType javascript noremap <buffer> <leader>B :call JsBeautify()<cr>
-autocmd FileType json noremap <buffer> <leader>B :call JsonBeautify()<cr>
-autocmd FileType jsx noremap <buffer> <leader>B :call JsxBeautify()<cr>
-autocmd FileType html noremap <buffer> <leader>B :call HtmlBeautify()<cr>
-autocmd FileType css noremap <buffer> <leader>B :call CSSBeautify()<cr>
-
-autocmd FileType javascript vnoremap <buffer> <leader>B :call RangeJsBeautify()<cr>
-autocmd FileType json vnoremap <buffer> <leader>B :call RangeJsonBeautify()<cr>
-autocmd FileType jsx vnoremap <buffer> <leader>B :call RangeJsxBeautify()<cr>
-autocmd FileType html vnoremap <buffer> <leader>B :call RangeHtmlBeautify()<cr>
-autocmd FileType css vnoremap <buffer> <leader>B :call RangeCSSBeautify()<cr>
+" AutoPairs and indent settings
 
 " Neoterm config--------------------------------------------------------
 let g:neoterm_position = 'horizontal'
@@ -313,17 +278,6 @@ endfunction
 
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
-"SQLUtilities change some defaults-------------
-let g:sqlutil_align_where=0
-let g:sqlutil_align_comma=1
-
-"Delimitemate config----------------------
-let delimitMate_expand_cr=1
-let delimitMate_matchpairs = "(:),[:],{:},<:>"
-au FileType vim,html,javascript let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
-
-" To be used with Delimitemate - inserts space between two lines
-inoremap <C-c> <CR><Esc>O
 
 " Closetag configuration------------------
 autocmd FileType html,htmljinja,javascript let b:closetag_html_style=1
@@ -336,15 +290,21 @@ let g:jsx_ext_required = 0
 nmap     <leader>f <Plug>CtrlSFPrompt
 vmap     <leader>f <Plug>CtrlSFVwordPath
 vmap     <leader>F <Plug>CtrlSFVwordExec
-"nmap     <leader>f <Plug>CtrlSFCwordPath
-"nmap     <leader>F <Plug>CtrlSFPwordPath
 nnoremap <leader>fo :CtrlSFOpen<CR>
 
+
+"Default SQL language to be used ('mysql' or 'sqlserver')
+let g:sql_type_default = 'sqlserver'
+
+"SQLUtilities change some defaults-------------
+let g:sqlutil_align_where=0
+let g:sqlutil_align_comma=1
 
 "dbext connection string settings
 "let g:dbext_default_profile_<profile_name> = '<connection string>'
 
-"" SQLite
+" DBext Connections----------------------------
+" Active Connection
 let g:dbext_default_profile_mysqlite = 'type=SQLITE:dbname=~/Dropbox/Code/Python/mycontactapp_flask/test.db'
 let g:dbext_default_profile = 'mysqlite'
 
@@ -358,18 +318,6 @@ nnoremap <leader>T :FzfBTags<CR>
 nnoremap <leader>L :FzfLines<CR>
 nnoremap <leader>t :FzfTags<CR>
 nnoremap <leader>c :FzfCommands<CR>
-
-" Drag Visuals----------------------------
-runtime Plug/dragvisuals.vim
-
-vmap  <expr>  <LEFT>   DVB_Drag('left')
-vmap  <expr>  <RIGHT>  DVB_Drag('right')
-vmap  <expr>  <DOWN>   DVB_Drag('down')
-vmap  <expr>  <UP>     DVB_Drag('up')
-vmap  <expr>  D        DVB_Duplicate()
-
-" Remove any introduced trailing whitespace after moving...
-let g:DVB_TrimWS = 1
 
 "  Ack and Ag-----------------------------
 if executable('ag')
