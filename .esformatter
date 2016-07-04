@@ -1,0 +1,58 @@
+{
+  "plugins": [
+    "esformatter-jsx",
+    "esformatter-quotes",
+    "esformatter-literal-notation",
+    "esformatter-parseint",
+    "esformatter-spaced-lined-comment",
+    "esformatter-collapse-objects",
+    "esformatter-remove-trailing-commas",
+    "esformatter-quote-props"
+  ],
+
+  "jsx": {
+    "formatJSXExpressions": true,
+    "JSXExpressionsSingleLine": true,
+    "formatJSX": true,
+    "attrsOnSameLineAsTag": false,
+    "maxAttrsOnTag": 2,
+    "firstAttributeOnSameLine": false,
+    "spaceInJSXExpressionContainers": " ",
+    "alignWithFirstAttribute": false,
+    "htmlOptions": { 
+      "brace_style": "collapse",
+      "indent_char": " ",
+      "indent_size": 2,
+      "max_preserve_newlines": 2,
+      "preserve_newlines": true
+    }
+  },
+
+  "quotes": {
+    "type": "single"
+  },
+
+  "collapseObjects": {
+    "ObjectExpression": {
+      "maxLineLength": 79,
+      "maxKeys": 1
+    }
+  },
+
+  "indent": {
+    "value": "  ",
+    "AlignComments": true
+  },
+
+  "whiteSpace": {
+    "before": {
+      "ObjectExpressionClosingBrace": 0,
+      "ModuleSpecifierClosingBrace": 0,
+      "PropertyName": 1
+    },
+    "after": {
+      "ObjectExpressionOpeningBrace": 0,
+      "ModuleSpecifierOpeningBrace": 0
+    }
+  }
+}

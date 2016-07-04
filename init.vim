@@ -168,6 +168,7 @@ set background=dark
 "colorscheme jellybeans
 colorscheme hybrid
 "colorscheme solarized
+"colorscheme onedark
 
 " highlighting
 set relativenumber
@@ -214,10 +215,13 @@ endif
 " ============================================================================
 " Plugins settings and mappings
 
+"Json plugin
 let g:vim_json_syntax_conceal = 0 " Don't hide Json syntax.
 
 " Autoformat mapping
 noremap <F3> :Autoformat<CR>
+let g:formatdef_es6 = '"esformatter"'
+let g:formatters_javascript_jsx = ['es6']
 
 " AutoPairs and indent settings
 
@@ -251,6 +255,7 @@ command! -nargs=+ Ti :T ipython <args>
 " Indentline settings
 let g:indentLine_color_term = 237
 let g:indentLine_char = '|'
+
 
 " Nerdtree git plugin settings
 let g:NERDTreeIndicatorMapCustom = {
@@ -305,7 +310,7 @@ let g:sqlutil_align_comma=1
 
 " DBext Connections----------------------------
 " Active Connection
-let g:dbext_default_profile_mysqlite = 'type=SQLITE:dbname=~/Dropbox/Code/Python/mycontactapp_flask/test.db'
+"let g:dbext_default_profile_mysqlite = 'type=SQLITE:dbname=~/Dropbox/Code/Python/mycontactapp_flask/test.db'
 let g:dbext_default_profile = 'mysqlite'
 
 " FZF  mappings--------------------------
@@ -365,9 +370,16 @@ map <leader>g :MundoToggle<CR>
 
 " Tern------------------------------
 autocmd FileType javascript setlocal omnifunc=tern#Complete
-let g:tern_map_keys=1
 let g:tern_show_argument_hints='on_hold'
 let g:tern_show_signature_in_pum=1
+
+nnoremap <leader>K :TernDoc<CR>
+nnoremap <leader>k :TernDocBrowse<CR>
+nnoremap <leader>d :TernDefPreview<CR>
+nnoremap <leader>D :TernDef<CR>
+nnoremap <leader>rn :TernRename<CR>
+nnoremap <leader>u :TernRefs<CR>
+nnoremap <leader>y :TernType<CR>
 
 " YouCompleteMe and UltiSnips compatibility, with the help of supertab-----
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
@@ -396,6 +408,7 @@ let g:UltiSnipsUsePythonVersion=2
 " NerdTree-----------------------------------
 let NERDTreeShowHidden=1
 map <Leader>n <Plug>NERDTreeTabsToggle<CR>
+"map <Leader>n :NERDTreeToggle<CR>
 
 " Dash -----------------------------
 nmap <silent> <leader>D <Plug>DashSearch
@@ -413,7 +426,7 @@ let g:jedi#goto_assignments_command = "<leader>a"
 let g:jedi#goto_definitions_command = "<leader>d"
 let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>u"
-let g:jedi#rename_command = "<leader>re"
+let g:jedi#rename_command = "<leader>rn"
 
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_splits_not_buffers = "bottom"
