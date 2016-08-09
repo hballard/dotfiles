@@ -35,14 +35,6 @@
         }, {
             "function": "powerline.segments.shell.jobnum",
             "priority": 20
-        }],
-        "right": [{
-            "function": "powerline.segments.common.time.date",
-            "args": {
-                "istime": "True",
-                "format": "%m-%d %H:%M:%S"
-            },
-            "priority": 10
         }]
     }
 }

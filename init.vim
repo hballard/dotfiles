@@ -43,11 +43,12 @@ Plug 'chiel92/vim-autoformat'
 Plug 'andviro/flake8-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'joshdick/airline-onedark.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'henrik/vim-qargs'
 Plug 'mxw/vim-jsx'
-Plug 'justinj/vim-react-snippets'
+Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'loremipsum'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'docunext/closetag.vim'
@@ -68,13 +69,29 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/ScrollColors'
 Plug 'flazz/vim-colorschemes'
-Plug 'godlygeek/csapprox'
 Plug 'vim-scripts/BufOnly.vim'
-Plug 'kassio/neoterm'
+"Plug 'kassio/neoterm'
 Plug 'qpkorr/vim-bufkill'
+Plug 'othree/jspc.vim'
+Plug 'flowtype/vim-flow'
+Plug 'edkolev/tmuxline.vim'
 
 call plug#end()
 " ============================================================================
+
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
 
 " Set the specific python interpreter
 "let g:loaded_python_provider = 1
@@ -157,7 +174,7 @@ nnoremap <leader>h 5<C-W><
 nnoremap <leader>= <C-W>=
 
 "Font and colors cleanup-----------------------------
-set t_Co=256
+"set t_Co=256
 set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 
@@ -165,14 +182,14 @@ set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 syntax on
 syntax enable
 set background=dark
-"colorscheme jellybeans
+"colorscheme onedark
 colorscheme hybrid
 "colorscheme solarized
-"colorscheme onedark
 
 " highlighting
 set relativenumber
-set cursorline
+"set cursorline
+:autocmd InsertEnter,InsertLeave * set cul!
 
 " folding settings
 set foldmethod=indent
@@ -215,6 +232,24 @@ endif
 " ============================================================================
 " Plugins settings and mappings
 
+let g:tmuxline_preset = 'nightly_fox'
+let g:tmuxline_powerline_separators = 0
+
+" User commands for use w/ vim-dispatch
+:command Glogg Start tig
+:command Ipy Start ipython
+:command Te Start
+:command Node Start node
+:command NDbg Start node-debug %
+:command Py Start python % 
+:command Py3 Start python3 %
+:command Htop Start htop
+:command Npm Start npm start
+
+"Flow plugin
+let g:flow#autoclose = 1
+"let g:flow#errjmp = 1
+
 "Json plugin
 let g:vim_json_syntax_conceal = 0 " Don't hide Json syntax.
 
@@ -223,39 +258,14 @@ noremap <F3> :Autoformat<CR>
 let g:formatdef_es6 = '"esformatter"'
 let g:formatters_javascript_jsx = ['es6']
 
-" AutoPairs and indent settings
-
 " Neoterm config--------------------------------------------------------
-let g:neoterm_position = 'horizontal'
-let g:neoterm_size = '10'
-let g:neoterm_automap_keys = ',tt'
-
-nnoremap <silent> <f10> :TREPLSendFile<cr>
-nnoremap <silent> <f9> :TREPLSend<cr>
-vnoremap <silent> <f9> :TREPLSend<cr>
-
-" run set test lib
- nnoremap <silent> ,rt :call neoterm#test#run('all')<cr>
- nnoremap <silent> ,rf :call neoterm#test#run('file')<cr>
- nnoremap <silent> ,rn :call neoterm#test#run('current')<cr>
- nnoremap <silent> ,rr :call neoterm#test#rerun()<cr>
-
-" Useful maps
-" hide/close terminal
- nnoremap <silent> ,th :call neoterm#close()<cr>
-" clear terminal
- nnoremap <silent> ,tl :call neoterm#clear()<cr>
-" kills the current job (send a <c-c>)
- nnoremap <silent> ,tc :call neoterm#kill()<cr>
-"
-" Git commands
-command! -nargs=+ Tg :T git <args>
-command! -nargs=+ Ti :T ipython <args>
+"let g:neoterm_position = 'horizontal'
+"let g:neoterm_size = '10'
+"let g:neoterm_automap_keys = ',tt'
 
 " Indentline settings
 let g:indentLine_color_term = 237
 let g:indentLine_char = '|'
-
 
 " Nerdtree git plugin settings
 let g:NERDTreeIndicatorMapCustom = {
@@ -297,7 +307,6 @@ vmap     <leader>f <Plug>CtrlSFVwordPath
 vmap     <leader>F <Plug>CtrlSFVwordExec
 nnoremap <leader>fo :CtrlSFOpen<CR>
 
-
 "Default SQL language to be used ('mysql' or 'sqlserver')
 let g:sql_type_default = 'sqlserver'
 
@@ -310,7 +319,7 @@ let g:sqlutil_align_comma=1
 
 " DBext Connections----------------------------
 " Active Connection
-"let g:dbext_default_profile_mysqlite = 'type=SQLITE:dbname=~/Dropbox/Code/Python/mycontactapp_flask/test.db'
+let g:dbext_default_profile_mysqlite = 'type=SQLITE:dbname=~/Desktop/simplereactapp/test.db'
 let g:dbext_default_profile = 'mysqlite'
 
 " FZF  mappings--------------------------
@@ -350,7 +359,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['pyflake', 'pep8']
-let g:syntastic_javascript_checkers = ['jshint', 'eslint']
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_html_tidy_exec = ['tidy5']
 "let g:syntastic_python_python_exec = 'python3'
 
@@ -369,7 +378,7 @@ let g:syntastic_style_warning_symbol = '⚠'
 map <leader>g :MundoToggle<CR>
 
 " Tern------------------------------
-autocmd FileType javascript setlocal omnifunc=tern#Complete
+"autocmd FileType javascript setlocal omnifunc=tern#Complete
 let g:tern_show_argument_hints='on_hold'
 let g:tern_show_signature_in_pum=1
 
@@ -437,4 +446,5 @@ let g:PyFlakeOnWrite = 0
 " Airline settings-----------------------
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+"let g:airline_theme = 'onedark'
 let g:airline_theme = 'powerlineish'

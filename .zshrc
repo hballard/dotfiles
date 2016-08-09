@@ -26,7 +26,7 @@ alias mampinit='export PATH="${PATH}:/Applications/MAMP/Library/bin"'
 alias mampexit='export PATH=$PATH_OLD'
 
 # Powerline settings
-. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+#. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # set vim as default editor and also alias vi command
 export EDITOR='nvim'
@@ -49,9 +49,9 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 ## Put these lines after the tmux startup command
 
-if [ -n "$TMUX" ]; then
-    tmux source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
-fi
+#if [ -n "$TMUX" ]; then
+    #tmux source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+#fi
 
 ###-begin-npm-completion-###
 #
@@ -111,3 +111,5 @@ fi
 #source /usr/local/opt/nvm/nvm.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

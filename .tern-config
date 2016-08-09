@@ -8,6 +8,8 @@
   "plugins": {
     "complete_strings": {},
     "node": {},
+    "node_resolve": {},
+    "commonjs": {},
     "requirejs": {},
     "webpack": {},
     "modules": {},
