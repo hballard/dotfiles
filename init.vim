@@ -6,7 +6,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'simnalamburt/vim-mundo'
 Plug 'Valloric/YouCompleteMe'
 Plug 'scrooloose/syntastic'
-Plug 'suan/vim-instant-markdown'
+"Plug 'suan/vim-instant-markdown'
 Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree'
@@ -40,10 +40,9 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'davidhalter/jedi-vim'
 Plug 'chiel92/vim-autoformat'
-Plug 'andviro/flake8-vim'
+"Plug 'andviro/flake8-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'joshdick/airline-onedark.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'henrik/vim-qargs'
@@ -70,11 +69,12 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/ScrollColors'
 Plug 'flazz/vim-colorschemes'
 Plug 'vim-scripts/BufOnly.vim'
-"Plug 'kassio/neoterm'
 Plug 'qpkorr/vim-bufkill'
 Plug 'othree/jspc.vim'
 Plug 'flowtype/vim-flow'
 Plug 'edkolev/tmuxline.vim'
+Plug 'rakr/vim-one'
+Plug 'othree/csscomplete.vim'
 
 call plug#end()
 " ============================================================================
@@ -151,7 +151,7 @@ let g:html_indent_tags = 'li\|p'
 
 " Make it obvious where 80 characters is
 set textwidth=80
-set colorcolumn=+1
+"set colorcolumn=+1
 " highlight ColorColumn ctermbg=7
 
 " Clear search highlights
@@ -182,14 +182,14 @@ set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 syntax on
 syntax enable
 set background=dark
-"colorscheme onedark
-colorscheme hybrid
+"colorscheme hybrid
 "colorscheme solarized
+colorscheme one
 
 " highlighting
 set relativenumber
 "set cursorline
-:autocmd InsertEnter,InsertLeave * set cul!
+autocmd InsertEnter,InsertLeave * set cul!
 
 " folding settings
 set foldmethod=indent
@@ -199,6 +199,7 @@ set foldlevel=99
 set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
 "set history=50
 set ruler         " show the cursor position all the time
+set hid
 set showcmd       " display incomplete commands
 set autowrite     " Automatically :write before running commands
 set ignorecase    " searches are case insensitive...
@@ -232,7 +233,10 @@ endif
 " ============================================================================
 " Plugins settings and mappings
 
-let g:tmuxline_preset = 'nightly_fox'
+" CSS Autocomplete
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
+
+"let g:tmuxline_preset = 'nightly_fox'
 let g:tmuxline_powerline_separators = 0
 
 " User commands for use w/ vim-dispatch
@@ -241,7 +245,7 @@ let g:tmuxline_powerline_separators = 0
 :command Te Start
 :command Node Start node
 :command NDbg Start node-debug %
-:command Py Start python % 
+:command Py Start python %
 :command Py3 Start python3 %
 :command Htop Start htop
 :command Npm Start npm start
@@ -257,11 +261,6 @@ let g:vim_json_syntax_conceal = 0 " Don't hide Json syntax.
 noremap <F3> :Autoformat<CR>
 let g:formatdef_es6 = '"esformatter"'
 let g:formatters_javascript_jsx = ['es6']
-
-" Neoterm config--------------------------------------------------------
-"let g:neoterm_position = 'horizontal'
-"let g:neoterm_size = '10'
-"let g:neoterm_automap_keys = ',tt'
 
 " Indentline settings
 let g:indentLine_color_term = 237
@@ -349,6 +348,9 @@ if executable('ag')
 map <leader>r :TagbarToggle<CR>
 " autofocus on tagbar open
 let g:tagbar_autofocus = 1
+
+" vim-javascript--------------------------
+let g:javascript_plugin_flow = 1
 
 
 " Syntastic's -----------------------------
@@ -446,5 +448,6 @@ let g:PyFlakeOnWrite = 0
 " Airline settings-----------------------
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-"let g:airline_theme = 'onedark'
-let g:airline_theme = 'powerlineish'
+"let g:airline_theme = 'one'
+let g:airline_theme = 'bubblegum'
+"let g:airline_theme = 'powerlineish'

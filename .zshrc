@@ -29,8 +29,8 @@ alias mampexit='export PATH=$PATH_OLD'
 #. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # set vim as default editor and also alias vi command
-export EDITOR='nvim'
-alias vi='/usr/local/bin/nvim'
+export EDITOR='vim'
+alias vi='/usr/local/bin/vim'
 
 # fix docker init path
 alias dockerinit='bash "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"'

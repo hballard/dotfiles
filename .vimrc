@@ -1,134 +1,123 @@
-" ============================================================================
-" Vundle initialization
-" Avoid modify this section, unless you are very sure of what you are doing
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-" let Vundle manage Vundle, required
-
-Plugin 'gmarik/Vundle.vim'
-
+call plug#begin()
 " My Plugins
-Plugin 'tpope/vim-fugitive'
-Plugin 'sjl/gundo.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'tpope/vim-repeat'
-Plugin 'scrooloose/nerdtree'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'ervandew/supertab'
-Plugin 'myint/syntastic-extras'
-Plugin 'tpope/vim-dispatch'
-Plugin 'honza/vim-snippets'
-Plugin 'majutsushi/tagbar'
-Plugin 'shinokada/dragvisuals.vim'
-"Plugin 'pangloss/vim-javascript'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'othree/html5.vim'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'Yggdroot/indentLine'
-"Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'rizzatti/dash.vim'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'rking/ag.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'marijnh/tern_for_vim'
-Plugin 'tpope/vim-sleuth'
-Plugin 'Raimondi/delimitMate'
-Plugin 'tpope/vim-surround'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'FelikZ/ctrlp-py-matcher'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'andviro/flake8-vim'
-Plugin 'bling/vim-airline'
-Plugin 'fisadev/vim-ctrlp-cmdpalette'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'mitsuhiko/vim-jinja'
-Plugin 'henrik/vim-qargs'
-Plugin 'mxw/vim-jsx'
-Plugin 'justinj/vim-react-snippets'
-Plugin 'mattn/livestyle-vim'
-Plugin 'tell-k/vim-autopep8'
-Plugin 'loremipsum'
-Plugin 'ryanoasis/vim-webdevicons'
-Plugin 'docunext/closetag.vim'
-Plugin 'edsono/vim-matchit'
-Plugin 'bonsaiben/bootstrap-snippets'
-Plugin 'dbext.vim'
-Plugin 'SQLUtilities'
-Plugin 'SQLComplete.vim'
-Plugin 'moll/vim-node'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'myusuf3/numbers.vim'
-Plugin 'benmills/vimux'
-Plugin 'tomasr/molokai'
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'chriskempson/base16-vim'
-Plugin 'Align'
-Plugin 'sqlserver.vim'
-Plugin 'jmcantrell/vim-virtualenv'
-Plugin 'chrisbra/csv.vim'
-Plugin 'vivkin/flatland.vim'
-Plugin 'ap/vim-css-color'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plug 'tpope/vim-fugitive'
+Plug 'simnalamburt/vim-mundo'
+Plug 'Valloric/YouCompleteMe'
+Plug 'scrooloose/syntastic'
+Plug 'suan/vim-instant-markdown'
+Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-repeat'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+Plug 'SirVer/ultisnips'
+Plug 'ervandew/supertab'
+Plug 'myint/syntastic-extras'
+Plug 'tpope/vim-dispatch'
+Plug 'honza/vim-snippets'
+Plug 'majutsushi/tagbar'
+Plug 'jiangmiao/auto-pairs'
+Plug 'pangloss/vim-javascript'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'elzr/vim-json'
+Plug 'ekalinin/dockerfile.vim'
+Plug 'kchmck/vim-coffee-script'
+Plug 'othree/html5.vim'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
+Plug 'rizzatti/dash.vim'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'scrooloose/nerdcommenter'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'rking/ag.vim'
+Plug 'marijnh/tern_for_vim', { 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'npm install' }
+Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-surround'
+Plug 'davidhalter/jedi-vim'
+Plug 'chiel92/vim-autoformat'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'dyng/ctrlsf.vim'
+Plug 'mitsuhiko/vim-jinja'
+Plug 'henrik/vim-qargs'
+Plug 'mxw/vim-jsx'
+Plug 'bentayloruk/vim-react-es6-snippets'
+Plug 'loremipsum'
+Plug 'ryanoasis/vim-webdevicons'
+Plug 'docunext/closetag.vim'
+Plug 'edsono/vim-matchit'
+Plug 'bonsaiben/bootstrap-snippets'
+Plug 'dbext.vim'
+Plug 'SQLUtilities'
+Plug 'SQLComplete.vim'
+Plug 'moll/vim-node'
+Plug 'tmhedberg/SimpylFold'
+Plug 'myusuf3/numbers.vim'
+Plug 'Align'
+Plug 'sqlserver.vim'
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'chrisbra/csv.vim'
+Plug 'ap/vim-css-color'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'vim-scripts/ScrollColors'
+Plug 'flazz/vim-colorschemes'
+Plug 'vim-scripts/BufOnly.vim'
+Plug 'qpkorr/vim-bufkill'
+Plug 'othree/jspc.vim'
+Plug 'flowtype/vim-flow'
+Plug 'edkolev/tmuxline.vim'
+Plug 'rakr/vim-one'
+Plug 'othree/csscomplete.vim'
 
-" Brief help
-" :PluginList       - lists configured plugins
-" filetype plugin on
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
+call plug#end()
 " ============================================================================
+
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+
 " Vim settings and mappings
+filetype indent on
 
 set number
 set numberwidth=4
 
 " key mappings
 let mapleader = " "
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
+nnoremap <c-h> <c-w>h
 
 " Press i to enter insert mode, and ii to exit.
 inoremap ii <Esc>
 
 " Change to j,k to move exactly up, down vs linewise wrap
-nnoremap j gj
+
 nnoremap k gk
 
-" Open up current file in chrome
-nnoremap <silent> <leader>z :!open -a 'Google Chrome'.app %<CR><CR>
+" Remap terminal escape keys
+"tnoremap <Esc> <c-\><c-n>
 
-" incremental search
-set incsearch
-" highlighted search results
-set hlsearch
+" Open up current file in chrome
+nnoremap <silent> <leader>z :!open -a 'Google Chrome'.app <CR><CR>
+nnoremap <silent> <leader>Z :!open -a 'Google Chrome'.app %<CR><CR>
 
 " Force Saving Files that Require Root Permission ('w!!')
 cmap w!! %!sudo tee > /dev/null %
@@ -155,7 +144,7 @@ let g:html_indent_tags = 'li\|p'
 
 " Make it obvious where 80 characters is
 set textwidth=80
-set colorcolumn=+1
+"set colorcolumn=+1
 " highlight ColorColumn ctermbg=7
 
 " Clear search highlights
@@ -178,8 +167,7 @@ nnoremap <leader>h 5<C-W><
 nnoremap <leader>= <C-W>=
 
 "Font and colors cleanup-----------------------------
-set t_Co=256
-set laststatus=2 " Always display the statusline in all windows
+"set t_Co=256
 set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 
@@ -187,52 +175,48 @@ set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 syntax on
 syntax enable
 set background=dark
-"colorscheme Solarized
-"colorscheme molokai
-"colorscheme flatland
-colorscheme jellybeans
+"colorscheme hybrid
+"colorscheme solarized
+colorscheme one
 
 " highlighting
 set relativenumber
-set cursorline
+"set cursorline
+hi CursorLine cterm=NONE
+autocmd InsertEnter,InsertLeave * set cul!
 
 " folding settings
+set hlsearch
 set foldmethod=indent
 set foldlevel=99
-
+set laststatus=2
 set backspace=2   " Backspace deletes like most programs in insert mode
 set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
-set history=50
 set ruler         " show the cursor position all the time
+set hid
 set showcmd       " display incomplete commands
 set autowrite     " Automatically :write before running commands
 set ignorecase    " searches are case insensitive...
 set smartcase     " ... unless they contain at least one capital letter
-set autoread
 set undofile
 set undodir=~/.vim/undo " where to save undo history
 set undolevels=1000  " how many undos
 set undoreload=10000 " number of lines to save for undo
 set backupdir=~/.vim/backup/
 set directory=~/.vim/backup/
+"set history=50
 
 " Enable spellchecking for Markdown
 autocmd FileType markdown setlocal spell
 
-" Default SQL language to be used ('mysql' or 'sqlserver')
-let g:sql_type_default = 'sqlserver'
-
-" set indentation for sql
-autocmd FileType sql setlocal shiftwidth=4 tabstop=4
-
-" javascript indentation settings
-autocmd FileType javascript,html setlocal shiftwidth=4 tabstop=4
+" Associate javascript files with html for jsx bootstrap snippets
+"autocmd BufFilePre,BufRead,BufNewFile *.js set filetype=javascript.jsx.html
 
 " Markdown syntax change
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 set pastetoggle=<F5>
-"set clipboard=unnamed
+set clipboard=unnamed
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -244,21 +228,69 @@ endif
 " ============================================================================
 " Plugins settings and mappings
 
-"SQLUtilities change some defaults-------------
-let g:sqlutil_align_where=0
-let g:sqlutil_align_comma=1
+" CSS Autocomplete
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
-"Delimitemate config----------------------
-let delimitMate_expand_cr=1
-let delimitMate_matchpairs = "(:),[:],{:},<:>"
-au FileType vim,html,javascript let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
+"let g:tmuxline_preset = 'nightly_fox'
+let g:tmuxline_powerline_separators = 0
 
-" To be used with Delimitemate - inserts space between two lines
-inoremap <C-c> <CR><Esc>O
+" User commands for use w/ vim-dispatch
+:command Glogg Start tig
+:command Ipy Start ipython
+:command Te Start
+:command Node Start node
+:command NDbg Start node-debug %
+:command Py Start python %
+:command Py3 Start python3 %
+:command Htop Start htop
+:command Npm Start npm start
+
+"Flow plugin
+let g:flow#autoclose = 1
+"let g:flow#errjmp = 1
+
+"Json plugin
+let g:vim_json_syntax_conceal = 0 " Don't hide Json syntax.
+
+" Autoformat mapping
+noremap <F3> :Autoformat<CR>
+let g:formatdef_es6 = '"esformatter"'
+let g:formatters_javascript_jsx = ['es6']
+
+" Indentline settings
+let g:indentLine_color_term = 237
+let g:indentLine_char = '|'
+
+" Nerdtree git plugin settings
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
+
+" fzf settings
+let g:fzf_command_prefix = 'Fzf'
+" fzf statusline mapping
+function! s:fzf_statusline()
+  " Override statusline as you like
+  highlight fzf1 ctermfg=161 ctermbg=251
+  highlight fzf2 ctermfg=23 ctermbg=251
+  highlight fzf3 ctermfg=237 ctermbg=251
+  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
 
 " Closetag configuration------------------
-autocmd FileType html,htmldjango,htmljinja,javascript let b:closetag_html_style=1
-autocmd Filetype html,xml,xsl,htm,htmldjango,htmljinja,javascript source ~/.vim/bundle/closetag.vim/plugin/closetag.vim
+autocmd FileType html,htmljinja,javascript let b:closetag_html_style=1
+autocmd Filetype html,xml,xsl,htm,htmljinja,javascript source ~/.config/nvim/plugged/closetag.vim/plugin/closetag.vim
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
@@ -267,35 +299,33 @@ let g:jsx_ext_required = 0
 nmap     <leader>f <Plug>CtrlSFPrompt
 vmap     <leader>f <Plug>CtrlSFVwordPath
 vmap     <leader>F <Plug>CtrlSFVwordExec
-"nmap     <leader>f <Plug>CtrlSFCwordPath
-"nmap     <leader>F <Plug>CtrlSFPwordPath
 nnoremap <leader>fo :CtrlSFOpen<CR>
 
+"Default SQL language to be used ('mysql' or 'sqlserver')
+let g:sql_type_default = 'sqlserver'
 
-" CtrlP mappings--------------------------
-nnoremap <leader>p :CtrlP<CR>
-nnoremap <leader>P :CtrlPCurWD<CR>
-nnoremap <leader>b :CtrlPBuffer<CR>
-nnoremap <leader>m :CtrlPMixed<CR>
-nnoremap <leader>M :CtrlPMRUFiles<CR>
-nnoremap <leader>T :CtrlPBufTag<CR>
-nnoremap <leader>L :CtrlPLine<CR>
-nnoremap <leader>t :CtrlPTag<CR>
+"SQLUtilities change some defaults-------------
+let g:sqlutil_align_where=0
+let g:sqlutil_align_comma=1
 
-"Ctrlp extension for command line
-nnoremap <leader>c :CtrlPCmdPalette<CR>
+"dbext connection string settings
+"let g:dbext_default_profile_<profile_name> = '<connection string>'
 
-" Drag Visuals----------------------------
-runtime plugin/dragvisuals.vim
+" DBext Connections----------------------------
+" Active Connection
+let g:dbext_default_profile_mysqlite = 'type=SQLITE:dbname=~/Desktop/simplereactapp/test.db'
+let g:dbext_default_profile = 'mysqlite'
 
-vmap  <expr>  <LEFT>   DVB_Drag('left')
-vmap  <expr>  <RIGHT>  DVB_Drag('right')
-vmap  <expr>  <DOWN>   DVB_Drag('down')
-vmap  <expr>  <UP>     DVB_Drag('up')
-vmap  <expr>  D        DVB_Duplicate()
-
-" Remove any introduced trailing whitespace after moving...
-let g:DVB_TrimWS = 1
+" FZF  mappings--------------------------
+nnoremap <leader>p :FZF<CR>
+nnoremap <leader>P :FzfAg<CR>
+nnoremap <leader>b :FzfBuffers<CR>
+nnoremap <leader>s :FzfSnippets<CR>
+nnoremap <leader>H :FzfHistory<CR>
+nnoremap <leader>T :FzfBTags<CR>
+nnoremap <leader>L :FzfLines<CR>
+nnoremap <leader>t :FzfTags<CR>
+nnoremap <leader>c :FzfCommands<CR>
 
 "  Ack and Ag-----------------------------
 if executable('ag')
@@ -306,33 +336,17 @@ endif
 if executable('ag')
     " Use Ag over Grep
     set grepprg=ag\ --nogroup\ --nocolor
-
-    " Use ag in CtrlP for listing files. Lightning fast and respects
-    " .gitignore
-    " let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-          \ --ignore .git
-          \ --ignore .svn
-          \ --ignore .hg
-          \ --ignore .DS_Store
-          \ --ignore "**/*.pyc"
-          \ -g ""'
-
-    " ag is fast enough that CtrlP doesn't need to cache
-    let g:ctrlp_use_caching = 0
  endif
-
-" better matching than CtrlP default
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-
-" Omnisharp -----------------------------
-let g:OmniSharp_selector_ui = 'ctrlp'  " Use ctrlp.vim
 
 " TagBar-----------------------------
 " toggle tagbar display
-map <F4> :TagbarToggle<CR>
+map <leader>r :TagbarToggle<CR>
 " autofocus on tagbar open
 let g:tagbar_autofocus = 1
+
+" vim-javascript--------------------------
+let g:javascript_plugin_flow = 1
+
 
 " Syntastic's -----------------------------
 set statusline+=%#warningmsg#
@@ -341,9 +355,10 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-let g:syntastic_javascript_checkers = ['jshint', 'eslint']
+let g:syntastic_python_checkers = ['pyflake', 'pep8']
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_html_tidy_exec = ['tidy5']
+"let g:syntastic_python_python_exec = 'python3'
 
 " show list of errors and warnings on the current file
 nmap <leader>e :Errors<CR>
@@ -354,64 +369,78 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
 
-" Gundo-----------------------------
-" let g:gundo_width = 40
-" let g:gundo_preview_height = 15
-map <leader>g :GundoToggle<CR>
+" Mundo-----------------------------
+" let g:mundo_width = 40
+" let g:mundo_preview_height = 15
+map <leader>g :MundoToggle<CR>
 
-" Tern------------------------------
-autocmd FileType javascript setlocal omnifunc=tern#Complete
-let g:tern_map_keys=1
-let g:tern_show_argument_hints='on_hold'
-let g:tern_show_signature_in_pum=1
-
-" python with virtualenv support--------------------------
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
 
 " YouCompleteMe and UltiSnips compatibility, with the help of supertab-----
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping = 0
-" let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-" let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
+
+" use this to set the python completion to python3
+"let g:ycm_python_binary_path = '/usr/local/bin/python3'
+
+" use this to turn off YCM python completion...
+"let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
+
+" This is due to a bug w/ the function definition preview
+"let g:ycm_autoclose_preview_window_after_insertion = 1
+"let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_add_preview_to_completeopt = 0
+set completeopt-=preview
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsUsePythonVersion=2
 
 " NerdTree-----------------------------------
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
-
-" Change CWD to NERTtree root and ctrlp root to NERTtree
-let g:NERDTreeChDirMode = 2
-let g:ctrlp_working_path_mode = 'rw'
+let NERDTreeShowHidden=1
+map <Leader>n <Plug>NERDTreeTabsToggle<CR>
+"map <Leader>n :NERDTreeToggle<CR>
 
 " Dash -----------------------------
 nmap <silent> <leader>D <Plug>DashSearch
 
+" Tern------------------------------
+"autocmd FileType javascript setlocal omnifunc=tern#Complete
+let g:tern_show_argument_hints='on_hold'
+let g:tern_show_signature_in_pum=1
+
+nnoremap K :TernDoc<CR>
+"nnoremap <leader>k :TernDocBrowse<CR>
+nnoremap <leader>d :TernDefPreview<CR>
+nnoremap <leader>D :TernDef<CR>
+nnoremap <leader>rn :TernRename<CR>
+nnoremap <leader>u :TernRefs<CR>
+nnoremap <leader>y :TernType<CR>
+
 " Jedi-Vim ------------------------------
-" no completions...using YCM for that (with Jedi)
-let g:jedi#completions_enabled = 0
-" set which version of python to use (option = 2 or 3, default=2)
+
+" Set the specific python interpreter
+"let g:loaded_python_provider = 1
+"let g:loaded_python3_provider = 1
+"let g:python3_host_prog = '/usr/local/bin'
+"let g:python_host_prog = '/usr/local/bin'
+
+" Python completions...using YCM for everything else.
+"let g:jedi#completions_enabled = 1
+"Set python version for jedi to use for completions
 "let g:jedi#force_py_version = 3
 let g:jedi#show_call_signatures = 1
+let g:jedi#show_call_signatures_delay = 0
 
 " mappings
 let g:jedi#goto_assignments_command = "<leader>a"
 let g:jedi#goto_definitions_command = "<leader>d"
 let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>u"
-let g:jedi#rename_command = "<leader>r"
+let g:jedi#rename_command = "<leader>rn"
 
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_splits_not_buffers = "bottom"
@@ -422,4 +451,7 @@ let g:PyFlakeOnWrite = 0
 " Airline settings-----------------------
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme = 'powerlineish'
+"let g:airline_theme = 'one'
+let g:airline_theme = 'bubblegum'
+"let g:airline_theme = 'powerlineish'
+set mouse=a
