@@ -21,9 +21,9 @@
     "firstAttributeOnSameLine": false,
     "spaceInJSXExpressionContainers": "",
     "alignWithFirstAttribute": false,
-    "htmlOptions": { 
+    "htmlOptions": {
       "brace_style": "collapse",
-      "indent_char": "  ",
+      "indent_char": " ",
       "indent_size": 2,
       "max_preserve_newlines": 2,
       "preserve_newlines": true

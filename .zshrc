@@ -13,6 +13,9 @@ fi
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
+# make python 3 the default
+#alias python='python3'
+
 # back up the old path
 export PATH_OLD=$PATH
 
@@ -30,7 +33,7 @@ alias mampexit='export PATH=$PATH_OLD'
 
 # set vim as default editor and also alias vi command
 export EDITOR='vim'
-alias vi='/usr/local/bin/vim'
+alias vi='/usr/local/bin/nvim'
 
 # fix docker init path
 alias dockerinit='bash "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"'

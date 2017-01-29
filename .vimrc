@@ -50,7 +50,6 @@ Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'loremipsum'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'docunext/closetag.vim'
-Plug 'edsono/vim-matchit'
 Plug 'bonsaiben/bootstrap-snippets'
 Plug 'dbext.vim'
 Plug 'SQLUtilities'
@@ -73,6 +72,7 @@ Plug 'othree/jspc.vim'
 Plug 'flowtype/vim-flow'
 Plug 'edkolev/tmuxline.vim'
 Plug 'rakr/vim-one'
+Plug 'colepeters/spacemacs-theme.vim'
 Plug 'othree/csscomplete.vim'
 
 call plug#end()
@@ -94,6 +94,10 @@ call plug#end()
 
 " Vim settings and mappings
 filetype indent on
+
+if !has('nvim')
+    set ttymouse=xterm2
+endif
 
 set number
 set numberwidth=4
@@ -178,6 +182,7 @@ set background=dark
 "colorscheme hybrid
 "colorscheme solarized
 colorscheme one
+"colorscheme spacemacs-theme
 
 " highlighting
 set relativenumber
@@ -243,7 +248,10 @@ let g:tmuxline_powerline_separators = 0
 :command Py Start python %
 :command Py3 Start python3 %
 :command Htop Start htop
-:command Npm Start npm start
+:command NpmStart Start npm start
+:command NpmWatch Start npm run watch
+:command NpmBuild Start npm run build
+:command NpmAPI Start npm run api
 
 "Flow plugin
 let g:flow#autoclose = 1
@@ -362,6 +370,7 @@ let g:syntastic_html_tidy_exec = ['tidy5']
 
 " show list of errors and warnings on the current file
 nmap <leader>e :Errors<CR>
+nmap <leader>, :SyntasticReset<CR>
 " let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 let g:syntastic_error_symbol = '✗'
@@ -446,7 +455,7 @@ let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_splits_not_buffers = "bottom"
 
 " Flake8-vim-----------------------------
-let g:PyFlakeOnWrite = 0
+"let g:PyFlakeOnWrite = 0
 
 " Airline settings-----------------------
 let g:airline_powerline_fonts = 1

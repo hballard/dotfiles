@@ -7,6 +7,7 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'Valloric/YouCompleteMe'
 Plug 'scrooloose/syntastic'
 "Plug 'suan/vim-instant-markdown'
+"Plug 'bronson/vim-trailing-whitespace'
 Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree'
@@ -21,6 +22,7 @@ Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'jiangmiao/auto-pairs'
 Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'elzr/vim-json'
 Plug 'ekalinin/dockerfile.vim'
@@ -35,12 +37,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'rking/ag.vim'
-Plug 'marijnh/tern_for_vim'
+Plug 'marijnh/tern_for_vim', { 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'npm install' }
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'davidhalter/jedi-vim'
 Plug 'chiel92/vim-autoformat'
-"Plug 'andviro/flake8-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'dyng/ctrlsf.vim'
@@ -51,13 +52,12 @@ Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'loremipsum'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'docunext/closetag.vim'
-Plug 'edsono/vim-matchit'
 Plug 'bonsaiben/bootstrap-snippets'
 Plug 'dbext.vim'
 Plug 'SQLUtilities'
 Plug 'SQLComplete.vim'
 Plug 'moll/vim-node'
-Plug 'tmhedberg/SimpylFold'
+"Plug 'tmhedberg/SimpylFold'
 Plug 'myusuf3/numbers.vim'
 Plug 'Align'
 Plug 'sqlserver.vim'
@@ -74,7 +74,9 @@ Plug 'othree/jspc.vim'
 Plug 'flowtype/vim-flow'
 Plug 'edkolev/tmuxline.vim'
 Plug 'rakr/vim-one'
+Plug 'colepeters/spacemacs-theme.vim'
 Plug 'othree/csscomplete.vim'
+Plug 'mhartington/oceanic-next'
 
 call plug#end()
 " ============================================================================
@@ -185,6 +187,8 @@ set background=dark
 "colorscheme hybrid
 "colorscheme solarized
 colorscheme one
+"colorscheme spacemacs-theme
+"colorscheme OceanicNext
 
 " highlighting
 set relativenumber
@@ -220,6 +224,18 @@ autocmd FileType markdown setlocal spell
 " Markdown syntax change
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
+" .eslintrc syntax change
+au BufNewFile,BufFilePre,BufRead *.eslintrc set filetype=json
+
+" .babelrc  syntax change
+au BufNewFile,BufFilePre,BufRead *.babelrc set filetype=json
+
+" .esformatter  syntax change
+au BufNewFile,BufFilePre,BufRead *.esformatter set filetype=json
+
+" .tern-config  syntax change
+au BufNewFile,BufFilePre,BufRead *.tern-config set filetype=json
+
 set pastetoggle=<F5>
 set clipboard=unnamed
 
@@ -242,13 +258,19 @@ let g:tmuxline_powerline_separators = 0
 " User commands for use w/ vim-dispatch
 :command Glogg Start tig
 :command Ipy Start ipython
+:command Ipdb Start python -m ipdb %
+:command Wdb Start wdb.server.py & python -m wdb %
 :command Te Start
 :command Node Start node
 :command NDbg Start node-debug %
 :command Py Start python %
+:command PyClean !find . -name '*.pyc' | xargs rm -f
 :command Py3 Start python3 %
 :command Htop Start htop
-:command Npm Start npm start
+:command NpmStart Start npm start
+:command NpmWatch Start npm run watch
+:command NpmBuild Start npm run build
+:command NpmAPI Start npm run api
 
 "Flow plugin
 let g:flow#autoclose = 1
@@ -360,13 +382,13 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['pyflake', 'pep8']
+let g:syntastic_python_checkers = ['flake8', 'pep8']
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_html_tidy_exec = ['tidy5']
 "let g:syntastic_python_python_exec = 'python3'
 
 " show list of errors and warnings on the current file
 nmap <leader>e :Errors<CR>
+nmap <leader>, :SyntasticReset<CR>
 " let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 let g:syntastic_error_symbol = '✗'
@@ -398,10 +420,10 @@ let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:SuperTabCrMapping = 0
 
-" use this to set the python completion to python3
-"let g:ycm_python_binary_path = '/usr/local/bin/python3'
+" Use this to set the python completion to python set in PATH
+let g:ycm_python_binary_path = 'python'
 
-" use this to turn off YCM python completion...
+" Use this to turn off YCM python completion...
 "let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
 
 " This is due to a bug w/ the function definition preview
@@ -414,7 +436,7 @@ set completeopt-=preview
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-let g:UltiSnipsUsePythonVersion=2
+"let g:UltiSnipsUsePythonVersion=3
 
 " NerdTree-----------------------------------
 let NERDTreeShowHidden=1
@@ -425,10 +447,12 @@ map <Leader>n <Plug>NERDTreeTabsToggle<CR>
 nmap <silent> <leader>D <Plug>DashSearch
 
 " Jedi-Vim ------------------------------
-" Python completions...using YCM for everything else.
-"let g:jedi#completions_enabled = 1
-"Set python version for jedi to use for completions
-"let g:jedi#force_py_version = 3
+" Python completions...using YCM for everything else 
+let g:jedi#completions_enabled = 0
+
+"Set python version for jedi to use for completions; 'auto', 2, or 3 as options
+let g:jedi#force_py_version = 'auto'
+
 let g:jedi#show_call_signatures = 1
 let g:jedi#show_call_signatures_delay = 0
 
@@ -443,7 +467,7 @@ let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_splits_not_buffers = "bottom"
 
 " Flake8-vim-----------------------------
-let g:PyFlakeOnWrite = 0
+"let g:PyFlakeOnWrite = 0
 
 " Airline settings-----------------------
 let g:airline_powerline_fonts = 1
