@@ -1,4 +1,4 @@
-" PLUGIN MANAGER SETTINGS=======================================
+" VIM PLUG SETTINGS=======================================
 
 " Vim Plug post-install hook functions--------------------------
 function! BuildYCM(info)
@@ -11,7 +11,7 @@ function! BuildYCM(info)
   endif
 endfunction
 
-" VimPlug-------------------------------------------------------
+" Vim Plug-------------------------------------------------------
 call plug#begin()
 
 " My Plugins
@@ -85,7 +85,7 @@ Plug 'vimlab/mdown.vim', { 'do': 'npm install' }
 
 call plug#end()
 
-" NON-PLUGIN RELAED CONFIG SETTINGS================================
+" NON-PLUGIN RELATED CONFIG SETTINGS================================
 
 "24 Bit True Color-----------------------------------------------
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -145,7 +145,6 @@ nnoremap <c-h> <c-w>h
 inoremap ii <Esc>
 
 " Change to j,k to move exactly up, down vs linewise wrap
-
 nnoremap k gk
 
 " Remap terminal escape keys
@@ -261,8 +260,7 @@ if has("autocmd")
         \| exe "normal! g'\"" | endif
 endif
 
-" ============================================================================
-" Plugins settings and mappings
+" Plugin settings and mappings==========================================
 
 " User commands for use w/ vim-dispatch
 :command Glogg Start tig
