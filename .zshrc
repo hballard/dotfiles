@@ -13,8 +13,10 @@ fi
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
-# make python 3 the default
-#alias python='python3'
+# open ssl fix
+export OPENSSL_INCLUDE_DIR=`brew --prefix openssl`/include
+export OPENSSL_LIB_DIR=`brew --prefix openssl`/lib
+export DEP_OPENSSL_INCLUDE=`brew --prefix openssl`/include
 
 # back up the old path
 export PATH_OLD=$PATH

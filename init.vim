@@ -1,14 +1,24 @@
+" PLUGIN MANAGER SETTINGS=======================================
 
+" Vim Plug post-install hook functions--------------------------
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py
+  endif
+endfunction
+
+" VimPlug-------------------------------------------------------
 call plug#begin()
-" My Plugins
 
+" My Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'simnalamburt/vim-mundo'
-Plug 'Valloric/YouCompleteMe'
-Plug 'scrooloose/syntastic'
-"Plug 'suan/vim-instant-markdown'
-"Plug 'bronson/vim-trailing-whitespace'
-Plug 'plasticboy/vim-markdown'
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'w0rp/ale'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -16,19 +26,11 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
-Plug 'myint/syntastic-extras'
 Plug 'tpope/vim-dispatch'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'jiangmiao/auto-pairs'
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
 Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'elzr/vim-json'
-Plug 'ekalinin/dockerfile.vim'
-Plug 'kchmck/vim-coffee-script'
-Plug 'othree/html5.vim'
-Plug 'hail2u/vim-css3-syntax'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'rizzatti/dash.vim'
@@ -37,7 +39,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'rking/ag.vim'
-Plug 'marijnh/tern_for_vim', { 'dir': '~/.vim/plugged/tern_for_vim', 'do': 'npm install' }
+Plug 'ternjs/tern_for_vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'davidhalter/jedi-vim'
@@ -47,7 +49,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'dyng/ctrlsf.vim'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'henrik/vim-qargs'
-Plug 'mxw/vim-jsx'
 Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'loremipsum'
 Plug 'ryanoasis/vim-webdevicons'
@@ -56,31 +57,37 @@ Plug 'bonsaiben/bootstrap-snippets'
 Plug 'dbext.vim'
 Plug 'SQLUtilities'
 Plug 'SQLComplete.vim'
+Plug 'sqlserver.vim'
 Plug 'moll/vim-node'
-"Plug 'tmhedberg/SimpylFold'
 Plug 'myusuf3/numbers.vim'
 Plug 'Align'
-Plug 'sqlserver.vim'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'chrisbra/csv.vim'
 Plug 'ap/vim-css-color'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/ScrollColors'
-Plug 'flazz/vim-colorschemes'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'qpkorr/vim-bufkill'
 Plug 'othree/jspc.vim'
 Plug 'flowtype/vim-flow'
 Plug 'edkolev/tmuxline.vim'
 Plug 'rakr/vim-one'
-Plug 'colepeters/spacemacs-theme.vim'
 Plug 'othree/csscomplete.vim'
-Plug 'mhartington/oceanic-next'
+Plug 'zirrostig/vim-schlepp'
+Plug 'sheerun/vim-polyglot'
+Plug 'flazz/vim-colorschemes'
+Plug 'henrik/vim-indexed-search'
+Plug 'mhinz/vim-hugefile'
+Plug 'liuchengxu/space-vim-dark'
+Plug 'neovim/node-host', { 'do': 'npm install' }
+Plug 'vimlab/mdown.vim', { 'do': 'npm install' }
 
 call plug#end()
-" ============================================================================
 
+" NON-PLUGIN RELAED CONFIG SETTINGS================================
+
+"24 Bit True Color-----------------------------------------------
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
@@ -95,19 +102,39 @@ call plug#end()
     set termguicolors
   endif
 
-" Set the specific python interpreter
+" Keymap to edit init.vim / .vimrc - can't get working correctly-----
+"nnoremap <leader>e :edit $MYVIMRC<cr>
+
+" Temp fix for terminal colors (one dark colorscheme)----------------
+let g:terminal_color_0="#1b2b34"
+let g:terminal_color_1="#ed5f67"
+let g:terminal_color_2="#9ac895"
+let g:terminal_color_3="#fbc963"
+let g:terminal_color_4="#669acd"
+let g:terminal_color_5="#c695c6"
+let g:terminal_color_6="#5fb4b4"
+let g:terminal_color_7="#c1c6cf"
+let g:terminal_color_8="#65737e"
+let g:terminal_color_9="#ed5f67"
+let g:terminal_color_10="#9ac895"
+let g:terminal_color_11="#fbc963"
+let g:terminal_color_12="#a8aebb"
+let g:terminal_color_13="#ced4df"
+let g:terminal_color_14="#5fb4b4"
+let g:terminal_color_15="#d9dfea"
+let g:terminal_color_background="#1b2b34"
+let g:terminal_color_foreground="#c1c6cf"
+
+" Set the specific python interpreter---------------------------------
 "let g:loaded_python_provider = 1
 "let g:loaded_python3_provider = 1
 "let g:python3_host_prog = '/usr/local/bin'
 "let g:python_host_prog = '/usr/local/bin'
 
-" Vim settings and mappings
+" Vim settings and mappings-------------------------------------------
 filetype indent on
-
 set number
 set numberwidth=4
-
-" key mappings
 let mapleader = " "
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
@@ -144,6 +171,9 @@ map bp :bp<CR>
 map bm :bm
 map sb :sb<CR>
 
+" toggle scroll of windows
+nnoremap <leader>sr :set scb!<CR>
+
 " autocompletion of files and commands behaves like shell
 " (complete only the common part, list the options that match)
 set wildmode=list:longest
@@ -159,9 +189,7 @@ set textwidth=80
 " Clear search highlights
 noremap <silent><Leader>/ :nohls<CR>
 
-" Switch between the last two files
-nnoremap <leader><leader> <c-^>
-
+" Snippet
 iabbr pmail heath.ballard@gmail.com
 
 " Open new split panes to right and bottom, which feels more natural
@@ -175,23 +203,13 @@ nnoremap <leader>l 5<C-W>>
 nnoremap <leader>h 5<C-W><
 nnoremap <leader>= <C-W>=
 
-"Font and colors cleanup-----------------------------
-"set t_Co=256
+"Font and colors cleanup
 set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 
-" Syntax highlighting-----------------------------
-syntax on
-syntax enable
-set background=dark
-"colorscheme hybrid
-"colorscheme solarized
-colorscheme one
-"colorscheme spacemacs-theme
-"colorscheme OceanicNext
-
 " highlighting
 set relativenumber
+
 "set cursorline
 autocmd InsertEnter,InsertLeave * set cul!
 
@@ -209,17 +227,14 @@ set autowrite     " Automatically :write before running commands
 set ignorecase    " searches are case insensitive...
 set smartcase     " ... unless they contain at least one capital letter
 set undofile
-set undodir=~/.vim/undo " where to save undo history
 set undolevels=1000  " how many undos
 set undoreload=10000 " number of lines to save for undo
-set backupdir=~/.vim/backup/
-set directory=~/.vim/backup/
+"set undodir=~/.config/nvim/undo " where to save undo history
+"set backupdir=~/.config/nvim/backup/
+"set directory=~/.config/nvim/backup/
 
 " Enable spellchecking for Markdown
 autocmd FileType markdown setlocal spell
-
-" Associate javascript files with html for jsx bootstrap snippets
-"autocmd BufFilePre,BufRead,BufNewFile *.js set filetype=javascript.jsx.html
 
 " Markdown syntax change
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
@@ -249,12 +264,6 @@ endif
 " ============================================================================
 " Plugins settings and mappings
 
-" CSS Autocomplete
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
-
-"let g:tmuxline_preset = 'nightly_fox'
-let g:tmuxline_powerline_separators = 0
-
 " User commands for use w/ vim-dispatch
 :command Glogg Start tig
 :command Ipy Start ipython
@@ -268,9 +277,29 @@ let g:tmuxline_powerline_separators = 0
 :command Py3 Start python3 %
 :command Htop Start htop
 :command NpmStart Start npm start
-:command NpmWatch Start npm run watch
+:command NpmClient Start npm run client
 :command NpmBuild Start npm run build
 :command NpmAPI Start npm run api
+:command NpmRedis Start npm run redis
+
+" Virtualenv settings
+nnoremap <leader>vl :VirtualEnvList<CR>
+nnoremap <leader>vd :VirtualEnvDeactivate<CR>
+nnoremap <leader>va :VirtualEnvActivate
+let g:virtualenv_stl_format = '[%n]'
+"let g:virtualenv_auto_activate = 1
+
+" Vim schlep -- move blocks of text with arrow keys
+vmap <unique> <up>    <Plug>SchleppUp
+vmap <unique> <down>  <Plug>SchleppDown
+vmap <unique> <left>  <Plug>SchleppLeft
+vmap <unique> <right> <Plug>SchleppRight
+
+" CSS Autocomplete
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
+
+"let g:tmuxline_preset = 'nightly_fox'
+let g:tmuxline_powerline_separators = 0
 
 "Flow plugin
 let g:flow#autoclose = 1
@@ -314,7 +343,6 @@ endfunction
 
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
-
 " Closetag configuration------------------
 autocmd FileType html,htmljinja,javascript let b:closetag_html_style=1
 autocmd Filetype html,xml,xsl,htm,htmljinja,javascript source ~/.config/nvim/plugged/closetag.vim/plugin/closetag.vim
@@ -331,11 +359,17 @@ nnoremap <leader>fo :CtrlSFOpen<CR>
 "Default SQL language to be used ('mysql' or 'sqlserver')
 let g:sql_type_default = 'sqlserver'
 
+"StatusLine settings -- doesn't apply since I'm using airline
+"set statusline+=%#warningmsg#
+"set statusline+=%{ALEGetStatusLine()}
+"set statusline+=%*
+"set statusline+=%{virtualenv#statusline()}
+
 "SQLUtilities change some defaults-------------
 let g:sqlutil_align_where=0
 let g:sqlutil_align_comma=1
 
-"dbext connection string settings
+"dbext Connection String settings
 "let g:dbext_default_profile_<profile_name> = '<connection string>'
 
 " DBext Connections----------------------------
@@ -374,27 +408,17 @@ let g:tagbar_autofocus = 1
 " vim-javascript--------------------------
 let g:javascript_plugin_flow = 1
 
-
-" Syntastic's -----------------------------
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['flake8', 'pep8']
-let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_python_python_exec = 'python3'
-
-" show list of errors and warnings on the current file
-nmap <leader>e :Errors<CR>
-nmap <leader>, :SyntasticReset<CR>
-" let g:syntastic_check_on_open = 1
-let g:syntastic_enable_signs = 1
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
+" Ale Linter settings---------------------
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠ '
+let g:ale_statusline_format = ['✗%d', '⚠ %d', '⬥ ok']
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
+let g:ale_linter_aliases = {'jsx': 'css'}
 
 " Mundo-----------------------------
 " let g:mundo_width = 40
@@ -406,8 +430,8 @@ map <leader>g :MundoToggle<CR>
 let g:tern_show_argument_hints='on_hold'
 let g:tern_show_signature_in_pum=1
 
-nnoremap <leader>K :TernDoc<CR>
-nnoremap <leader>k :TernDocBrowse<CR>
+nnoremap K :TernDoc<CR>
+nnoremap <leader>K :TernDocBrowse<CR>
 nnoremap <leader>d :TernDefPreview<CR>
 nnoremap <leader>D :TernDef<CR>
 nnoremap <leader>rn :TernRename<CR>
@@ -427,8 +451,6 @@ let g:ycm_python_binary_path = 'python'
 "let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
 
 " This is due to a bug w/ the function definition preview
-"let g:ycm_autoclose_preview_window_after_insertion = 1
-"let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_add_preview_to_completeopt = 0
 set completeopt-=preview
 
@@ -441,20 +463,19 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " NerdTree-----------------------------------
 let NERDTreeShowHidden=1
 map <Leader>n <Plug>NERDTreeTabsToggle<CR>
-"map <Leader>n :NERDTreeToggle<CR>
 
 " Dash -----------------------------
 nmap <silent> <leader>D <Plug>DashSearch
 
 " Jedi-Vim ------------------------------
-" Python completions...using YCM for everything else 
+" Python refactoring and goto..using YCM for completions
 let g:jedi#completions_enabled = 0
 
 "Set python version for jedi to use for completions; 'auto', 2, or 3 as options
 let g:jedi#force_py_version = 'auto'
 
 let g:jedi#show_call_signatures = 1
-let g:jedi#show_call_signatures_delay = 0
+let g:jedi#show_call_signatures_delay = 500
 
 " mappings
 let g:jedi#goto_assignments_command = "<leader>a"
@@ -472,6 +493,23 @@ let g:jedi#use_splits_not_buffers = "bottom"
 " Airline settings-----------------------
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#virtualenv#enabled = 1
+let airline#extensions#ale#error_symbol = '✗'
+let airline#extensions#ale#warning_symbol = '⚠'
+
+"let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'violet'
 "let g:airline_theme = 'one'
-let g:airline_theme = 'bubblegum'
 "let g:airline_theme = 'powerlineish'
+
+" Syntax highlighting-----------------------------
+syntax on
+syntax enable
+set background=dark
+"colorscheme one
+colorscheme space-vim-dark
+"colorscheme hybrid
+"colorscheme lucius
+"colorscheme molokai
+"colorscheme gruvbox
+"colorscheme spacegray
