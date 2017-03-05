@@ -1,6 +1,6 @@
 " VIM PLUG SETTINGS=======================================
 
-" Vim Plug post-install hook functions--------------------------
+" Vim Plug post-install and pre-install hook functions--------------
 function! BuildYCM(info)
   " info is a dictionary with 3 fields
   " - name:   name of the plugin
