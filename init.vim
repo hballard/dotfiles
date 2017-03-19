@@ -1,23 +1,13 @@
-" VIM PLUG SETTINGS=======================================
+" VIM PLUG=======================================
+" Vim Plug Functions-------------------------------------------
 
-" Vim Plug post-install and pre-install hook functions--------------
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !./install.py
-  endif
-endfunction
-
-" Vim Plug-------------------------------------------------------
+" Vim Plugins--------------------------------------------------
 call plug#begin()
 
 " My Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'simnalamburt/vim-mundo'
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'Valloric/YouCompleteMe'
 Plug 'w0rp/ale'
 Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree'
@@ -48,7 +38,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'dyng/ctrlsf.vim'
 Plug 'mitsuhiko/vim-jinja'
-Plug 'henrik/vim-qargs'
 Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'loremipsum'
 Plug 'ryanoasis/vim-webdevicons'
@@ -83,93 +72,60 @@ Plug 'liuchengxu/space-vim-dark'
 Plug 'neovim/node-host', { 'do': 'npm install' }
 Plug 'vimlab/mdown.vim', { 'do': 'npm install' }
 Plug 'tyru/open-browser.vim'
+Plug 'itchyny/vim-cursorword'
 call plug#end()
-
-" NON-PLUGIN RELATED CONFIG SETTINGS================================
-
-"24 Bit True Color-----------------------------------------------
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-  if (has("nvim"))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
-    set termguicolors
-  endif
-
-" Keymap to edit init.vim / .vimrc - can't get working correctly-----
-"nnoremap <leader>e :edit $MYVIMRC<cr>
-
-" Temp fix for terminal colors (one dark colorscheme)----------------
-let g:terminal_color_0="#1b2b34"
-let g:terminal_color_1="#ed5f67"
-let g:terminal_color_2="#9ac895"
-let g:terminal_color_3="#fbc963"
-let g:terminal_color_4="#669acd"
-let g:terminal_color_5="#c695c6"
-let g:terminal_color_6="#5fb4b4"
-let g:terminal_color_7="#c1c6cf"
-let g:terminal_color_8="#65737e"
-let g:terminal_color_9="#ed5f67"
-let g:terminal_color_10="#9ac895"
-let g:terminal_color_11="#fbc963"
-let g:terminal_color_12="#a8aebb"
-let g:terminal_color_13="#ced4df"
-let g:terminal_color_14="#5fb4b4"
-let g:terminal_color_15="#d9dfea"
-let g:terminal_color_background="#1b2b34"
-let g:terminal_color_foreground="#c1c6cf"
-
-" Set the specific python interpreter---------------------------------
-"let g:loaded_python_provider = 1
-"let g:loaded_python3_provider = 1
-"let g:python3_host_prog = '/usr/local/bin'
-"let g:python_host_prog = '/usr/local/bin'
 
 " Vim settings and mappings-------------------------------------------
 filetype indent on
 set number
 set numberwidth=4
-let mapleader = " "
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-l> <c-w>l
-nnoremap <c-h> <c-w>h
+let g:mapleader = ' '
+
+" Easier movement between windows / splits
+nnoremap <leader>wj <c-w>j
+nnoremap <leader>wk <c-w>k
+nnoremap <leader>wl <c-w>l
+nnoremap <leader>wh <c-w>h
+nnoremap <leader>wd :q<CR>
+nnoremap <leader>ws :sp<CR>
+nnoremap <leader>wv :vs<CR>
+
+" Keymap to open default shell
+nnoremap <leader>' :sp term://zsh<CR>
+
+" Keymap to edit init.vim / .vimrc - can't get working correctly-----
+nnoremap <leader>fed :e $MYVIMRC<CR>
+nnoremap <leader>fer :source $MYVIMRC<CR>
 
 " Press i to enter insert mode, and ii to exit.
 inoremap ii <Esc>
 
 " Change to j,k to move exactly up, down vs linewise wrap
 nnoremap k gk
+nnoremap j gj
 
 " Remap terminal escape keys
 tnoremap <Esc> <c-\><c-n>
-
-" Open up current file in chrome
-nnoremap <silent> <leader>z :!open -a 'Google Chrome'.app <CR><CR>
-nnoremap <silent> <leader>Z :!open -a 'Google Chrome'.app %<CR><CR>
 
 " Force Saving Files that Require Root Permission ('w!!')
 cmap w!! %!sudo tee > /dev/null %
 
 " tab navigation mappings
-map tn :tabn<CR>
-map tp :tabp<CR>
-map tm :tabm
-map tt :tabnew<CR>
-map ts :tab split<CR>
+nnoremap <leader>tn :tabn<CR>
+nnoremap <leader>tp :tabp<CR>
+nnoremap <leader>tm :tabm
+nnoremap <leader>tN :tabnew<CR>
+nnoremap <leader>ts :tab split<CR>
+nnoremap <leader>td :q<CR>
 
 " buffer navigation mappings
-map bn :bn<CR>
-map bp :bp<CR>
-map bm :bm
-map sb :sb<CR>
+nnoremap <leader>bn :bn<CR>
+nnoremap <leader>bp :bp<CR>
+nnoremap <leader>bm :bm
+nnoremap <leader>bd :bd<CR>
 
 " toggle scroll of windows
-nnoremap <leader>sr :set scb!<CR>
+nnoremap <leader>wsc :set scb!<CR>
 
 " autocompletion of files and commands behaves like shell
 " (complete only the common part, list the options that match)
@@ -184,7 +140,7 @@ set textwidth=80
 " highlight ColorColumn ctermbg=7
 
 " Clear search highlights
-noremap <silent><Leader>/ :nohls<CR>
+noremap <silent><leader>s/ :nohls<CR>
 
 " Snippet
 iabbr pmail heath.ballard@gmail.com
@@ -194,11 +150,10 @@ set splitbelow
 set splitright
 
 " mapping for better splits
-nnoremap <leader>j 5<C-W>-
-nnoremap <leader>k 5<C-W>+
-nnoremap <leader>l 5<C-W>>
-nnoremap <leader>h 5<C-W><
-nnoremap <leader>= <C-W>=
+nnoremap <leader>wJ 5<C-W>-
+nnoremap <leader>wK 5<C-W>+
+nnoremap <leader>wL 5<C-W>>
+nnoremap <leader>wH 5<C-W><
 
 "Font and colors cleanup
 set guifont=Source\ Code\ Pro\ for\ Powerline:h14
@@ -218,7 +173,7 @@ set foldlevel=99
 set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
 "set history=50
 set ruler         " show the cursor position all the time
-set hid
+set hidden
 set showcmd       " display incomplete commands
 set autowrite     " Automatically :write before running commands
 set ignorecase    " searches are case insensitive...
@@ -231,7 +186,7 @@ set undoreload=10000 " number of lines to save for undo
 "set directory=~/.config/nvim/backup/
 
 " Enable spellchecking for Markdown
-autocmd FileType markdown setlocal spell
+au FileType markdown setlocal spell
 
 " Markdown syntax change
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
@@ -253,14 +208,69 @@ set clipboard=unnamed
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
-if has("autocmd")
+if has('autocmd')
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\"" | endif
 endif
 
+" NON-PLUGIN RELATED CONFIG SETTINGS================================
+
+"24 Bit True Color-----------------------------------------------
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+  if (has('nvim'))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has('termguicolors'))
+    set termguicolors
+  endif
+
+
+" Temp fix for terminal colors (one dark colorscheme)----------------
+"let g:terminal_color_0='#1b2b34'
+"let g:terminal_color_1='#ed5f67'
+"let g:terminal_color_2='#9ac895'
+"let g:terminal_color_3='#fbc963'
+"let g:terminal_color_4='#669acd'
+"let g:terminal_color_5='#c695c6'
+"let g:terminal_color_6='#5fb4b4'
+"let g:terminal_color_7='#c1c6cf'
+"let g:terminal_color_8='#65737e'
+"let g:terminal_color_9='#ed5f67'
+"let g:terminal_color_10='#9ac895'
+"let g:terminal_color_11='#fbc963'
+"let g:terminal_color_12='#a8aebb'
+"let g:terminal_color_13='#ced4df'
+"let g:terminal_color_14='#5fb4b4'
+"let g:terminal_color_15='#d9dfea'
+"let g:terminal_color_background='#1b2b34'
+"let g:terminal_color_foreground='#c1c6cf'
+
+" Temp fix for terminal colors (spacemacs dark colorscheme)----------------
+let g:terminal_color_1='#d4557d'
+let g:terminal_color_2='#5fb4b4'
+let g:terminal_color_3='#fbc963'
+let g:terminal_color_4='#669acd'
+let g:terminal_color_5='#c695c6'
+let g:terminal_color_6='#5fb4b4'
+let g:terminal_color_9='#d4557d'
+let g:terminal_color_10='#86D02F'
+let g:terminal_color_11='#fbc963'
+let g:terminal_color_14='#5fb4b4'
+
+" Set the specific python interpreter---------------------------------
+"let g:loaded_python_provider = 1
+"let g:loaded_python3_provider = 1
+"let g:python3_host_prog = '/usr/local/bin'
+"let g:python_host_prog = '/usr/local/bin'
+
+
 " Plugin settings and mappings==========================================
 
-" User commands for use w/ vim-dispatch
+" User commands for use w/ vim-dispatch or shell
 :command Glogg Start tig
 :command Ipy Start ipython
 :command Ipdb Start python -m ipdb %
@@ -268,20 +278,29 @@ endif
 :command Te Start
 :command Node Start node
 :command NDbg Start node-debug %
-:command Py Start python %
 :command PyClean !find . -name '*.pyc' | xargs rm -f
-:command Py3 Start python3 %
 :command Htop Start htop
 :command NpmStart Start npm start
 :command NpmClient Start npm run client
 :command NpmBuild Start npm run build
 :command NpmAPI Start npm run api
 :command NpmRedis Start npm run redis
+:command Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
+
+" EasyMotion Mappings---------------------------------
+map <leader>jj <Plug>(easymotion-s)
+map <leader>jt <Plug>(easymotion-bd-t)
+map <leader>jw <Plug>(easymotion-bd-w)
+map <leader>jW <Plug>(easymotion-bd-W)
+map <leader>je <Plug>(easymotion-bd-e)
+map <leader>jE <Plug>(easymotion-bd-E)
+map <leader>jk <Plug>(easymotion-bd-jk)
+map <leader>jn <Plug>(easymotion-bd-n)
 
 " Virtualenv settings
-nnoremap <leader>vl :VirtualEnvList<CR>
-nnoremap <leader>vd :VirtualEnvDeactivate<CR>
-nnoremap <leader>va :VirtualEnvActivate
+nnoremap <leader>mvl :VirtualEnvList<CR>
+nnoremap <leader>mvd :VirtualEnvDeactivate<CR>
+nnoremap <leader>mva :VirtualEnvActivate
 let g:virtualenv_stl_format = '[%n]'
 "let g:virtualenv_auto_activate = 1
 
@@ -292,7 +311,7 @@ vmap <unique> <left>  <Plug>SchleppLeft
 vmap <unique> <right> <Plug>SchleppRight
 
 " CSS Autocomplete
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
+au FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
 "let g:tmuxline_preset = 'nightly_fox'
 let g:tmuxline_powerline_separators = 0
@@ -315,15 +334,15 @@ let g:indentLine_char = '|'
 
 " Nerdtree git plugin settings
 let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
+    \ 'Modified'  : '✹',
+    \ 'Staged'    : '✚',
+    \ 'Untracked' : '✭',
+    \ 'Renamed'   : '➜',
+    \ 'Unmerged'  : '═',
+    \ 'Deleted'   : '✖',
+    \ 'Dirty'     : '✗',
+    \ 'Clean'     : '✔︎',
+    \ 'Unknown'   : '?'
     \ }
 
 " fzf settings
@@ -337,20 +356,20 @@ function! s:fzf_statusline()
   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
 
-autocmd! User FzfStatusLine call <SID>fzf_statusline()
+au! User FzfStatusLine call <SID>fzf_statusline()
 
 " Closetag configuration------------------
-autocmd FileType html,htmljinja,javascript let b:closetag_html_style=1
+au FileType html,htmljinja,javascript let b:closetag_html_style=1
 autocmd Filetype html,xml,xsl,htm,htmljinja,javascript source ~/.config/nvim/plugged/closetag.vim/plugin/closetag.vim
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
 
 " CtrlsF mappings------------------------
-nmap     <leader>f <Plug>CtrlSFPrompt
-vmap     <leader>f <Plug>CtrlSFVwordPath
-vmap     <leader>F <Plug>CtrlSFVwordExec
-nnoremap <leader>fo :CtrlSFOpen<CR>
+nmap <leader>sp <Plug>CtrlSFPrompt
+vmap <leader>sp <Plug>CtrlSFVwordPath
+vmap <leader>sP <Plug>CtrlSFVwordExec
+nnoremap <leader>so :CtrlSFOpen<CR>
 
 "Default SQL language to be used ('mysql' or 'sqlserver')
 let g:sql_type_default = 'sqlserver'
@@ -374,15 +393,15 @@ let g:dbext_default_profile_mysqlite = 'type=SQLITE:dbname=~/Desktop/simplereact
 let g:dbext_default_profile = 'mysqlite'
 
 " FZF  mappings--------------------------
-nnoremap <leader>p :FZF<CR>
-nnoremap <leader>P :FzfAg<CR>
-nnoremap <leader>b :FzfBuffers<CR>
-nnoremap <leader>s :FzfSnippets<CR>
-nnoremap <leader>H :FzfHistory<CR>
-nnoremap <leader>T :FzfBTags<CR>
-nnoremap <leader>L :FzfLines<CR>
-nnoremap <leader>t :FzfTags<CR>
-nnoremap <leader>c :FzfCommands<CR>
+nnoremap <leader>ff :FZF<CR>
+nnoremap <leader>/ :FzfAg<CR>
+nnoremap <leader>bb :FzfBuffers<CR>
+nnoremap <leader>ss :FzfSnippets<CR>
+nnoremap <leader>fr :FzfHistory<CR>
+nnoremap <leader>bt :FzfBTags<CR>
+nnoremap <leader>fl :FzfLines<CR>
+nnoremap <leader>st :FzfTags<CR>
+nnoremap <leader>sc :FzfCommands<CR>
 
 "  Ack and Ag-----------------------------
 if executable('ag')
@@ -407,19 +426,19 @@ let g:javascript_plugin_flow = 1
 " Ale Linter settings---------------------
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚠ '
-let g:ale_statusline_format = ['✗%d', '⚠ %d', '⬥ ok']
+let g:ale_statusline_format = ['✗ %d', '⚠  %d', '⬥ ok']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
 let g:ale_linter_aliases = {'jsx': 'css'}
+nmap <leader>ep <Plug>(ale_previous_wrap)
+nmap <leader>en <Plug>(ale_next_wrap)
 
 " Mundo-----------------------------
 " let g:mundo_width = 40
 " let g:mundo_preview_height = 15
-map <leader>g :MundoToggle<CR>
+nnoremap <leader>au :MundoToggle<CR>
 
 " Tern------------------------------
 "autocmd FileType javascript setlocal omnifunc=tern#Complete
@@ -427,12 +446,14 @@ let g:tern_show_argument_hints='on_hold'
 let g:tern_show_signature_in_pum=1
 
 nnoremap K :TernDoc<CR>
-nnoremap <leader>K :TernDocBrowse<CR>
-nnoremap <leader>d :TernDefPreview<CR>
-nnoremap <leader>D :TernDef<CR>
-nnoremap <leader>rn :TernRename<CR>
-nnoremap <leader>u :TernRefs<CR>
-nnoremap <leader>y :TernType<CR>
+nnoremap <leader>mK :TernDocBrowse<CR>
+nnoremap <leader>md :TernDefPreview<CR>
+nnoremap <leader>mr :TernRename<CR>
+nnoremap <leader>mu :TernRefs<CR>
+nnoremap <leader>my :TernType<CR>
+
+" Vim-Polyglot--------------------------------------------------
+let g:python_highlight_all=1
 
 " YouCompleteMe and UltiSnips compatibility, with the help of supertab-----
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
@@ -451,17 +472,17 @@ let g:ycm_add_preview_to_completeopt = 0
 set completeopt-=preview
 
 " better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 "let g:UltiSnipsUsePythonVersion=3
 
 " NerdTree-----------------------------------
-let NERDTreeShowHidden=1
-map <Leader>n <Plug>NERDTreeTabsToggle<CR>
+let g:NERDTreeShowHidden=1
+map <leader>ft <Plug>NERDTreeTabsToggle<CR>
 
 " Dash -----------------------------
-nmap <silent> <leader>D <Plug>DashSearch
+nnoremap <silent> <leader>dd <Plug>DashSearch
 
 " Jedi-Vim ------------------------------
 " Python refactoring and goto..using YCM for completions
@@ -474,24 +495,21 @@ let g:jedi#show_call_signatures = 1
 let g:jedi#show_call_signatures_delay = 500
 
 " mappings
-let g:jedi#goto_assignments_command = "<leader>a"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>u"
-let g:jedi#rename_command = "<leader>rn"
+let g:jedi#goto_assignments_command = '<leader>ma'
+let g:jedi#goto_definitions_command = '<leader>md'
+let g:jedi#documentation_command = 'K'
+let g:jedi#usages_command = '<leader>mu'
+let g:jedi#rename_command = '<leader>mr'
 
 let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#use_splits_not_buffers = "bottom"
-
-" Flake8-vim-----------------------------
-"let g:PyFlakeOnWrite = 0
+let g:jedi#use_splits_not_buffers = 'bottom'
 
 " Airline settings-----------------------
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#virtualenv#enabled = 1
-let airline#extensions#ale#error_symbol = '✗'
-let airline#extensions#ale#warning_symbol = '⚠'
+let g:airline#extensions#ale#error_symbol = '✗'
+let g:airline#extensions#ale#warning_symbol = '⚠'
 
 "let g:airline_theme = 'bubblegum'
 let g:airline_theme = 'violet'
@@ -509,3 +527,5 @@ colorscheme space-vim-dark
 "colorscheme molokai
 "colorscheme gruvbox
 "colorscheme spacegray
+
+hi Comment cterm=italic
