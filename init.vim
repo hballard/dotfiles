@@ -75,6 +75,7 @@ Plug 'neovim/node-host', { 'do': 'npm install' }
 Plug 'vimlab/mdown.vim', { 'do': 'npm install' }
 Plug 'tyru/open-browser.vim'
 Plug 'itchyny/vim-cursorword'
+Plug 'janko-m/vim-test'
 call plug#end()
 
 " Vim settings and mappings-------------------------------------------
@@ -97,7 +98,7 @@ nnoremap <leader>' :sp term://zsh<CR>
 
 " Keymap to edit init.vim / .vimrc
 nnoremap <leader>fed :e $MYVIMRC<CR>
-nnoremap <leader>fer :source $MYVIMRC<CR>
+nnoremap <leader>feR :source $MYVIMRC<CR>
 
 " Press i to enter insert mode, and ii to exit.
 inoremap ii <Esc>
@@ -300,20 +301,35 @@ map <leader>jE <Plug>(easymotion-bd-E)
 map <leader>jl <Plug>(easymotion-bd-jk)
 map <leader>jn <Plug>(easymotion-bd-n)
 
-" Virtualenv settings
+" Vim-test configurations---------------------------
+nmap <silent> <leader>mtt :TestNearest<CR>
+nmap <silent> <leader>mtm :TestFile<CR>
+nmap <silent> <leader>mta :TestSuite<CR>
+nmap <silent> <leader>mtl :TestLast<CR>
+nmap <silent> <leader>mtv :TestVisit<CR>
+
+" make test commands execute using dispatch.vim
+let g:test#strategy = 'dispatch'
+let g:test#runner_commands = ['PyTest', 'Mocha']
+
+" Virtualenv settings------------------------------
 nnoremap <leader>mVw :VirtualEnvList<CR>
 nnoremap <leader>mVd :VirtualEnvDeactivate<CR>
 nnoremap <leader>mVa :VirtualEnvActivate
 let g:virtualenv_stl_format = '[%n]'
 "let g:virtualenv_auto_activate = 1
 
-" Vim schlep -- move blocks of text with arrow keys
+" Markdown live preview---------------------------
+nnoremap <leader>mcp :Mgrip<CR>
+nnoremap <leader>mcP :Mpreview<CR>
+
+" Vim schlep -------------------------------------
 vmap <unique> <up>    <Plug>SchleppUp
 vmap <unique> <down>  <Plug>SchleppDown
 vmap <unique> <left>  <Plug>SchleppLeft
 vmap <unique> <right> <Plug>SchleppRight
 
-" NerdCommenter config
+" NerdCommenter config----------------------------
 map <leader>; <Plug>NERDCommenterToggle
 nmap <leader>ca <Plug>NERDCommenterAppend
 
