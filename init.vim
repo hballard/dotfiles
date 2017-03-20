@@ -1,4 +1,6 @@
-" VIM PLUG=======================================
+" All keymappings same or very similar to emacs spacemacs distro
+
+" Vim Plug=======================================
 " Vim Plug Functions-------------------------------------------
 
 " Vim Plugins--------------------------------------------------
@@ -93,7 +95,7 @@ nnoremap <leader>wv :vs<CR>
 " Keymap to open default shell
 nnoremap <leader>' :sp term://zsh<CR>
 
-" Keymap to edit init.vim / .vimrc - can't get working correctly-----
+" Keymap to edit init.vim / .vimrc
 nnoremap <leader>fed :e $MYVIMRC<CR>
 nnoremap <leader>fer :source $MYVIMRC<CR>
 
@@ -124,26 +126,23 @@ nnoremap <leader>bp :bp<CR>
 nnoremap <leader>bm :bm
 nnoremap <leader>bd :bd<CR>
 
+" show registers
+nnoremap <leader>re :register<CR>
+
 " toggle scroll of windows
 nnoremap <leader>wsc :set scb!<CR>
 
 " autocompletion of files and commands behaves like shell
-" (complete only the common part, list the options that match)
+" complete only the common part, list the options that match
 set wildmode=list:longest
-
-" Treat <li> and <p> tags like the block tags they are
-let g:html_indent_tags = 'li\|p'
 
 " Make it obvious where 80 characters is
 set textwidth=80
-"set colorcolumn=+1
+" set colorcolumn=+1
 " highlight ColorColumn ctermbg=7
 
 " Clear search highlights
 noremap <silent><leader>s/ :nohls<CR>
-
-" Snippet
-iabbr pmail heath.ballard@gmail.com
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
@@ -261,12 +260,6 @@ let g:terminal_color_10='#86D02F'
 let g:terminal_color_11='#fbc963'
 let g:terminal_color_14='#5fb4b4'
 
-" Set the specific python interpreter---------------------------------
-"let g:loaded_python_provider = 1
-"let g:loaded_python3_provider = 1
-"let g:python3_host_prog = '/usr/local/bin'
-"let g:python_host_prog = '/usr/local/bin'
-
 
 " Plugin settings and mappings==========================================
 
@@ -287,6 +280,16 @@ let g:terminal_color_14='#5fb4b4'
 :command NpmRedis Start npm run redis
 :command Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
 
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+" Fugitive (git) Mappings----------------------------
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gS :Gw<CR>
+nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>g. :Glogg<CR>
+nnoremap <leader>gm :G
+
 " EasyMotion Mappings---------------------------------
 map <leader>jj <Plug>(easymotion-s)
 map <leader>jt <Plug>(easymotion-bd-t)
@@ -294,13 +297,13 @@ map <leader>jw <Plug>(easymotion-bd-w)
 map <leader>jW <Plug>(easymotion-bd-W)
 map <leader>je <Plug>(easymotion-bd-e)
 map <leader>jE <Plug>(easymotion-bd-E)
-map <leader>jk <Plug>(easymotion-bd-jk)
+map <leader>jl <Plug>(easymotion-bd-jk)
 map <leader>jn <Plug>(easymotion-bd-n)
 
 " Virtualenv settings
-nnoremap <leader>mvl :VirtualEnvList<CR>
-nnoremap <leader>mvd :VirtualEnvDeactivate<CR>
-nnoremap <leader>mva :VirtualEnvActivate
+nnoremap <leader>mVw :VirtualEnvList<CR>
+nnoremap <leader>mVd :VirtualEnvDeactivate<CR>
+nnoremap <leader>mVa :VirtualEnvActivate
 let g:virtualenv_stl_format = '[%n]'
 "let g:virtualenv_auto_activate = 1
 
@@ -309,6 +312,10 @@ vmap <unique> <up>    <Plug>SchleppUp
 vmap <unique> <down>  <Plug>SchleppDown
 vmap <unique> <left>  <Plug>SchleppLeft
 vmap <unique> <right> <Plug>SchleppRight
+
+" NerdCommenter config
+map <leader>; <Plug>NERDCommenterToggle
+nmap <leader>ca <Plug>NERDCommenterAppend
 
 " CSS Autocomplete
 au FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
@@ -371,14 +378,14 @@ vmap <leader>sp <Plug>CtrlSFVwordPath
 vmap <leader>sP <Plug>CtrlSFVwordExec
 nnoremap <leader>so :CtrlSFOpen<CR>
 
-"Default SQL language to be used ('mysql' or 'sqlserver')
-let g:sql_type_default = 'sqlserver'
-
 "StatusLine settings -- doesn't apply since I'm using airline
 "set statusline+=%#warningmsg#
 "set statusline+=%{ALEGetStatusLine()}
 "set statusline+=%*
 "set statusline+=%{virtualenv#statusline()}
+
+"Default SQL language to be used ('mysql' or 'sqlserver')
+let g:sql_type_default = 'sqlserver'
 
 "SQLUtilities change some defaults-------------
 let g:sqlutil_align_where=0
@@ -396,11 +403,11 @@ let g:dbext_default_profile = 'mysqlite'
 nnoremap <leader>ff :FZF<CR>
 nnoremap <leader>/ :FzfAg<CR>
 nnoremap <leader>bb :FzfBuffers<CR>
-nnoremap <leader>ss :FzfSnippets<CR>
+nnoremap <leader>is :FzfSnippets<CR>
 nnoremap <leader>fr :FzfHistory<CR>
-nnoremap <leader>bt :FzfBTags<CR>
-nnoremap <leader>fl :FzfLines<CR>
-nnoremap <leader>st :FzfTags<CR>
+nnoremap <leader>ji :FzfBTags<CR>
+nnoremap <leader>ss :FzfLines<CR>
+nnoremap <leader>jI :FzfTags<CR>
 nnoremap <leader>sc :FzfCommands<CR>
 
 "  Ack and Ag-----------------------------
@@ -416,8 +423,7 @@ if executable('ag')
 
 " TagBar-----------------------------
 " toggle tagbar display
-map <leader>r :TagbarToggle<CR>
-" autofocus on tagbar open
+map <leader>jr :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
 " vim-javascript--------------------------
