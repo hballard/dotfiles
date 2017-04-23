@@ -34,7 +34,7 @@ alias mampexit='export PATH=$PATH_OLD'
 #. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # set vim as default editor and also alias vi command
-export EDITOR='vim'
+export EDITOR='nvim'
 alias vi='/usr/local/bin/nvim'
 
 # fix docker init path
@@ -118,3 +118,4 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+eval $(/usr/libexec/path_helper -s)

@@ -1,12 +1,13 @@
-" All keymappings same or very similar to emacs spacemacs distro
+" ALL KEYMAPPINGS ARE THE SAME OR VERY SIMILAR TO EMACS 'SPACEMACS' DISTRO
 
-" Vim Plug=======================================
+" Vim Plug====================================================
+
 " Vim Plug Functions-------------------------------------------
+" none
 
 " Vim Plugins--------------------------------------------------
 call plug#begin()
 
-" My Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'simnalamburt/vim-mundo'
 Plug 'Valloric/YouCompleteMe'
@@ -35,7 +36,7 @@ Plug 'ternjs/tern_for_vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'davidhalter/jedi-vim'
-Plug 'chiel92/vim-autoformat'
+Plug 'sbdchd/neoformat'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'dyng/ctrlsf.vim'
@@ -45,8 +46,6 @@ Plug 'loremipsum'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'docunext/closetag.vim'
 Plug 'bonsaiben/bootstrap-snippets'
-Plug 'dbext.vim'
-Plug 'SQLUtilities'
 Plug 'SQLComplete.vim'
 Plug 'sqlserver.vim'
 Plug 'moll/vim-node'
@@ -78,7 +77,8 @@ Plug 'itchyny/vim-cursorword'
 Plug 'janko-m/vim-test'
 call plug#end()
 
-" Vim settings and mappings-------------------------------------------
+" NON-PLUGIN RELATED CONFIG SETTINGS================================
+
 filetype indent on
 set number
 set numberwidth=4
@@ -125,7 +125,7 @@ nnoremap <leader>td :q<CR>
 nnoremap <leader>bn :bn<CR>
 nnoremap <leader>bp :bp<CR>
 nnoremap <leader>bm :bm
-nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bd :bd!<CR>
 
 " show registers
 nnoremap <leader>re :register<CR>
@@ -156,7 +156,7 @@ nnoremap <leader>wL 5<C-W>>
 nnoremap <leader>wH 5<C-W><
 
 "Font and colors cleanup
-set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+"set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 
 " highlighting
@@ -168,7 +168,8 @@ autocmd InsertEnter,InsertLeave * set cul!
 " folding settings
 set foldmethod=indent
 set foldlevel=99
-
+set ttyfast                " Faster redrawing.
+set lazyredraw             " Only redraw when necessary.
 "set backspace=2   " Backspace deletes like most programs in insert mode
 set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
 "set history=50
@@ -213,8 +214,6 @@ if has('autocmd')
         \| exe "normal! g'\"" | endif
 endif
 
-" NON-PLUGIN RELATED CONFIG SETTINGS================================
-
 "24 Bit True Color-----------------------------------------------
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -230,41 +229,110 @@ endif
 
 
 " Temp fix for terminal colors (one dark colorscheme)----------------
-"let g:terminal_color_0='#1b2b34'
-"let g:terminal_color_1='#ed5f67'
-"let g:terminal_color_2='#9ac895'
-"let g:terminal_color_3='#fbc963'
-"let g:terminal_color_4='#669acd'
-"let g:terminal_color_5='#c695c6'
-"let g:terminal_color_6='#5fb4b4'
-"let g:terminal_color_7='#c1c6cf'
-"let g:terminal_color_8='#65737e'
-"let g:terminal_color_9='#ed5f67'
-"let g:terminal_color_10='#9ac895'
-"let g:terminal_color_11='#fbc963'
-"let g:terminal_color_12='#a8aebb'
-"let g:terminal_color_13='#ced4df'
-"let g:terminal_color_14='#5fb4b4'
-"let g:terminal_color_15='#d9dfea'
-"let g:terminal_color_background='#1b2b34'
-"let g:terminal_color_foreground='#c1c6cf'
-
-" Temp fix for terminal colors (spacemacs dark colorscheme)----------------
-let g:terminal_color_1='#d4557d'
-let g:terminal_color_2='#5fb4b4'
+let g:terminal_color_0='#1b2b34'
+let g:terminal_color_1='#ed5f67'
+let g:terminal_color_2='#9ac895'
 let g:terminal_color_3='#fbc963'
 let g:terminal_color_4='#669acd'
 let g:terminal_color_5='#c695c6'
 let g:terminal_color_6='#5fb4b4'
-let g:terminal_color_9='#d4557d'
-let g:terminal_color_10='#86D02F'
+let g:terminal_color_7='#c1c6cf'
+let g:terminal_color_8='#65737e'
+let g:terminal_color_9='#ed5f67'
+let g:terminal_color_10='#9ac895'
 let g:terminal_color_11='#fbc963'
+let g:terminal_color_12='#a8aebb'
+let g:terminal_color_13='#ced4df'
 let g:terminal_color_14='#5fb4b4'
+let g:terminal_color_15='#d9dfea'
+let g:terminal_color_background='#1b2b34'
+let g:terminal_color_foreground='#c1c6cf'
+
+" Temp fix for terminal colors (spacemacs dark colorscheme)----------------
+"let g:terminal_color_1='#d4557d'
+"let g:terminal_color_2='#5fb4b4'
+"let g:terminal_color_3='#fbc963'
+"let g:terminal_color_4='#669acd'
+"let g:terminal_color_5='#c695c6'
+"let g:terminal_color_6='#5fb4b4'
+"let g:terminal_color_9='#d4557d'
+"let g:terminal_color_10='#86D02F'
+"let g:terminal_color_11='#fbc963'
+"let g:terminal_color_14='#5fb4b4'
 
 
 " Plugin settings and mappings==========================================
 
-" User commands for use w/ vim-dispatch or shell
+" Custom functions-------------------------------
+
+function! SqlListTablesFunc()
+" Connect to database with enviornmental variable -- export connection string
+" ex. export DATABASE_URL=sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db 
+python << EOF
+import records, vim
+
+def sql_run():
+  db = records.Database(records.DATABASE_URL)
+  for name in db.get_table_names():
+    print name
+
+EOF
+  let temp_reg = @"
+  redir @"
+  silent! py sql_run()
+  redir END
+  let output = copy(@")
+  let @" = temp_reg
+  if empty(output)
+    echoerr "no output"
+  else
+    new SQLTables
+    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted
+    put! =output
+  endif
+endfunction
+
+function! SqlRunFunc()
+python << EOF
+import records, vim
+def py_sql():
+  def get_range():
+    buf = vim.current.buffer
+    (lnum1, col1) = buf.mark('<')
+    (lnum2, col2) = buf.mark('>')
+    lines = vim.eval('getline({}, {})'.format(lnum1, lnum2))
+    if len(lines) == 1:
+      lines[0] = lines[0][col1:col2 + 1]
+    else:
+      lines[0] = lines[0][col1:]
+      lines[-1] = lines[-1][:col2 + 1]
+    return "\n".join(lines)
+  def sql_run(sql_code):
+    db = records.Database(records.DATABASE_URL)
+    r = db.query(sql_code)
+    print r.dataset
+  sql_code = get_range()
+  sql_run(sql_code)
+EOF
+  let temp_reg = @"
+  redir @"
+  silent! py py_sql()
+  redir END
+  let output = copy(@")
+  let @" = temp_reg
+  if empty(output)
+    echoerr "no output"
+  else
+    new SQLResults
+    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted
+    put! =output
+  endif
+endfunction
+
+" Custom user commands for use w/ vim-dispatch, external shell commands,
+" and custom functions
+:command! -nargs=* -complete=shellcmd R new results |
+      \setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 :command Glogg Start tig
 :command Ipy Start ipython
 :command Ipdb Start python -m ipdb %
@@ -280,6 +348,9 @@ let g:terminal_color_14='#5fb4b4'
 :command NpmAPI Start npm run api
 :command NpmRedis Start npm run redis
 :command Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
+:command -range=% SQLRun :call SqlRunFunc()
+:command SQLListTables :call SqlListTablesFunc()
+
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
@@ -295,9 +366,7 @@ nnoremap <leader>gm :G
 map <leader>jj <Plug>(easymotion-s)
 map <leader>jt <Plug>(easymotion-bd-t)
 map <leader>jw <Plug>(easymotion-bd-w)
-map <leader>jW <Plug>(easymotion-bd-W)
 map <leader>je <Plug>(easymotion-bd-e)
-map <leader>jE <Plug>(easymotion-bd-E)
 map <leader>jl <Plug>(easymotion-bd-jk)
 map <leader>jn <Plug>(easymotion-bd-n)
 
@@ -309,8 +378,10 @@ nmap <silent> <leader>mtl :TestLast<CR>
 nmap <silent> <leader>mtv :TestVisit<CR>
 
 " make test commands execute using dispatch.vim
-let g:test#strategy = 'dispatch'
+let g:test#strategy = 'neovim'
 let g:test#runner_commands = ['PyTest', 'Mocha']
+let g:test#python#runner = 'pytest'
+let g:test#python#pytest#options = '--verbose'
 
 " Virtualenv settings------------------------------
 nnoremap <leader>mVw :VirtualEnvList<CR>
@@ -343,13 +414,8 @@ let g:tmuxline_powerline_separators = 0
 let g:flow#autoclose = 1
 "let g:flow#errjmp = 1
 
-"Json plugin
-let g:vim_json_syntax_conceal = 0 " Don't hide Json syntax.
-
-" Autoformat mapping
-noremap <F3> :Autoformat<CR>
-let g:formatdef_es6 = '"esformatter"'
-let g:formatters_javascript_jsx = ['es6']
+" Neoformat
+noremap <F3> :Neoformat<CR>
 
 " Indentline settings
 let g:indentLine_color_term = 237
@@ -394,26 +460,8 @@ vmap <leader>sp <Plug>CtrlSFVwordPath
 vmap <leader>sP <Plug>CtrlSFVwordExec
 nnoremap <leader>so :CtrlSFOpen<CR>
 
-"StatusLine settings -- doesn't apply since I'm using airline
-"set statusline+=%#warningmsg#
-"set statusline+=%{ALEGetStatusLine()}
-"set statusline+=%*
-"set statusline+=%{virtualenv#statusline()}
-
 "Default SQL language to be used ('mysql' or 'sqlserver')
 let g:sql_type_default = 'sqlserver'
-
-"SQLUtilities change some defaults-------------
-let g:sqlutil_align_where=0
-let g:sqlutil_align_comma=1
-
-"dbext Connection String settings
-"let g:dbext_default_profile_<profile_name> = '<connection string>'
-
-" DBext Connections----------------------------
-" Active Connection
-let g:dbext_default_profile_mysqlite = 'type=SQLITE:dbname=~/Desktop/simplereactapp/test.db'
-let g:dbext_default_profile = 'mysqlite'
 
 " FZF  mappings--------------------------
 nnoremap <leader>ff :FZF<CR>
@@ -425,6 +473,7 @@ nnoremap <leader>ji :FzfBTags<CR>
 nnoremap <leader>ss :FzfLines<CR>
 nnoremap <leader>jI :FzfTags<CR>
 nnoremap <leader>sc :FzfCommands<CR>
+nnoremap <leader>ss :FzfBLines<CR>
 
 "  Ack and Ag-----------------------------
 if executable('ag')
@@ -458,7 +507,7 @@ nmap <leader>ep <Plug>(ale_previous_wrap)
 nmap <leader>en <Plug>(ale_next_wrap)
 
 " Mundo-----------------------------
-" let g:mundo_width = 40
+ "let g:mundo_width = 40
 " let g:mundo_preview_height = 15
 nnoremap <leader>au :MundoToggle<CR>
 
@@ -501,6 +550,7 @@ let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
 " NerdTree-----------------------------------
 let g:NERDTreeShowHidden=1
+let g:NERDTreeWinSize=40
 map <leader>ft <Plug>NERDTreeTabsToggle<CR>
 
 " Dash -----------------------------
@@ -533,8 +583,8 @@ let g:airline#extensions#virtualenv#enabled = 1
 let g:airline#extensions#ale#error_symbol = '✗'
 let g:airline#extensions#ale#warning_symbol = '⚠'
 
-"let g:airline_theme = 'bubblegum'
-let g:airline_theme = 'violet'
+let g:airline_theme = 'bubblegum'
+"let g:airline_theme = 'violet'
 "let g:airline_theme = 'one'
 "let g:airline_theme = 'powerlineish'
 
@@ -542,12 +592,16 @@ let g:airline_theme = 'violet'
 syntax on
 syntax enable
 set background=dark
-"colorscheme one
-colorscheme space-vim-dark
+colorscheme one
+"colorscheme space-vim-dark
 "colorscheme hybrid
 "colorscheme lucius
 "colorscheme molokai
 "colorscheme gruvbox
 "colorscheme spacegray
 
+set t_ZH=^[[3m
+set t_ZR=^[[23m
+"let &t_ZH="\e[3m"
+"let &t_ZR="\e[23m"
 hi Comment cterm=italic
