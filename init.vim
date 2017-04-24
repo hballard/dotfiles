@@ -266,16 +266,26 @@ let g:terminal_color_foreground='#c1c6cf'
 " Custom functions-------------------------------
 
 function! SqlListTablesFunc()
-" Connect to database with enviornmental variable -- export connection string
-" ex. export DATABASE_URL=sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db 
 python << EOF
-import records, vim
-
 def sql_run():
-  db = records.Database(records.DATABASE_URL)
+  try:
+    import records, vim
+  except ImportError:
+    print '''This plugin relies on the 3rd party python package "records".
+You need to install it in your path. Using pip:
+
+        $pip install records'''
+    return
+  try:
+    db = records.Database(records.DATABASE_URL)
+  except ValueError:
+    print '''There is no database connection. You must set the environmental variable "DATABASE_URL"
+with the correct SQL connection string for your database.  Example:
+
+    $export DATABASE_URL=sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db'''
+    return
   for name in db.get_table_names():
     print name
-
 EOF
   let temp_reg = @"
   redir @"
@@ -294,8 +304,16 @@ endfunction
 
 function! SqlRunFunc()
 python << EOF
-import records, vim
 def py_sql():
+  try:
+    import records, vim
+  except ImportError:
+    print '''This plugin relies on the 3rd party python package "records".
+You need to install it in your path. Using pip:
+
+        $pip install records'''
+    return
+  from sqlalchemy.exc import ResourceClosedError, OperationalError
   def get_range():
     buf = vim.current.buffer
     (lnum1, col1) = buf.mark('<')
@@ -308,10 +326,26 @@ def py_sql():
       lines[-1] = lines[-1][:col2 + 1]
     return "\n".join(lines)
   def sql_run(sql_code):
-    db = records.Database(records.DATABASE_URL)
-    r = db.query(sql_code)
-    print r.dataset
-  sql_code = get_range()
+    try:
+      db = records.Database(records.DATABASE_URL)
+      r = db.query(sql_code)
+      print '{0} records returned\n'.format(len(r.all()))
+      print r.dataset
+    except ValueError:
+      print '''There is no database connection. You must set the environmental variable "DATABASE_URL"
+with the correct SQL connection string for your database.  Example:
+
+      $export DATABASE_URL=sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db'''
+      return
+    except ResourceClosedError as e:
+      if e.message == 'This result object does not return rows. It has been closed automatically.':
+        print 'Statement executed successfully (no rows returned)'
+    except OperationalError as e:
+      print 'There is an error in your query statement (no rows returned)\n\n    ERROR: {0}'.format(e.message)
+  try:
+    sql_code = get_range()
+  except IndexError:
+    sql_code = "\n".join(vim.current.buffer)
   sql_run(sql_code)
 EOF
   let temp_reg = @"
@@ -323,7 +357,7 @@ EOF
   if empty(output)
     echoerr "no output"
   else
-    new SQLResults
+    new SQLExecResults
     setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted
     put! =output
   endif
@@ -333,24 +367,27 @@ endfunction
 " and custom functions
 :command! -nargs=* -complete=shellcmd R new results |
       \setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
-:command Glogg Start tig
-:command Ipy Start ipython
-:command Ipdb Start python -m ipdb %
-:command Wdb Start wdb.server.py & python -m wdb %
-:command Te Start
-:command Node Start node
-:command NDbg Start node-debug %
-:command PyClean !find . -name '*.pyc' | xargs rm -f
-:command Htop Start htop
-:command NpmStart Start npm start
-:command NpmClient Start npm run client
-:command NpmBuild Start npm run build
-:command NpmAPI Start npm run api
-:command NpmRedis Start npm run redis
-:command Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
-:command -range=% SQLRun :call SqlRunFunc()
-:command SQLListTables :call SqlListTablesFunc()
+:command! Glogg Start tig
+:command! Ipy Start ipython
+:command! Ipdb Start python -m ipdb %
+:command! Wdb Start wdb.server.py & python -m wdb %
+:command! Te Start
+:command! Node Start node
+:command! NDbg Start node-debug %
+:command! PyClean !find . -name '*.pyc' | xargs rm -f
+:command! Htop Start htop
+:command! NpmStart Start npm start
+:command! NpmClient Start npm run client
+:command! NpmBuild Start npm run build
+:command! NpmAPI Start npm run api
+:command! NpmRedis Start npm run redis
+:command! Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
+:command! -range=% SQLExecBuffer :call SqlRunFunc()
+:command! SQLListTables :call SqlListTablesFunc()
 
+" SQL Custom command Mappings
+nnoremap <leader>mlt :SQLListTables<CR>
+noremap <leader>msb :SQLExecBuffer<CR>
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
@@ -414,8 +451,11 @@ let g:tmuxline_powerline_separators = 0
 let g:flow#autoclose = 1
 "let g:flow#errjmp = 1
 
+" Clean out AlignMaps mappings -- part of Align plugin
+"autocmd VimEnter * AlignMapsClean
+
 " Neoformat
-noremap <F3> :Neoformat<CR>
+nnoremap <leader>m= :Neoformat<CR>
 
 " Indentline settings
 let g:indentLine_color_term = 237
