@@ -267,7 +267,7 @@ let g:terminal_color_foreground='#c1c6cf'
 
 function! SqlListTablesFunc()
 python << EOF
-def sql_run():
+def sql_get_db_info():
   try:
     import records, vim
   except ImportError:
@@ -276,20 +276,31 @@ You need to install it in your path. Using pip:
 
         $pip install records'''
     return
+  if records.DATABASE_URL:
+    cxn = records.DATABASE_URL
+  elif int(vim.eval("exists('g:SQL_database_url')")) == 1:
+    cxn = vim.eval('g:SQL_database_url')
+  else:
+    cxn = None
   try:
-    db = records.Database(records.DATABASE_URL)
+    db = records.Database(cxn)
   except ValueError:
-    print '''There is no database connection. You must set the environmental variable "DATABASE_URL"
-with the correct SQL connection string for your database.  Example:
+    print '''There is no database connection. You must either set the
+environmental variable "DATABASE_URL" or the vim variable "g:SQL_database_url"
+with the correct SQL connection string for your database.  Examples:
 
-    $export DATABASE_URL=sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db'''
+From the shell:
+$export DATABASE_URL=sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db
+
+From vim or neovim:
+:let g:SQL_database_url = "sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db"'''
     return
   for name in db.get_table_names():
     print name
 EOF
   let temp_reg = @"
   redir @"
-  silent! py sql_run()
+  silent! py sql_get_db_info()
   redir END
   let output = copy(@")
   let @" = temp_reg
@@ -304,7 +315,7 @@ endfunction
 
 function! SqlRunFunc()
 python << EOF
-def py_sql():
+def sql_execute():
   try:
     import records, vim
   except ImportError:
@@ -326,16 +337,27 @@ You need to install it in your path. Using pip:
       lines[-1] = lines[-1][:col2 + 1]
     return "\n".join(lines)
   def sql_run(sql_code):
+    if records.DATABASE_URL:
+      cxn = records.DATABASE_URL
+    elif int(vim.eval("exists('g:SQL_database_url')")) == 1:
+      cxn = vim.eval('g:SQL_database_url')
+    else:
+      cxn = None
     try:
-      db = records.Database(records.DATABASE_URL)
+      db = records.Database(cxn)
       r = db.query(sql_code)
       print '{0} records returned\n'.format(len(r.all()))
       print r.dataset
     except ValueError:
-      print '''There is no database connection. You must set the environmental variable "DATABASE_URL"
-with the correct SQL connection string for your database.  Example:
+      print '''There is no database connection. You must either set the
+environmental variable "DATABASE_URL" or the vim variable "g:SQL_database_url"
+with the correct SQL connection string for your database.  Examples:
 
-      $export DATABASE_URL=sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db'''
+From the shell:
+$export DATABASE_URL=sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db
+
+From vim or neovim:
+:let g:SQL_database_url = "sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db"'''
       return
     except ResourceClosedError as e:
       if e.message == 'This result object does not return rows. It has been closed automatically.':
@@ -350,7 +372,7 @@ with the correct SQL connection string for your database.  Example:
 EOF
   let temp_reg = @"
   redir @"
-  silent! py py_sql()
+  silent! py sql_execute()
   redir END
   let output = copy(@")
   let @" = temp_reg
@@ -382,12 +404,13 @@ endfunction
 :command! NpmAPI Start npm run api
 :command! NpmRedis Start npm run redis
 :command! Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
-:command! -range=% SQLExecBuffer :call SqlRunFunc()
+:command! -range=% SQLExec :call SqlRunFunc()
 :command! SQLListTables :call SqlListTablesFunc()
 
 " SQL Custom command Mappings
 nnoremap <leader>mlt :SQLListTables<CR>
-noremap <leader>msb :SQLExecBuffer<CR>
+noremap <leader>msb :SQLExec<CR>
+"let g:SQL_database_url = 'sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db'
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
