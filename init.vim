@@ -2,10 +2,10 @@
 
 " Vim Plug====================================================
 
-" Vim Plug Functions-------------------------------------------
-" none
+" Vim Plug Functions------------------------------------
+"  none
 
-" Vim Plugins--------------------------------------------------
+" Vim Plugins-------------------------------------------
 call plug#begin()
 
 Plug 'tpope/vim-fugitive'
@@ -36,6 +36,7 @@ Plug 'ternjs/tern_for_vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'davidhalter/jedi-vim'
+Plug 'python-mode/python-mode'
 Plug 'sbdchd/neoformat'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -94,7 +95,7 @@ nnoremap <leader>ws :sp<CR>
 nnoremap <leader>wv :vs<CR>
 
 " Keymap to open default shell
-nnoremap <leader>' :sp term://zsh<CR>
+nnoremap <leader>' :sp term://zsh<CR>i
 
 " Keymap to edit init.vim / .vimrc
 nnoremap <leader>fed :e $MYVIMRC<CR>
@@ -261,7 +262,7 @@ let g:terminal_color_foreground='#c1c6cf'
 "let g:terminal_color_14='#5fb4b4'
 
 
-" Plugin settings and mappings==========================================
+" PLUGIN SETTINGS AND MAPPINGS==========================================
 
 " Custom functions-------------------------------
 
@@ -390,6 +391,8 @@ endfunction
 :command! -nargs=* -complete=shellcmd R new results |
       \setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
 :command! Glogg Start tig
+:command! Glances Start glances
+:command! Http Start http-prompt
 :command! Ipy Start ipython
 :command! Ipdb Start python -m ipdb %
 :command! Wdb Start wdb.server.py & python -m wdb %
@@ -397,6 +400,8 @@ endfunction
 :command! Node Start node
 :command! NDbg Start node-debug %
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
+:command! PyLineCount !find . -name '*.py' | xargs wc -l
+:command! JSLineCount !find . -name '*.js' | xargs wc -l
 :command! Htop Start htop
 :command! NpmStart Start npm start
 :command! NpmClient Start npm run client
@@ -421,6 +426,24 @@ nnoremap <leader>gS :Gw<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>g. :Glogg<CR>
 nnoremap <leader>gm :G
+
+" Python-mode settings------------------------------
+"let g:pymode = 0
+let g:pymode_syntax = 1
+let g:pymode_breakpoint = 0
+let g:pymode_doc = 0
+let g:pymode_folding = 0
+let g:pymode_indent = 0
+let g:pymode_lint = 0
+let g:pymode_motion = 0
+let g:pymode_options = 0
+let g:pymode_options_colorcolumn = 0
+let g:pymode_rope = 0
+let g:pymode_rope_completion = 0
+let g:pymode_run = 0
+let g:pymode_trim_whitespaces = 0
+let g:pymode_virtualenv = 0
+let g:pymode_warnings = 0
 
 " EasyMotion Mappings---------------------------------
 map <leader>jj <Plug>(easymotion-s)
@@ -533,10 +556,10 @@ nnoremap <leader>bb :FzfBuffers<CR>
 nnoremap <leader>is :FzfSnippets<CR>
 nnoremap <leader>fr :FzfHistory<CR>
 nnoremap <leader>ji :FzfBTags<CR>
-nnoremap <leader>ss :FzfLines<CR>
 nnoremap <leader>jI :FzfTags<CR>
 nnoremap <leader>sc :FzfCommands<CR>
 nnoremap <leader>ss :FzfBLines<CR>
+nnoremap <leader>sS :FzfLines<CR>
 
 "  Ack and Ag-----------------------------
 if executable('ag')
@@ -646,17 +669,17 @@ let g:airline#extensions#virtualenv#enabled = 1
 let g:airline#extensions#ale#error_symbol = '✗'
 let g:airline#extensions#ale#warning_symbol = '⚠'
 
-let g:airline_theme = 'bubblegum'
-"let g:airline_theme = 'violet'
-"let g:airline_theme = 'one'
+"let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'violet'
+"let g:airline_theme = 'minimalist'
 "let g:airline_theme = 'powerlineish'
 
 " Syntax highlighting-----------------------------
 syntax on
 syntax enable
 set background=dark
-colorscheme one
-"colorscheme space-vim-dark
+"colorscheme one
+colorscheme space-vim-dark
 "colorscheme hybrid
 "colorscheme lucius
 "colorscheme molokai

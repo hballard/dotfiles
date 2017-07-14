@@ -9,10 +9,6 @@ fi
 
 # Customize to your needs...
 
-###nvm package manager for node
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
-
 # open ssl fix
 export OPENSSL_INCLUDE_DIR=`brew --prefix openssl`/include
 export OPENSSL_LIB_DIR=`brew --prefix openssl`/lib
@@ -46,25 +42,9 @@ export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 
-# To support Virtualenvwrapper
-source /usr/local/bin/virtualenvwrapper.sh
-
-## Add tmuxinator completions support
-#source ~/.bin/tmuxinator.zsh
-
-## Put these lines after the tmux startup command
-
-#if [ -n "$TMUX" ]; then
-    #tmux source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
-#fi
-
-###-begin-npm-completion-###
-#
-# npm command completion script
-#
-# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
-# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
-#
+###nvm package manager for node
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
 
 COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
 COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
@@ -113,11 +93,14 @@ fi
 ###-end-npm-completion-###
 
 . /usr/local/etc/profile.d/z.sh
-#source /usr/local/opt/nvm/nvm.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 eval $(/usr/libexec/path_helper -s)
 
-PYTHONDONTWRITEBYTECODE=true
+export PYTHONDONTWRITEBYTECODE=true
+
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
