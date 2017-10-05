@@ -17,10 +17,10 @@ export DEP_OPENSSL_INCLUDE=`brew --prefix openssl`/include
 # back up the old path
 export PATH_OLD=$PATH
 
-alias anacondainit='export PATH="/Users/heath/Software/anaconda/bin:$PATH"'
+#alias anacondainit='export PATH="/Users/heath/Software/anaconda/bin:$PATH"'
 
 # # turn anaconda off by restoring the backed up path
-alias anacondaexit='export PATH=$PATH_OLD'
+#alias anacondaexit='export PATH=$PATH_OLD'
 
 # Add mamp to end of path
 alias mampinit='export PATH="${PATH}:/Applications/MAMP/Library/bin"'

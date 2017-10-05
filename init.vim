@@ -8,10 +8,12 @@
 " Vim Plugins-------------------------------------------
 call plug#begin()
 
-Plug 'Align'
+"Plug 'flowtype/vim-flow'
+"Plug 'metakirby5/codi.vim'
+"Plug 'moll/vim-node'
+"Plug 'rizzatti/dash.vim'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'SQLComplete.vim'
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/YouCompleteMe'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -26,24 +28,21 @@ Plug 'docunext/closetag.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ervandew/supertab'
+Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 Plug 'flazz/vim-colorschemes'
-Plug 'flowtype/vim-flow'
 Plug 'henrik/vim-indexed-search'
 Plug 'honza/vim-snippets'
 Plug 'itchyny/vim-cursorword'
 Plug 'janko-m/vim-test'
 Plug 'jiangmiao/auto-pairs'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'jmcantrell/vim-virtualenv'
+Plug 'jodosha/vim-godebug'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'liuchengxu/space-vim-dark'
-Plug 'loremipsum'
 Plug 'majutsushi/tagbar'
-Plug 'metakirby5/codi.vim'
 Plug 'mhinz/vim-hugefile'
 Plug 'mitsuhiko/vim-jinja'
-Plug 'moll/vim-node'
 Plug 'myusuf3/numbers.vim'
 Plug 'neovim/node-host', { 'do': 'npm install' }
 Plug 'othree/csscomplete.vim'
@@ -52,7 +51,6 @@ Plug 'othree/jspc.vim'
 Plug 'python-mode/python-mode'
 Plug 'qpkorr/vim-bufkill'
 Plug 'rakr/vim-one'
-Plug 'rizzatti/dash.vim'
 Plug 'rking/ag.vim'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'sbdchd/neoformat'
@@ -60,7 +58,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'simnalamburt/vim-mundo'
-Plug 'sqlserver.vim'
 Plug 'ternjs/tern_for_vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tomtom/tlib_vim'
@@ -72,8 +69,12 @@ Plug 'tpope/vim-surround'
 Plug 'tyru/open-browser.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/Align'
 Plug 'vim-scripts/BufOnly.vim'
+Plug 'vim-scripts/SQLComplete.vim'
 Plug 'vim-scripts/ScrollColors'
+Plug 'vim-scripts/loremipsum'
+Plug 'vim-scripts/sqlserver.vim'
 Plug 'vimlab/mdown.vim', { 'do': 'npm install' }
 Plug 'w0rp/ale'
 Plug 'zirrostig/vim-schlepp'
@@ -267,143 +268,16 @@ let g:terminal_color_14='#5fb4b4'
 
 " PLUGIN SETTINGS AND MAPPINGS==========================================
 
-" Custom functions-------------------------------
-
-function! SqlListTablesFunc()
-python << EOF
-def sql_get_db_info():
-  try:
-    import records, vim
-  except ImportError:
-    print '''This plugin relies on the 3rd party python package "records".
-You need to install it in your path. Using pip:
-
-        $pip install records'''
-    return
-  if records.DATABASE_URL:
-    cxn = records.DATABASE_URL
-  elif int(vim.eval("exists('g:SQL_database_url')")) == 1:
-    cxn = vim.eval('g:SQL_database_url')
-  else:
-    cxn = None
-  try:
-    db = records.Database(cxn)
-  except ValueError:
-    print '''There is no database connection. You must either set the
-environmental variable "DATABASE_URL" or the vim variable "g:SQL_database_url"
-with the correct SQL connection string for your database.  Examples:
-
-From the shell:
-$export DATABASE_URL=sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db
-
-From vim or neovim:
-:let g:SQL_database_url = "sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db"'''
-    return
-  for name in db.get_table_names():
-    print name
-EOF
-  let temp_reg = @"
-  redir @"
-  silent! py sql_get_db_info()
-  redir END
-  let output = copy(@")
-  let @" = temp_reg
-  if empty(output)
-    echoerr "no output"
-  else
-    new SQLTables
-    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted
-    put! =output
-  endif
-endfunction
-
-function! SqlRunFunc()
-python << EOF
-def sql_execute():
-  try:
-    import records, vim
-  except ImportError:
-    print '''This plugin relies on the 3rd party python package "records".
-You need to install it in your path. Using pip:
-
-        $pip install records'''
-    return
-  from sqlalchemy.exc import ResourceClosedError, OperationalError
-  def get_range():
-    buf = vim.current.buffer
-    (lnum1, col1) = buf.mark('<')
-    (lnum2, col2) = buf.mark('>')
-    lines = vim.eval('getline({}, {})'.format(lnum1, lnum2))
-    if len(lines) == 1:
-      lines[0] = lines[0][col1:col2 + 1]
-    else:
-      lines[0] = lines[0][col1:]
-      lines[-1] = lines[-1][:col2 + 1]
-    return "\n".join(lines)
-  def sql_run(sql_code):
-    if records.DATABASE_URL:
-      cxn = records.DATABASE_URL
-    elif int(vim.eval("exists('g:SQL_database_url')")) == 1:
-      cxn = vim.eval('g:SQL_database_url')
-    else:
-      cxn = None
-    try:
-      db = records.Database(cxn)
-      r = db.query(sql_code)
-      print '{0} records returned\n'.format(len(r.all()))
-      print r.dataset
-    except ValueError:
-      print '''There is no database connection. You must either set the
-environmental variable "DATABASE_URL" or the vim variable "g:SQL_database_url"
-with the correct SQL connection string for your database.  Examples:
-
-From the shell:
-$export DATABASE_URL=sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db
-
-From vim or neovim:
-:let g:SQL_database_url = "sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db"'''
-      return
-    except ResourceClosedError as e:
-      if e.message == 'This result object does not return rows. It has been closed automatically.':
-        print 'Statement executed successfully (no rows returned)'
-    except OperationalError as e:
-      print 'There is an error in your query statement (no rows returned)\n\n    ERROR: {0}'.format(e.message)
-  try:
-    sql_code = get_range()
-  except IndexError:
-    sql_code = "\n".join(vim.current.buffer)
-  sql_run(sql_code)
-EOF
-  let temp_reg = @"
-  redir @"
-  silent! py sql_execute()
-  redir END
-  let output = copy(@")
-  let @" = temp_reg
-  if empty(output)
-    echoerr "no output"
-  else
-    new SQLExecResults
-    setlocal buftype=nofile bufhidden=wipe noswapfile nobuflisted
-    put! =output
-  endif
-endfunction
-
-" Custom user commands for use w/ vim-dispatch,
 " external shell commands, and custom functions -----------------------------
-:command! -nargs=* -complete=shellcmd R new results |
-      \setlocal buftype=nofile bufhidden=hide noswapfile | r !<args>
-:command! -range=% SQLExec :call SqlRunFunc()
-:command! Glances Start glances
 :command! Glogg Start tig
 :command! Htop Start htop
 :command! Http Start http-prompt
 :command! Ipdb Start python -m ipdb %
-:command! Ipy Start ipython
+:command! Ipy split term://ipython
 :command! JSLineCount !find . -name '*.js' | xargs wc -l
 :command! Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
 :command! NDbg Start node-debug %
-:command! Node Start node
+:command! Node split term://node
 :command! NpmAPI Start npm run api
 :command! NpmBuild Start npm run build
 :command! NpmClient Start npm run client
@@ -411,13 +285,8 @@ endfunction
 :command! NpmStart Start npm start
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
 :command! PyLineCount !find . -name '*.py' | xargs wc -l
-:command! SQLListTables :call SqlListTablesFunc()
 :command! Te Start
-
-" SQL Custom command Mappings------------------------
-nnoremap <leader>mlt :SQLListTables<CR>
-noremap <leader>msb :SQLExec<CR>
-"let g:SQL_database_url = 'sqlite:////Users/heath/Desktop/python-subscriptions/chatapp/server/test.db'
+:command! Usql split term://usql
 
 "Default SQL language to be used ('mysql' or 'sqlserver')
 let g:sql_type_default = 'sqlserver'
@@ -593,7 +462,8 @@ let g:ale_statusline_format = ['✗ %d', '⚠  %d', '⬥ ok']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
+let g:ale_linters = {'jsx': ['stylelint', 'eslint'], 'python': ['flake8', 'mypy', 'pylint']}
+let g:ale_fixers = {'python': ['isort']}
 let g:ale_linter_aliases = {'jsx': 'css'}
 nmap <leader>ep <Plug>(ale_previous_wrap)
 nmap <leader>en <Plug>(ale_next_wrap)
@@ -669,10 +539,45 @@ let g:jedi#rename_command = '<leader>mr'
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_splits_not_buffers = 'bottom'
 
+" Vim-go settings------------------------------------------------
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_auto_sameids = 1
+
+let g:go_fmt_command = "goimports"
+let g:go_auto_type_info = 1
+let g:go_addtags_transform = "camelcase"
+let g:go_auto_sameids = 0
+
+"if has("nvim")
+    "let g:go_term_enabled = 1
+    "let g:go_term_mode = "vsplit"
+    "let g:go_term_height = 30
+    "let g:go_term_width = 30
+  "endif
+
+:command! GoRunTemp split term://go run *
+
+au FileType go nmap <leader>ma :GoDeclsDir<cr>
+au FileType go nmap <leader>mr :GoRename<cr>
+au FileType go nmap <leader>md :GoDef<cr>
+"au FileType go nmap <leader>mxx :GoRun<cr>
+au FileType go nmap <leader>mxx :GoRunTemp<cr>
+au FileType go nmap <leader>mxb :GoBuild<cr>
+au FileType go nmap <leader>mxi :GoInstall<cr>
+au FileType go nmap <leader>mgc :GoCoverage<cr>
+
 " Airline settings-----------------------------------------------
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#ale#error_symbol = '✗'
 let g:airline#extensions#ale#warning_symbol = '⚠'
 
