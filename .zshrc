@@ -104,3 +104,7 @@ export PYTHONDONTWRITEBYTECODE=true
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+eval "$(_PIPENV_COMPLETE=source-zsh pipenv)"
+
+source $(pew shell_config)
