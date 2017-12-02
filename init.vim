@@ -281,7 +281,6 @@ let g:terminal_color_14='#5fb4b4'
 :command! NpmAPI Start npm run api
 :command! NpmBuild Start npm run build
 :command! NpmClient Start npm run client
-:command! NpmRedis Start npm run redis
 :command! NpmStart Start npm start
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
 :command! PyLineCount !find . -name '*.py' | xargs wc -l
