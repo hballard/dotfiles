@@ -9,22 +9,29 @@ fi
 
 # Customize to your needs...
 
-# open ssl fix
-export OPENSSL_INCLUDE_DIR=`brew --prefix openssl`/include
-export OPENSSL_LIB_DIR=`brew --prefix openssl`/lib
-export DEP_OPENSSL_INCLUDE=`brew --prefix openssl`/include
+# open ssl fix - may not need this, try init below them
+alias initopenssl='export OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)"/include \
+  export OPENSSL_LIB_DIR="$(brew --prefix openssl)"/lib \
+  export DEP_OPENSSL_INCLUDE="$(brew --prefix openssl)"/include \
+  export CFLAGS="-I$(brew --prefix openssl)/include" \
+  export LDFLAGS="-L$(brew --prefix openssl)/lib"'
+
+# start and stop postgres
+
+alias psql-server-start='pg_ctl -D /usr/local/var/postgres start'
+alias psql-server-stop='pg_ctl -D /usr/local/var/postgres stop'
 
 # back up the old path
 export PATH_OLD=$PATH
 
-#alias anacondainit='export PATH="/Users/heath/Software/anaconda/bin:$PATH"'
+alias initanaconda='export PATH="/Users/heath/Software/anaconda3/bin:$PATH"'
 
 # # turn anaconda off by restoring the backed up path
-#alias anacondaexit='export PATH=$PATH_OLD'
+alias exitanaconda='export PATH=$PATH_OLD'
 
 # Add mamp to end of path
-alias mampinit='export PATH="${PATH}:/Applications/MAMP/Library/bin"'
-alias mampexit='export PATH=$PATH_OLD'
+alias initmamp='export PATH="${PATH}:/Applications/MAMP/Library/bin"'
+alias exitmamp='export PATH=$PATH_OLD'
 
 # Powerline settings
 #. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
@@ -34,7 +41,7 @@ export EDITOR='nvim'
 alias vi='/usr/local/bin/nvim'
 
 # fix docker init path
-alias dockerinit='bash "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"'
+alias initdocker='bash "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"'
 
 # Set GOPATH
 export GOPATH=$HOME/Code/go
@@ -43,8 +50,7 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 
 ###nvm package manager for node
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+alias initnvm='export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh'
 
 COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
 COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
@@ -101,10 +107,8 @@ eval $(/usr/libexec/path_helper -s)
 
 export PYTHONDONTWRITEBYTECODE=true
 
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-eval "$(_PIPENV_COMPLETE=source-zsh pipenv)"
-
-source $(pew shell_config)
+# These are all for auto-completion
+alias initpyenv='export PYENV_VIRTUALENV_DISABLE_PROMPT=1 && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"'
+initpyenv
+alias initpipenv='eval "$(_PIPENV_COMPLETE=source-zsh pipenv)"'
+alias initpew='source $(pew shell_config)'

@@ -8,10 +8,6 @@
 " Vim Plugins-------------------------------------------
 call plug#begin()
 
-"Plug 'flowtype/vim-flow'
-"Plug 'metakirby5/codi.vim'
-"Plug 'moll/vim-node'
-"Plug 'rizzatti/dash.vim'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'SirVer/ultisnips'
@@ -50,7 +46,6 @@ Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'othree/jspc.vim'
 Plug 'python-mode/python-mode'
 Plug 'qpkorr/vim-bufkill'
-"Plug 'rakr/vim-one'
 Plug 'rking/ag.vim'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'sbdchd/neoformat'
@@ -66,7 +61,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
-"Plug 'tyru/open-browser.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/Align'
@@ -75,7 +69,6 @@ Plug 'vim-scripts/SQLComplete.vim'
 Plug 'vim-scripts/ScrollColors'
 Plug 'vim-scripts/loremipsum'
 Plug 'vim-scripts/sqlserver.vim'
-Plug 'vimlab/mdown.vim', { 'do': 'npm install' }
 Plug 'w0rp/ale'
 Plug 'zirrostig/vim-schlepp'
 
@@ -167,7 +160,7 @@ set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
 set relativenumber
 
 "set cursorline
-autocmd InsertEnter,InsertLeave * set cul!
+"autocmd InsertEnter,InsertLeave * set cul!
 
 set foldmethod=indent
 set foldlevel=99
@@ -193,7 +186,7 @@ set undoreload=10000 " number of lines to save for undo
 au FileType markdown setlocal spell
 
 " Markdown syntax change
-au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+au BufNewFile,BufFilePre,BufRead *.md set filetype=text
 
 " .eslintrc syntax change
 au BufNewFile,BufFilePre,BufRead *.eslintrc set filetype=json
@@ -203,6 +196,9 @@ au BufNewFile,BufFilePre,BufRead *.babelrc set filetype=json
 
 " .esformatter  syntax change
 au BufNewFile,BufFilePre,BufRead *.esformatter set filetype=json
+
+" .lock  syntax change
+au BufNewFile,BufFilePre,BufRead *.lock set filetype=json
 
 " .tern-config  syntax change
 au BufNewFile,BufFilePre,BufRead *.tern-config set filetype=json
@@ -219,10 +215,6 @@ endif
 
 "24 Bit True Color-----------------------------------------------
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-"If you're using tmux version 2.2 or later, you can
-"remove the outermost $TMUX check and use tmux's 24-bit color support
-"(see < http://sunaku.github.io/tmux-24bit-color.html#usage >
-"for more information.)
   if (has('nvim'))
     "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -561,11 +553,14 @@ let g:go_auto_sameids = 0
     "let g:go_term_width = 30
   "endif
 
+" Temporary fix for :GoRun command-----
 :command! GoRunTemp split term://go run *
 
 au FileType go nmap <leader>ma :GoDeclsDir<cr>
 au FileType go nmap <leader>mr :GoRename<cr>
 au FileType go nmap <leader>md :GoDef<cr>
+au FileType go nmap <leader>mu :GoCallers<cr>
+au FileType go nmap <leader>K :GoDescribe<cr>
 "au FileType go nmap <leader>mxx :GoRun<cr>
 au FileType go nmap <leader>mxx :GoRunTemp<cr>
 au FileType go nmap <leader>mxb :GoBuild<cr>
@@ -589,13 +584,9 @@ let g:airline_theme = 'violet'
 syntax on
 syntax enable
 set background=dark
-"colorscheme one
 colorscheme space-vim-dark
 "colorscheme hybrid
 "colorscheme molokai
+"colorscheme one
 
-set t_ZH=^[[3m
-set t_ZR=^[[23m
-"let &t_ZH="\e[3m"
-"let &t_ZR="\e[23m"
-hi Comment cterm=italic
+hi Comment guifg=#292B2E guibg=#2AA1AE
