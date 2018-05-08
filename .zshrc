@@ -17,31 +17,31 @@ alias initopenssl='export OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)"/include
   export LDFLAGS="-L$(brew --prefix openssl)/lib"'
 
 # start and stop postgres
-
 alias psql-server-start='pg_ctl -D /usr/local/var/postgres start'
 alias psql-server-stop='pg_ctl -D /usr/local/var/postgres stop'
 
 # back up the old path
 export PATH_OLD=$PATH
 
-alias initanaconda='export PATH="/Users/heath/Software/anaconda3/bin:$PATH"'
+#alias initanaconda='export PATH="/Users/heath/Software/anaconda3/bin:$PATH"'
 
 # # turn anaconda off by restoring the backed up path
-alias exitanaconda='export PATH=$PATH_OLD'
+#alias exitanaconda='export PATH=$PATH_OLD'
 
 # Add mamp to end of path
-alias initmamp='export PATH="${PATH}:/Applications/MAMP/Library/bin"'
-alias exitmamp='export PATH=$PATH_OLD'
+#alias initmamp='export PATH="${PATH}:/Applications/MAMP/Library/bin"'
+#alias exitmamp='export PATH=$PATH_OLD'
 
 # Powerline settings
 #. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # set vim as default editor and also alias vi command
 export EDITOR='nvim'
+export VISUAL='nvim'
 alias vi='/usr/local/bin/nvim'
 
-# fix docker init path
-alias initdocker='bash "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"'
+# intialize docker completion
+autoload -Uz compinit; compinit
 
 # Set GOPATH
 export GOPATH=$HOME/Code/go
@@ -98,7 +98,7 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-npm-completion-###
 
-. /usr/local/etc/profile.d/z.sh
+#. /usr/local/etc/profile.d/z.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

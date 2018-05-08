@@ -191,17 +191,20 @@ au BufNewFile,BufFilePre,BufRead *.md set filetype=text
 " .eslintrc syntax change
 au BufNewFile,BufFilePre,BufRead *.eslintrc set filetype=json
 
-" .babelrc  syntax change
+" .babelrc syntax change
 au BufNewFile,BufFilePre,BufRead *.babelrc set filetype=json
 
-" .esformatter  syntax change
+" .esformatter syntax change
 au BufNewFile,BufFilePre,BufRead *.esformatter set filetype=json
 
-" .lock  syntax change
+" .lock syntax change
 au BufNewFile,BufFilePre,BufRead *.lock set filetype=json
 
-" .tern-config  syntax change
+" .tern-config syntax change
 au BufNewFile,BufFilePre,BufRead *.tern-config set filetype=json
+
+" Pipfile syntax change
+au BufNewFile,BufFilePre,BufRead Pipfile set filetype=toml
 
 set pastetoggle=<F5>
 set clipboard=unnamed
@@ -369,7 +372,7 @@ let g:flow#autoclose = 1
 "autocmd VimEnter * AlignMapsClean
 
 " Neoformat----------------------------------------
-nnoremap <leader>m= :Neoformat<CR>
+"nnoremap <leader>m= :Neoformat<CR>
 
 " Indentline settings------------------------------
 let g:indentLine_color_term = 237
@@ -554,15 +557,15 @@ let g:go_auto_sameids = 0
   "endif
 
 " Temporary fix for :GoRun command-----
-:command! GoRunTemp split term://go run *
+":command! GoRunTemp split term://go run *
 
 au FileType go nmap <leader>ma :GoDeclsDir<cr>
 au FileType go nmap <leader>mr :GoRename<cr>
 au FileType go nmap <leader>md :GoDef<cr>
 au FileType go nmap <leader>mu :GoCallers<cr>
 au FileType go nmap <leader>K :GoDescribe<cr>
-"au FileType go nmap <leader>mxx :GoRun<cr>
-au FileType go nmap <leader>mxx :GoRunTemp<cr>
+au FileType go nmap <leader>mxx :GoRun<cr>
+"au FileType go nmap <leader>mxx :GoRunTemp<cr>
 au FileType go nmap <leader>mxb :GoBuild<cr>
 au FileType go nmap <leader>mxi :GoInstall<cr>
 au FileType go nmap <leader>mgc :GoCoverage<cr>
@@ -589,4 +592,5 @@ colorscheme space-vim-dark
 "colorscheme molokai
 "colorscheme one
 
-hi Comment guifg=#292B2E guibg=#2AA1AE
+" Not needed right now...was a fix for comment highlighting
+"hi Comment guifg=#292B2E guibg=#2AA1AE
