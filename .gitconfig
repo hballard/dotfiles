@@ -1,0 +1,7 @@
+[alias]
+	logg = log --all --decorate --oneline --graph
+[user]
+	name = hballard
+	email = heath.ballard@gmail.com
+[core]
+	excludesfile = /Users/heath/.gitignore
