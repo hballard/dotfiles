@@ -42,8 +42,11 @@ Plug 'mitsuhiko/vim-jinja'
 Plug 'myusuf3/numbers.vim'
 Plug 'neovim/node-host', { 'do': 'npm install' }
 Plug 'othree/csscomplete.vim'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'othree/jspc.vim'
+"Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'jodosha/vim-godebug'
 Plug 'python-mode/python-mode'
 Plug 'qpkorr/vim-bufkill'
 Plug 'rking/ag.vim'
@@ -372,7 +375,7 @@ let g:flow#autoclose = 1
 "autocmd VimEnter * AlignMapsClean
 
 " Neoformat----------------------------------------
-"nnoremap <leader>m= :Neoformat<CR>
+nnoremap <leader>mf :Neoformat<CR>
 
 " Indentline settings------------------------------
 let g:indentLine_color_term = 237
@@ -416,6 +419,9 @@ nnoremap <leader>jI :FzfTags<CR>
 nnoremap <leader>sc :FzfCommands<CR>
 nnoremap <leader>ss :FzfBLines<CR>
 nnoremap <leader>sS :FzfLines<CR>
+
+" Use HTML snippets in Javascript files
+autocmd FileType javascript UltiSnipsAddFiletypes html
 
 " Closetag configuration----------------------------
 au FileType html,htmljinja,javascript let b:closetag_html_style=1
@@ -481,6 +487,7 @@ nnoremap <leader>my :TernType<CR>
 
 " Vim-Polyglot--------------------------------------------------
 let g:python_highlight_all=1
+let g:polyglot_disabled = ['graphql']
 
 " YouCompleteMe and UltiSnips compatibility,--------------------
 " with the help of supertab
@@ -578,19 +585,10 @@ let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#ale#error_symbol = '✗'
 let g:airline#extensions#ale#warning_symbol = '⚠'
 
-"let g:airline_theme = 'bubblegum'
 let g:airline_theme = 'violet'
-"let g:airline_theme = 'minimalist'
-"let g:airline_theme = 'powerlineish'
 
 " Syntax highlighting--------------------------------------------
 syntax on
 syntax enable
 set background=dark
 colorscheme space-vim-dark
-"colorscheme hybrid
-"colorscheme molokai
-"colorscheme one
-
-" Not needed right now...was a fix for comment highlighting
-"hi Comment guifg=#292B2E guibg=#2AA1AE

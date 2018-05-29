@@ -9,9 +9,12 @@
         "jsx": true
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier"
     ],
+    "extends": ["prettier"],
     "rules": {
+    "prettier/prettier": "error",
     "no-alert": 2,
     "no-array-constructor": 2,
     "no-caller": 2,

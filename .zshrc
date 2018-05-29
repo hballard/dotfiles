@@ -28,10 +28,6 @@ export PATH_OLD=$PATH
 # # turn anaconda off by restoring the backed up path
 #alias exitanaconda='export PATH=$PATH_OLD'
 
-# Add mamp to end of path
-#alias initmamp='export PATH="${PATH}:/Applications/MAMP/Library/bin"'
-#alias exitmamp='export PATH=$PATH_OLD'
-
 # Powerline settings
 #. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
@@ -50,7 +46,7 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 
 ###nvm package manager for node
-alias initnvm='export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh'
+alias initnode='export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh'
 
 COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
 COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
