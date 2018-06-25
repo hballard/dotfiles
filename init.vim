@@ -107,6 +107,9 @@ inoremap ii <Esc>
 nnoremap k gk
 nnoremap j gj
 
+" Mouse scrolling
+set mouse=a
+
 " Remap terminal escape keys
 tnoremap <Esc> <c-\><c-n>
 
@@ -165,6 +168,7 @@ set relativenumber
 "set cursorline
 "autocmd InsertEnter,InsertLeave * set cul!
 
+set updatetime=2000
 set foldmethod=indent
 set foldlevel=99
 set ttyfast                " Faster redrawing.
@@ -232,36 +236,36 @@ endif
 
 
 " Temp fix for terminal colors (one dark colorscheme)----------------
-"let g:terminal_color_0='#1b2b34'
-"let g:terminal_color_1='#ed5f67'
-"let g:terminal_color_2='#9ac895'
-"let g:terminal_color_3='#fbc963'
-"let g:terminal_color_4='#669acd'
-"let g:terminal_color_5='#c695c6'
-"let g:terminal_color_6='#5fb4b4'
-"let g:terminal_color_7='#c1c6cf'
-"let g:terminal_color_8='#65737e'
-"let g:terminal_color_9='#ed5f67'
-"let g:terminal_color_10='#9ac895'
-"let g:terminal_color_11='#fbc963'
-"let g:terminal_color_12='#a8aebb'
-"let g:terminal_color_13='#ced4df'
-"let g:terminal_color_14='#5fb4b4'
-"let g:terminal_color_15='#d9dfea'
-"let g:terminal_color_background='#1b2b34'
-"let g:terminal_color_foreground='#c1c6cf'
-
-" Temp fix for terminal colors (spacemacs dark colorscheme)----------------
-let g:terminal_color_1='#d4557d'
-let g:terminal_color_2='#5fb4b4'
+let g:terminal_color_0='#1b2b34'
+let g:terminal_color_1='#ed5f67'
+let g:terminal_color_2='#9ac895'
 let g:terminal_color_3='#fbc963'
 let g:terminal_color_4='#669acd'
 let g:terminal_color_5='#c695c6'
 let g:terminal_color_6='#5fb4b4'
-let g:terminal_color_9='#d4557d'
-let g:terminal_color_10='#86D02F'
+let g:terminal_color_7='#c1c6cf'
+let g:terminal_color_8='#65737e'
+let g:terminal_color_9='#ed5f67'
+let g:terminal_color_10='#9ac895'
 let g:terminal_color_11='#fbc963'
+let g:terminal_color_12='#a8aebb'
+let g:terminal_color_13='#ced4df'
 let g:terminal_color_14='#5fb4b4'
+let g:terminal_color_15='#d9dfea'
+let g:terminal_color_background='#1b2b34'
+let g:terminal_color_foreground='#c1c6cf'
+
+" Temp fix for terminal colors (spacemacs dark colorscheme)----------------
+"let g:terminal_color_1='#d4557d'
+"let g:terminal_color_2='#5fb4b4'
+"let g:terminal_color_3='#fbc963'
+"let g:terminal_color_4='#669acd'
+"let g:terminal_color_5='#c695c6'
+"let g:terminal_color_6='#5fb4b4'
+"let g:terminal_color_9='#d4557d'
+"let g:terminal_color_10='#86D02F'
+"let g:terminal_color_11='#fbc963'
+"let g:terminal_color_14='#5fb4b4'
 
 
 " PLUGIN SETTINGS AND MAPPINGS==========================================
@@ -272,13 +276,13 @@ let g:terminal_color_14='#5fb4b4'
 :command! Http Start http-prompt
 :command! Ipdb Start python -m ipdb %
 :command! Ipy split term://ipython
-:command! JSLineCount !find . -name '*.js' | xargs wc -l
+:command! JSLineCount !find . -name '*.js' -not -path "./node_modules/*" | xargs wc -l
 :command! Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
 :command! NDbg Start node-debug %
 :command! Node split term://node
-:command! NpmAPI Start npm run api
+:command! NpmEject Start npm run eject
 :command! NpmBuild Start npm run build
-:command! NpmClient Start npm run client
+:command! NpmTest Start npm run test
 :command! NpmStart Start npm start
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
 :command! PyLineCount !find . -name '*.py' | xargs wc -l
@@ -462,9 +466,10 @@ let g:ale_statusline_format = ['✗ %d', '⚠  %d', '⬥ ok']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_linters = {'jsx': ['stylelint', 'eslint'], 'python': ['flake8', 'mypy', 'pylint']}
-let g:ale_fixers = {'python': ['isort']}
-let g:ale_linter_aliases = {'jsx': 'css'}
+let g:ale_linters = {'python': ['flake8', 'mypy']}
+let g:ale_python_mypy_options = '--strict-optional'
+"let g:ale_fixers = {'python': ['isort']}
+"let g:ale_linter_aliases = {'jsx': 'css'}
 nmap <leader>ep <Plug>(ale_previous_wrap)
 nmap <leader>en <Plug>(ale_next_wrap)
 
@@ -483,7 +488,7 @@ nnoremap <leader>mK :TernDocBrowse<CR>
 nnoremap <leader>md :TernDefPreview<CR>
 nnoremap <leader>mr :TernRename<CR>
 nnoremap <leader>mu :TernRefs<CR>
-nnoremap <leader>my :TernType<CR>
+nnoremap <leader>ms :TernType<CR>
 
 " Vim-Polyglot--------------------------------------------------
 let g:python_highlight_all=1
@@ -532,7 +537,7 @@ let g:jedi#show_call_signatures_delay = 500
 
 " mappings
 let g:jedi#goto_assignments_command = '<leader>ma'
-let g:jedi#goto_definitions_command = '<leader>md'
+let g:jedi#goto_command = '<leader>md'
 let g:jedi#documentation_command = 'K'
 let g:jedi#usages_command = '<leader>mu'
 let g:jedi#rename_command = '<leader>mr'
@@ -563,16 +568,12 @@ let g:go_auto_sameids = 0
     "let g:go_term_width = 30
   "endif
 
-" Temporary fix for :GoRun command-----
-":command! GoRunTemp split term://go run *
-
 au FileType go nmap <leader>ma :GoDeclsDir<cr>
 au FileType go nmap <leader>mr :GoRename<cr>
 au FileType go nmap <leader>md :GoDef<cr>
 au FileType go nmap <leader>mu :GoCallers<cr>
 au FileType go nmap <leader>K :GoDescribe<cr>
 au FileType go nmap <leader>mxx :GoRun<cr>
-"au FileType go nmap <leader>mxx :GoRunTemp<cr>
 au FileType go nmap <leader>mxb :GoBuild<cr>
 au FileType go nmap <leader>mxi :GoInstall<cr>
 au FileType go nmap <leader>mgc :GoCoverage<cr>
@@ -592,3 +593,4 @@ syntax on
 syntax enable
 set background=dark
 colorscheme space-vim-dark
+"colorscheme dracula

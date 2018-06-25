@@ -20,8 +20,12 @@ alias initopenssl='export OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)"/include
 alias psql-server-start='pg_ctl -D /usr/local/var/postgres start'
 alias psql-server-stop='pg_ctl -D /usr/local/var/postgres stop'
 
+# tmuxinator completions
+source ~/.bin/tmuxinator.zsh
+
+# Anaconda stuff
 # back up the old path
-export PATH_OLD=$PATH
+#export PATH_OLD=$PATH
 
 #alias initanaconda='export PATH="/Users/heath/Software/anaconda3/bin:$PATH"'
 
@@ -47,6 +51,9 @@ export PATH=$PATH:$GOROOT/bin
 
 ###nvm package manager for node
 alias initnode='export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh'
+
+## alia command to update all python packages with pip
+alias pip-upgrade-all="pip freeze — local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U"
 
 COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
 COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
@@ -104,7 +111,8 @@ eval $(/usr/libexec/path_helper -s)
 export PYTHONDONTWRITEBYTECODE=true
 
 # These are all for auto-completion
-alias initpyenv='export PYENV_VIRTUALENV_DISABLE_PROMPT=1 && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"'
+alias initpyenv='export PYTHON_CONFIGURE_OPTS="--enable-framework" && export PYENV_VIRTUALENV_DISABLE_PROMPT=1 && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"'
 initpyenv
 alias initpipenv='eval "$(_PIPENV_COMPLETE=source-zsh pipenv)"'
+initpipenv
 alias initpew='source $(pew shell_config)'
