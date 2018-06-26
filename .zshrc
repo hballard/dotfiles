@@ -32,9 +32,6 @@ source ~/.bin/tmuxinator.zsh
 # # turn anaconda off by restoring the backed up path
 #alias exitanaconda='export PATH=$PATH_OLD'
 
-# Powerline settings
-#. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
-
 # set vim as default editor and also alias vi command
 export EDITOR='nvim'
 export VISUAL='nvim'
@@ -50,11 +47,11 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 
 ###nvm package manager for node
-alias initnode='export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh'
+alias nvm='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && nvm'
+alias node='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && node'
+alias npm='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && npm'
 
-## alia command to update all python packages with pip
-alias pip-upgrade-all="pip freeze — local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U"
-
+###-begin-npm-completion-###
 COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
 COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
 export COMP_WORDBREAKS
@@ -101,18 +98,20 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-npm-completion-###
 
-#. /usr/local/etc/profile.d/z.sh
-
+# Initialize fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Initialize iterm2 shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 eval $(/usr/libexec/path_helper -s)
 
+# Stop python from creating bytecode files
 export PYTHONDONTWRITEBYTECODE=true
 
+## alias command to update all python packages with pip
+alias pip-upgrade-all="pip freeze — local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U"
+
 # These are all for auto-completion
-alias initpyenv='export PYTHON_CONFIGURE_OPTS="--enable-framework" && export PYENV_VIRTUALENV_DISABLE_PROMPT=1 && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"'
-initpyenv
-alias initpipenv='eval "$(_PIPENV_COMPLETE=source-zsh pipenv)"'
-initpipenv
-alias initpew='source $(pew shell_config)'
+alias pyenv='unalias pyenv && export PYTHON_CONFIGURE_OPTS="--enable-framework" && export PYENV_VIRTUALENV_DISABLE_PROMPT=1 && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)" && pyenv'
+alias pipenv='unalias pipenv && eval "$(_PIPENV_COMPLETE=source-zsh pipenv)" && pipenv'
+alias pew='unalias pew && source $(pew shell_config) && pew'
