@@ -23,15 +23,6 @@ alias psql-server-stop='pg_ctl -D /usr/local/var/postgres stop'
 # tmuxinator completions
 source ~/.bin/tmuxinator.zsh
 
-# Anaconda stuff
-# back up the old path
-#export PATH_OLD=$PATH
-
-#alias initanaconda='export PATH="/Users/heath/Software/anaconda3/bin:$PATH"'
-
-# # turn anaconda off by restoring the backed up path
-#alias exitanaconda='export PATH=$PATH_OLD'
-
 # set vim as default editor and also alias vi command
 export EDITOR='nvim'
 export VISUAL='nvim'
@@ -108,10 +99,13 @@ eval $(/usr/libexec/path_helper -s)
 # Stop python from creating bytecode files
 export PYTHONDONTWRITEBYTECODE=true
 
-## alias command to update all python packages with pip
+## Alias command to update all python packages with pip
 alias pip-upgrade-all="pip freeze — local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U"
 
 # These are all for auto-completion
-alias pyenv='unalias pyenv && export PYTHON_CONFIGURE_OPTS="--enable-framework" && export PYENV_VIRTUALENV_DISABLE_PROMPT=1 && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)" && pyenv'
+alias init_pyenv='export PYTHON_CONFIGURE_OPTS="--enable-framework" && export PYENV_VIRTUALENV_DISABLE_PROMPT=1 && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"'
+init_pyenv
+
 alias pipenv='unalias pipenv && eval "$(_PIPENV_COMPLETE=source-zsh pipenv)" && pipenv'
+
 alias pew='unalias pew && source $(pew shell_config) && pew'
