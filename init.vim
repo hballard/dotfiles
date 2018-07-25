@@ -18,6 +18,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'bonsaiben/bootstrap-snippets'
+Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
 Plug 'chrisbra/csv.vim'
 Plug 'davidhalter/jedi-vim'
 Plug 'docunext/closetag.vim'
@@ -32,7 +33,6 @@ Plug 'itchyny/vim-cursorword'
 Plug 'janko-m/vim-test'
 Plug 'jiangmiao/auto-pairs'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'jodosha/vim-godebug'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'liuchengxu/space-vim-dark'
@@ -69,7 +69,6 @@ Plug 'vim-scripts/BufOnly.vim'
 Plug 'vim-scripts/SQLComplete.vim'
 Plug 'vim-scripts/ScrollColors'
 Plug 'vim-scripts/loremipsum'
-Plug 'vim-scripts/sqlserver.vim'
 Plug 'w0rp/ale'
 Plug 'zirrostig/vim-schlepp'
 
@@ -234,44 +233,42 @@ endif
 
 
 " Temp fix for terminal colors (one dark colorscheme)----------------
-let g:terminal_color_0='#1b2b34'
-let g:terminal_color_1='#ed5f67'
-let g:terminal_color_2='#9ac895'
-let g:terminal_color_3='#fbc963'
-let g:terminal_color_4='#669acd'
-let g:terminal_color_5='#c695c6'
-let g:terminal_color_6='#5fb4b4'
-let g:terminal_color_7='#c1c6cf'
-let g:terminal_color_8='#65737e'
-let g:terminal_color_9='#ed5f67'
-let g:terminal_color_10='#9ac895'
-let g:terminal_color_11='#fbc963'
-let g:terminal_color_12='#a8aebb'
-let g:terminal_color_13='#ced4df'
-let g:terminal_color_14='#5fb4b4'
-let g:terminal_color_15='#d9dfea'
-let g:terminal_color_background='#1b2b34'
-let g:terminal_color_foreground='#c1c6cf'
-
-" Temp fix for terminal colors (spacemacs dark colorscheme)----------------
-"let g:terminal_color_1='#d4557d'
-"let g:terminal_color_2='#5fb4b4'
+"let g:terminal_color_0='#1b2b34'
+"let g:terminal_color_1='#ed5f67'
+"let g:terminal_color_2='#9ac895'
 "let g:terminal_color_3='#fbc963'
 "let g:terminal_color_4='#669acd'
 "let g:terminal_color_5='#c695c6'
 "let g:terminal_color_6='#5fb4b4'
-"let g:terminal_color_9='#d4557d'
-"let g:terminal_color_10='#86D02F'
+"let g:terminal_color_7='#c1c6cf'
+"let g:terminal_color_8='#65737e'
+"let g:terminal_color_9='#ed5f67'
+"let g:terminal_color_10='#9ac895'
 "let g:terminal_color_11='#fbc963'
+"let g:terminal_color_12='#a8aebb'
+"let g:terminal_color_13='#ced4df'
 "let g:terminal_color_14='#5fb4b4'
+"let g:terminal_color_15='#d9dfea'
+"let g:terminal_color_background='#1b2b34'
+"let g:terminal_color_foreground='#c1c6cf'
+
+" Temp fix for terminal colors (spacemacs dark colorscheme)----------------
+let g:terminal_color_1='#d4557d'
+let g:terminal_color_2='#5fb4b4'
+let g:terminal_color_3='#fbc963'
+let g:terminal_color_4='#669acd'
+let g:terminal_color_5='#c695c6'
+let g:terminal_color_6='#5fb4b4'
+let g:terminal_color_9='#d4557d'
+let g:terminal_color_10='#86D02F'
+let g:terminal_color_11='#fbc963'
+let g:terminal_color_14='#5fb4b4'
 
 
 " PLUGIN SETTINGS AND MAPPINGS==========================================
 
 " external shell commands, and custom functions -----------------------------
 :command! Glogg Start tig
-:command! Htop Start htop
-:command! Http Start http-prompt
 :command! Ipdb Start python -m ipdb %
 :command! Ipy split term://ipython
 :command! JSLineCount !find . -name '*.js' -not -path "./node_modules/*" | xargs wc -l
@@ -287,8 +284,8 @@ let g:terminal_color_foreground='#c1c6cf'
 :command! Te Start
 :command! Usql split term://usql
 
-"Default SQL language to be used ('mysql' or 'sqlserver')
-let g:sql_type_default = 'sqlserver'
+"Default SQL language to be used
+let g:sql_type_default = 'pgsql'
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
@@ -378,6 +375,11 @@ let g:flow#autoclose = 1
 
 " Neoformat----------------------------------------
 nnoremap <leader>mf :Neoformat<CR>
+let g:neoformat_javascript_prettier = {
+      \ 'exe': './node_modules/.bin/prettier',
+      \ 'args': ['--write', '--config ~/.prettierrc'],
+      \ 'replace': 1
+      \ }
 
 " Indentline settings------------------------------
 let g:indentLine_color_term = 237
@@ -454,9 +456,6 @@ if executable('ag')
 map <leader>jr :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
-" vim-javascript-------------------------------------
-let g:javascript_plugin_flow = 1
-
 " Ale Linter settings--------------------------------
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚠ '
@@ -476,21 +475,9 @@ nmap <leader>en <Plug>(ale_next_wrap)
 " let g:mundo_preview_height = 15
 nnoremap <leader>au :MundoToggle<CR>
 
-" Tern------------------------------------------------
-"autocmd FileType javascript setlocal omnifunc=tern#Complete
-let g:tern_show_argument_hints='on_hold'
-let g:tern_show_signature_in_pum=1
-
-nnoremap K :TernDoc<CR>
-nnoremap <leader>mK :TernDocBrowse<CR>
-nnoremap <leader>md :TernDefPreview<CR>
-nnoremap <leader>mr :TernRename<CR>
-nnoremap <leader>mu :TernRefs<CR>
-nnoremap <leader>ms :TernType<CR>
-
 " Vim-Polyglot--------------------------------------------------
 let g:python_highlight_all=1
-let g:polyglot_disabled = ['graphql']
+"let g:polyglot_disabled = ['graphql']
 
 " YouCompleteMe and UltiSnips compatibility,--------------------
 " with the help of supertab
@@ -523,6 +510,51 @@ map <leader>ft <Plug>NERDTreeTabsToggle<CR>
 " Dash ----------------------------------------------------------
 nnoremap <silent> <leader>dd <Plug>DashSearch
 
+" nvim-typescript----------------------------------------------------
+" QuickFix window automatically appear if :make (TSExecute) has any errors
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+" Custom TS commands
+:command! TSWatch Start tsc --watch --pretty
+:command! TSBuild make
+:command! TSExecute write | vsplit term://tsc --outFile /dev/stdout % \| node
+
+" A little faster in-memory package for doing same thing as line above; must
+" install ts-node
+":command! TSExecute vsplit term://ts-node %
+
+" Customize :make command
+"let g:typescript_compiler_binary = 'tsc'
+"let g:typescript_compiler_options = ''
+
+au FileType typescript nmap K :TSDoc<CR>
+au FileType typescript nmap <leader>md :TSDefPreview<CR>
+au FileType typescript nmap <leader>mr :TSRename<CR>
+au FileType typescript nmap <leader>mu :TSRefs<CR>
+au FileType typescript nmap <leader>ms :TSType<CR>
+au FileType typescript nmap <leader>ma :TSTypeDef<CR>
+au FileType typescript nmap <leader>mi :TSImport<CR>
+au FileType typescript nmap <leader>mxw :TSWatch<CR>
+au FileType typescript nmap <leader>mxb :TSBuild<CR>
+au FileType typescript nmap <leader>mxx :TSExecute<CR>
+
+" Tern------------------------------------------------
+"autocmd FileType javascript setlocal omnifunc=tern#Complete
+let g:tern_show_argument_hints='on_hold'
+let g:tern_show_signature_in_pum=1
+
+" Custom JS commands
+:command JSexecute write | vsplit term://node %
+
+au FileType javascript nmap K :TernDoc<CR>
+au FileType javascript nmap <leader>mK :TernDocBrowse<CR>
+au FileType javascript nmap <leader>md :TernDefPreview<CR>
+au FileType javascript nmap <leader>mr :TernRename<CR>
+au FileType javascript nmap <leader>mu :TernRefs<CR>
+au FileType javascript nmap <leader>ms :TernType<CR>
+au FileType javascript nmap <leader>mxx :JSexecute<CR>
+
 " Jedi-Vim ------------------------------------------------------
 " Python refactoring and goto..using YCM for completions
 let g:jedi#completions_enabled = 0
@@ -533,12 +565,16 @@ let g:jedi#force_py_version = 'auto'
 let g:jedi#show_call_signatures = 1
 let g:jedi#show_call_signatures_delay = 500
 
+" Custom Python commands
+:command Pyexecute write | vsplit term://python %
+
 " mappings
-let g:jedi#goto_assignments_command = '<leader>ma'
-let g:jedi#goto_command = '<leader>md'
 let g:jedi#documentation_command = 'K'
-let g:jedi#usages_command = '<leader>mu'
+let g:jedi#goto_command = '<leader>md'
 let g:jedi#rename_command = '<leader>mr'
+let g:jedi#usages_command = '<leader>mu'
+let g:jedi#goto_assignments_command = '<leader>ma'
+au FileType python nmap <leader>mxx :Pyexecute<CR>
 
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_splits_not_buffers = 'bottom'
@@ -557,7 +593,6 @@ let g:go_auto_sameids = 1
 let g:go_fmt_command = "goimports"
 let g:go_auto_type_info = 1
 let g:go_addtags_transform = "camelcase"
-let g:go_auto_sameids = 0
 
 "if has("nvim")
     "let g:go_term_enabled = 1
@@ -566,15 +601,16 @@ let g:go_auto_sameids = 0
     "let g:go_term_width = 30
   "endif
 
-au FileType go nmap <leader>ma :GoDeclsDir<cr>
-au FileType go nmap <leader>mr :GoRename<cr>
+au FileType go nmap K :GoDescribe<cr>
 au FileType go nmap <leader>md :GoDef<cr>
-au FileType go nmap <leader>mu :GoCallers<cr>
-au FileType go nmap <leader>K :GoDescribe<cr>
+au FileType go nmap <leader>mr :GoRename<cr>
+au FileType go nmap <leader>mu :GoImplements<cr>
+au FileType go nmap <leader>ma :GoDecls<cr>
 au FileType go nmap <leader>mxx :GoRun<cr>
 au FileType go nmap <leader>mxb :GoBuild<cr>
 au FileType go nmap <leader>mxi :GoInstall<cr>
 au FileType go nmap <leader>mgc :GoCoverage<cr>
+au FileType go nmap <leader>mcc :GoCallers<cr>
 
 " Airline settings-----------------------------------------------
 let g:airline_powerline_fonts = 1
