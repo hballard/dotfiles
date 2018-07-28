@@ -11,7 +11,7 @@ call plug#begin()
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --go-completer --js-completer' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
@@ -190,26 +190,29 @@ set undoreload=10000 " number of lines to save for undo
 " Enable spellchecking for Markdown
 au FileType markdown setlocal spell
 
-" Markdown syntax change
-au BufNewFile,BufFilePre,BufRead *.md set filetype=text
+augroup FileMappings
+  au!
+  " Markdown syntax change
+  au BufNewFile,BufFilePre,BufRead *.md set filetype=text
 
-" .eslintrc syntax change
-au BufNewFile,BufFilePre,BufRead *.eslintrc set filetype=json
+  " .eslintrc syntax change
+  au BufNewFile,BufFilePre,BufRead *.eslintrc set filetype=json
 
-" .babelrc syntax change
-au BufNewFile,BufFilePre,BufRead *.babelrc set filetype=json
+  " .babelrc syntax change
+  au BufNewFile,BufFilePre,BufRead *.babelrc set filetype=json
 
-" .esformatter syntax change
-au BufNewFile,BufFilePre,BufRead *.esformatter set filetype=json
+  " .esformatter syntax change
+  au BufNewFile,BufFilePre,BufRead *.esformatter set filetype=json
 
-" .lock syntax change
-au BufNewFile,BufFilePre,BufRead *.lock set filetype=json
+  " .lock syntax change
+  au BufNewFile,BufFilePre,BufRead *.lock set filetype=json
 
-" .tern-config syntax change
-au BufNewFile,BufFilePre,BufRead *.tern-config set filetype=json
+  " .tern-config syntax change
+  au BufNewFile,BufFilePre,BufRead *.tern-config set filetype=json
 
-" Pipfile syntax change
-au BufNewFile,BufFilePre,BufRead Pipfile set filetype=toml
+  " Pipfile syntax change
+  au BufNewFile,BufFilePre,BufRead Pipfile set filetype=toml
+augroup END
 
 set pastetoggle=<F5>
 set clipboard=unnamed
@@ -360,6 +363,7 @@ vmap <unique> <right> <Plug>SchleppRight
 " NerdCommenter config----------------------------
 map <leader>; <Plug>NERDCommenterToggle
 nmap <leader>ca <Plug>NERDCommenterAppend
+let g:NERDSpaceDelims = 1
 
 " CSS Autocomplete--------------------------------
 au FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
@@ -526,16 +530,19 @@ let g:nvim_typescript#diagnosticsEnable=0
 " install ts-node
 :command! TSExecute write | vsplit term://ts-node %
 
-au BufEnter *.ts nnoremap K :TSDoc<CR>
-au BufEnter *.ts nnoremap <leader>md :TSDefPreview<CR>
-au BufEnter *.ts nnoremap <leader>mr :TSRename<CR>
-au BufEnter *.ts nnoremap <leader>mu :TSRefs<CR>
-au BufEnter *.ts nnoremap <leader>ms :TSType<CR>
-au BufEnter *.ts nnoremap <leader>ma :TSTypeDef<CR>
-au BufEnter *.ts nnoremap <leader>mi :TSImport<CR>
-au BufEnter *.ts nnoremap <leader>mxw :TSWatch<CR>
-au BufEnter *.ts nnoremap <leader>mxb :TSBuild<CR>
-au BufEnter *.ts nnoremap <leader>mxx :TSExecute<CR>
+augroup TSMappings
+  au!
+  au BufEnter *.ts nnoremap K :TSDoc<CR>
+  au BufEnter *.ts nnoremap <leader>md :TSDefPreview<CR>
+  au BufEnter *.ts nnoremap <leader>mr :TSRename<CR>
+  au BufEnter *.ts nnoremap <leader>mu :TSRefs<CR>
+  au BufEnter *.ts nnoremap <leader>ms :TSType<CR>
+  au BufEnter *.ts nnoremap <leader>ma :TSTypeDef<CR>
+  au BufEnter *.ts nnoremap <leader>mi :TSImport<CR>
+  au BufEnter *.ts nnoremap <leader>mxw :TSWatch<CR>
+  au BufEnter *.ts nnoremap <leader>mxb :TSBuild<CR>
+  au BufEnter *.ts nnoremap <leader>mxx :TSExecute<CR>
+augroup END
 
 " Tern------------------------------------------------
 "autocmd FileType javascript setlocal omnifunc=tern#Complete
@@ -545,13 +552,16 @@ let g:tern_show_signature_in_pum=1
 " Custom JS commands
 :command JSexecute write | vsplit term://node %
 
-au BufEnter *.js nnoremap K :TernDoc<CR>
-au BufEnter *.js nnoremap <leader>mK :TernDocBrowse<CR>
-au BufEnter *.js nnoremap <leader>md :TernDefPreview<CR>
-au BufEnter *.js nnoremap <leader>mr :TernRename<CR>
-au BufEnter *.js nnoremap <leader>mu :TernRefs<CR>
-au BufEnter *.js nnoremap <leader>ms :TernType<CR>
-au BufEnter *.js nnoremap <leader>mxx :JSexecute<CR>
+augroup JSMappings
+  au!
+  au BufEnter *.js nnoremap K :TernDoc<CR>
+  au BufEnter *.js nnoremap <leader>mK :TernDocBrowse<CR>
+  au BufEnter *.js nnoremap <leader>md :TernDefPreview<CR>
+  au BufEnter *.js nnoremap <leader>mr :TernRename<CR>
+  au BufEnter *.js nnoremap <leader>mu :TernRefs<CR>
+  au BufEnter *.js nnoremap <leader>ms :TernType<CR>
+  au BufEnter *.js nnoremap <leader>mxx :JSexecute<CR>
+augroup END
 
 " Jedi-Vim ------------------------------------------------------
 " Python refactoring and goto..using YCM for completions
@@ -599,16 +609,19 @@ let g:go_addtags_transform = "camelcase"
     "let g:go_term_width = 30
   "endif
 
-au BufEnter *.go nnoremap K :GoDescribe<cr>
-au BufEnter *.go nnoremap <leader>md :GoDef<cr>
-au BufEnter *.go nnoremap <leader>mr :GoRename<cr>
-au BufEnter *.go nnoremap <leader>mu :GoImplements<cr>
-au BufEnter *.go nnoremap <leader>ma :GoDecls<cr>
-au BufEnter *.go nnoremap <leader>mxx :GoRun<cr>
-au BufEnter *.go nnoremap <leader>mxb :GoBuild<cr>
-au BufEnter *.go nnoremap <leader>mxi :GoInstall<cr>
-au BufEnter *.go nnoremap <leader>mgc :GoCoverage<cr>
-au BufEnter *.go nnoremap <leader>mcc :GoCallers<cr>
+augroup GoMappings
+au!
+  au BufEnter *.go nnoremap K :GoDescribe<cr>
+  au BufEnter *.go nnoremap <leader>md :GoDef<cr>
+  au BufEnter *.go nnoremap <leader>mr :GoRename<cr>
+  au BufEnter *.go nnoremap <leader>mu :GoImplements<cr>
+  au BufEnter *.go nnoremap <leader>ma :GoDecls<cr>
+  au BufEnter *.go nnoremap <leader>mxx :GoRun<cr>
+  au BufEnter *.go nnoremap <leader>mxb :GoBuild<cr>
+  au BufEnter *.go nnoremap <leader>mxi :GoInstall<cr>
+  au BufEnter *.go nnoremap <leader>mgc :GoCoverage<cr>
+  au BufEnter *.go nnoremap <leader>mcc :GoCallers<cr>
+augroup END
 
 " Airline settings-----------------------------------------------
 let g:airline_powerline_fonts = 1
