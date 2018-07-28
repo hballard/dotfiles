@@ -53,6 +53,7 @@ Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'ternjs/tern_for_vim'
 Plug 'terryma/vim-multiple-cursors'
@@ -477,7 +478,7 @@ nnoremap <leader>au :MundoToggle<CR>
 
 " Vim-Polyglot--------------------------------------------------
 let g:python_highlight_all=1
-"let g:polyglot_disabled = ['graphql']
+let g:polyglot_disabled = ['typescript']
 
 " YouCompleteMe and UltiSnips compatibility,--------------------
 " with the help of supertab
@@ -511,33 +512,30 @@ map <leader>ft <Plug>NERDTreeTabsToggle<CR>
 nnoremap <silent> <leader>dd <Plug>DashSearch
 
 " nvim-typescript----------------------------------------------------
-" QuickFix window automatically appear if :make (TSExecute) has any errors
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
+
+" Disable this plugin's linting; fix for error symbol that does not go away
+let g:nvim_typescript#diagnosticsEnable=0
 
 " Custom TS commands
 :command! TSWatch Start tsc --watch --pretty
-:command! TSBuild make
-:command! TSExecute write | vsplit term://tsc --outFile /dev/stdout % \| node
+:command! TSBuild !tsc
+
+":command! TSExecute write | vsplit term://tsc --outFile /dev/stdout % \| node
 
 " A little faster in-memory package for doing same thing as line above; must
 " install ts-node
-":command! TSExecute vsplit term://ts-node %
+:command! TSExecute write | vsplit term://ts-node %
 
-" Customize :make command
-"let g:typescript_compiler_binary = 'tsc'
-"let g:typescript_compiler_options = ''
-
-au FileType typescript nmap K :TSDoc<CR>
-au FileType typescript nmap <leader>md :TSDefPreview<CR>
-au FileType typescript nmap <leader>mr :TSRename<CR>
-au FileType typescript nmap <leader>mu :TSRefs<CR>
-au FileType typescript nmap <leader>ms :TSType<CR>
-au FileType typescript nmap <leader>ma :TSTypeDef<CR>
-au FileType typescript nmap <leader>mi :TSImport<CR>
-au FileType typescript nmap <leader>mxw :TSWatch<CR>
-au FileType typescript nmap <leader>mxb :TSBuild<CR>
-au FileType typescript nmap <leader>mxx :TSExecute<CR>
+au BufEnter *.ts nnoremap K :TSDoc<CR>
+au BufEnter *.ts nnoremap <leader>md :TSDefPreview<CR>
+au BufEnter *.ts nnoremap <leader>mr :TSRename<CR>
+au BufEnter *.ts nnoremap <leader>mu :TSRefs<CR>
+au BufEnter *.ts nnoremap <leader>ms :TSType<CR>
+au BufEnter *.ts nnoremap <leader>ma :TSTypeDef<CR>
+au BufEnter *.ts nnoremap <leader>mi :TSImport<CR>
+au BufEnter *.ts nnoremap <leader>mxw :TSWatch<CR>
+au BufEnter *.ts nnoremap <leader>mxb :TSBuild<CR>
+au BufEnter *.ts nnoremap <leader>mxx :TSExecute<CR>
 
 " Tern------------------------------------------------
 "autocmd FileType javascript setlocal omnifunc=tern#Complete
@@ -547,13 +545,13 @@ let g:tern_show_signature_in_pum=1
 " Custom JS commands
 :command JSexecute write | vsplit term://node %
 
-au FileType javascript nmap K :TernDoc<CR>
-au FileType javascript nmap <leader>mK :TernDocBrowse<CR>
-au FileType javascript nmap <leader>md :TernDefPreview<CR>
-au FileType javascript nmap <leader>mr :TernRename<CR>
-au FileType javascript nmap <leader>mu :TernRefs<CR>
-au FileType javascript nmap <leader>ms :TernType<CR>
-au FileType javascript nmap <leader>mxx :JSexecute<CR>
+au BufEnter *.js nnoremap K :TernDoc<CR>
+au BufEnter *.js nnoremap <leader>mK :TernDocBrowse<CR>
+au BufEnter *.js nnoremap <leader>md :TernDefPreview<CR>
+au BufEnter *.js nnoremap <leader>mr :TernRename<CR>
+au BufEnter *.js nnoremap <leader>mu :TernRefs<CR>
+au BufEnter *.js nnoremap <leader>ms :TernType<CR>
+au BufEnter *.js nnoremap <leader>mxx :JSexecute<CR>
 
 " Jedi-Vim ------------------------------------------------------
 " Python refactoring and goto..using YCM for completions
@@ -574,7 +572,7 @@ let g:jedi#goto_command = '<leader>md'
 let g:jedi#rename_command = '<leader>mr'
 let g:jedi#usages_command = '<leader>mu'
 let g:jedi#goto_assignments_command = '<leader>ma'
-au FileType python nmap <leader>mxx :Pyexecute<CR>
+au BufEnter *.py nmap <leader>mxx :Pyexecute<CR>
 
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#use_splits_not_buffers = 'bottom'
@@ -601,16 +599,16 @@ let g:go_addtags_transform = "camelcase"
     "let g:go_term_width = 30
   "endif
 
-au FileType go nmap K :GoDescribe<cr>
-au FileType go nmap <leader>md :GoDef<cr>
-au FileType go nmap <leader>mr :GoRename<cr>
-au FileType go nmap <leader>mu :GoImplements<cr>
-au FileType go nmap <leader>ma :GoDecls<cr>
-au FileType go nmap <leader>mxx :GoRun<cr>
-au FileType go nmap <leader>mxb :GoBuild<cr>
-au FileType go nmap <leader>mxi :GoInstall<cr>
-au FileType go nmap <leader>mgc :GoCoverage<cr>
-au FileType go nmap <leader>mcc :GoCallers<cr>
+au BufEnter *.go nnoremap K :GoDescribe<cr>
+au BufEnter *.go nnoremap <leader>md :GoDef<cr>
+au BufEnter *.go nnoremap <leader>mr :GoRename<cr>
+au BufEnter *.go nnoremap <leader>mu :GoImplements<cr>
+au BufEnter *.go nnoremap <leader>ma :GoDecls<cr>
+au BufEnter *.go nnoremap <leader>mxx :GoRun<cr>
+au BufEnter *.go nnoremap <leader>mxb :GoBuild<cr>
+au BufEnter *.go nnoremap <leader>mxi :GoInstall<cr>
+au BufEnter *.go nnoremap <leader>mgc :GoCoverage<cr>
+au BufEnter *.go nnoremap <leader>mcc :GoCallers<cr>
 
 " Airline settings-----------------------------------------------
 let g:airline_powerline_fonts = 1
