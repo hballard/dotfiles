@@ -212,6 +212,9 @@ augroup FileMappings
 
   " Pipfile syntax change
   au BufNewFile,BufFilePre,BufRead Pipfile set filetype=toml
+
+  " specfile syntax change
+  au BufNewFile,BufFilePre,BufRead *.spec set filetype=python
 augroup END
 
 set pastetoggle=<F5>
@@ -469,7 +472,7 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_linters = {'python': ['flake8', 'mypy']}
-let g:ale_python_mypy_options = '--strict-optional'
+let g:ale_python_mypy_options = '--strict-optional --ignore-missing-stubs'
 "let g:ale_fixers = {'python': ['isort']}
 "let g:ale_linter_aliases = {'jsx': 'css'}
 nmap <leader>ep <Plug>(ale_previous_wrap)
@@ -494,8 +497,8 @@ let g:SuperTabCrMapping = 0
 " Use this to set the python completion to python set in PATH
 let g:ycm_python_binary_path = 'python'
 
-" Use this to turn off YCM python completion...
-"let g:ycm_filetype_specific_completion_to_disable = {'python': 1}
+" Use this to turn off YCM language completion...
+" let g:ycm_filetype_specific_completion_to_disable = {'typescript': 1}
 
 " This is due to a bug w/ the function definition preview
 let g:ycm_add_preview_to_completeopt = 0
@@ -525,23 +528,22 @@ let g:nvim_typescript#diagnosticsEnable=0
 :command! TSBuild !tsc
 
 ":command! TSExecute write | vsplit term://tsc --outFile /dev/stdout % \| node
-
 " A little faster in-memory package for doing same thing as line above; must
 " install ts-node
 :command! TSExecute write | vsplit term://ts-node %
 
 augroup TSMappings
   au!
-  au BufEnter *.ts nnoremap K :TSDoc<CR>
-  au BufEnter *.ts nnoremap <leader>md :TSDefPreview<CR>
-  au BufEnter *.ts nnoremap <leader>mr :TSRename<CR>
-  au BufEnter *.ts nnoremap <leader>mu :TSRefs<CR>
-  au BufEnter *.ts nnoremap <leader>ms :TSType<CR>
-  au BufEnter *.ts nnoremap <leader>ma :TSTypeDef<CR>
-  au BufEnter *.ts nnoremap <leader>mi :TSImport<CR>
-  au BufEnter *.ts nnoremap <leader>mxw :TSWatch<CR>
-  au BufEnter *.ts nnoremap <leader>mxb :TSBuild<CR>
-  au BufEnter *.ts nnoremap <leader>mxx :TSExecute<CR>
+  au BufEnter,FileType *.ts nnoremap K :TSDoc<CR>
+  au BufEnter,FileType *.ts nnoremap <leader>md :TSDefPreview<CR>
+  au BufEnter,FileType *.ts nnoremap <leader>mr :TSRename<CR>
+  au BufEnter,FileType *.ts nnoremap <leader>mu :TSRefs<CR>
+  au BufEnter,FileType *.ts nnoremap <leader>ms :TSType<CR>
+  au BufEnter,FileType *.ts nnoremap <leader>ma :TSTypeDef<CR>
+  au BufEnter,FileType *.ts nnoremap <leader>mi :TSImport<CR>
+  au BufEnter,FileType *.ts nnoremap <leader>mxw :TSWatch<CR>
+  au BufEnter,FileType *.ts nnoremap <leader>mxb :TSBuild<CR>
+  au BufEnter,FileType *.ts nnoremap <leader>mxx :TSExecute<CR>
 augroup END
 
 " Tern------------------------------------------------
@@ -554,13 +556,13 @@ let g:tern_show_signature_in_pum=1
 
 augroup JSMappings
   au!
-  au BufEnter *.js nnoremap K :TernDoc<CR>
-  au BufEnter *.js nnoremap <leader>mK :TernDocBrowse<CR>
-  au BufEnter *.js nnoremap <leader>md :TernDefPreview<CR>
-  au BufEnter *.js nnoremap <leader>mr :TernRename<CR>
-  au BufEnter *.js nnoremap <leader>mu :TernRefs<CR>
-  au BufEnter *.js nnoremap <leader>ms :TernType<CR>
-  au BufEnter *.js nnoremap <leader>mxx :JSexecute<CR>
+  au BufEnter,FileType *.js nnoremap K :TernDoc<CR>
+  au BufEnter,FileType *.js nnoremap <leader>mK :TernDocBrowse<CR>
+  au BufEnter,FileType *.js nnoremap <leader>md :TernDefPreview<CR>
+  au BufEnter,FileType *.js nnoremap <leader>mr :TernRename<CR>
+  au BufEnter,FileType *.js nnoremap <leader>mu :TernRefs<CR>
+  au BufEnter,FileType *.js nnoremap <leader>ms :TernType<CR>
+  au BufEnter,FileType *.js nnoremap <leader>mxx :JSexecute<CR>
 augroup END
 
 " Jedi-Vim ------------------------------------------------------
@@ -611,16 +613,16 @@ let g:go_addtags_transform = "camelcase"
 
 augroup GoMappings
 au!
-  au BufEnter *.go nnoremap K :GoDescribe<cr>
-  au BufEnter *.go nnoremap <leader>md :GoDef<cr>
-  au BufEnter *.go nnoremap <leader>mr :GoRename<cr>
-  au BufEnter *.go nnoremap <leader>mu :GoImplements<cr>
-  au BufEnter *.go nnoremap <leader>ma :GoDecls<cr>
-  au BufEnter *.go nnoremap <leader>mxx :GoRun<cr>
-  au BufEnter *.go nnoremap <leader>mxb :GoBuild<cr>
-  au BufEnter *.go nnoremap <leader>mxi :GoInstall<cr>
-  au BufEnter *.go nnoremap <leader>mgc :GoCoverage<cr>
-  au BufEnter *.go nnoremap <leader>mcc :GoCallers<cr>
+  au BufEnter,FileType *.go nnoremap K :GoDescribe<cr>
+  au BufEnter,FileType *.go nnoremap <leader>md :GoDef<cr>
+  au BufEnter,FileType *.go nnoremap <leader>mr :GoRename<cr>
+  au BufEnter,FileType *.go nnoremap <leader>mu :GoImplements<cr>
+  au BufEnter,FileType *.go nnoremap <leader>ma :GoDecls<cr>
+  au BufEnter,FileType *.go nnoremap <leader>mxx :GoRun<cr>
+  au BufEnter,FileType *.go nnoremap <leader>mxb :GoBuild<cr>
+  au BufEnter,FileType *.go nnoremap <leader>mxi :GoInstall<cr>
+  au BufEnter,FileType *.go nnoremap <leader>mgc :GoCoverage<cr>
+  au BufEnter,FileType *.go nnoremap <leader>mcc :GoCallers<cr>
 augroup END
 
 " Airline settings-----------------------------------------------

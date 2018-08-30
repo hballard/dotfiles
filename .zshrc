@@ -20,6 +20,9 @@ alias initopenssl='export OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)"/include
 alias psql-server-start='pg_ctl -D /usr/local/var/postgres start'
 alias psql-server-stop='pg_ctl -D /usr/local/var/postgres stop'
 
+# init qmake
+alias init_qmake='export PATH="/usr/local/opt/qt/bin:$PATH"'
+
 # tmuxinator completions
 source ~/.bin/tmuxinator.zsh
 
