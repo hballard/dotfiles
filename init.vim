@@ -276,16 +276,9 @@ let g:terminal_color_14='#5fb4b4'
 
 " external shell commands, and custom functions -----------------------------
 :command! Glogg Start tig
-:command! Ipdb Start python -m ipdb %
-:command! Ipy split term://ipython
 :command! JSLineCount !find . -name '*.js' -not -path "./node_modules/*" | xargs wc -l
+:command! TSLineCount !find . -name '*.ts*' -not -path "./node_modules/*" | xargs wc -l
 :command! Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
-:command! NDbg Start node-debug %
-:command! Node split term://node
-:command! NpmEject Start npm run eject
-:command! NpmBuild Start npm run build
-:command! NpmTest Start npm run test
-:command! NpmStart Start npm start
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
 :command! PyLineCount !find . -name '*.py' | xargs wc -l
 :command! Te Start
@@ -521,7 +514,10 @@ nnoremap <silent> <leader>dd <Plug>DashSearch
 " nvim-typescript----------------------------------------------------
 
 " Disable this plugin's linting; fix for error symbol that does not go away
-let g:nvim_typescript#diagnosticsEnable=0
+let g:nvim_typescript#diagnostics_enable=0
+
+" Echo symbol type info
+let g:nvim_typescript#type_info_on_hold=1
 
 " Custom TS commands
 :command! TSWatch Start tsc --watch --pretty
@@ -534,16 +530,16 @@ let g:nvim_typescript#diagnosticsEnable=0
 
 augroup TSMappings
   au!
-  au BufEnter,FileType *.ts nnoremap K :TSDoc<CR>
-  au BufEnter,FileType *.ts nnoremap <leader>md :TSDefPreview<CR>
-  au BufEnter,FileType *.ts nnoremap <leader>mr :TSRename<CR>
-  au BufEnter,FileType *.ts nnoremap <leader>mu :TSRefs<CR>
-  au BufEnter,FileType *.ts nnoremap <leader>ms :TSType<CR>
-  au BufEnter,FileType *.ts nnoremap <leader>ma :TSTypeDef<CR>
-  au BufEnter,FileType *.ts nnoremap <leader>mi :TSImport<CR>
-  au BufEnter,FileType *.ts nnoremap <leader>mxw :TSWatch<CR>
-  au BufEnter,FileType *.ts nnoremap <leader>mxb :TSBuild<CR>
-  au BufEnter,FileType *.ts nnoremap <leader>mxx :TSExecute<CR>
+  au BufEnter,FileType typescript nnoremap K :TSDoc<CR>
+  au BufEnter,FileType typescript nnoremap <leader>md :TSDefPreview<CR>
+  au BufEnter,FileType typescript nnoremap <leader>mr :TSRename<CR>
+  au BufEnter,FileType typescript nnoremap <leader>mu :TSRefs<CR>
+  au BufEnter,FileType typescript nnoremap <leader>ms :TSType<CR>
+  au BufEnter,FileType typescript nnoremap <leader>ma :TSTypeDef<CR>
+  au BufEnter,FileType typescript nnoremap <leader>mi :TSImport<CR>
+  au BufEnter,FileType typescript nnoremap <leader>mxw :TSWatch<CR>
+  au BufEnter,FileType typescript nnoremap <leader>mxb :TSBuild<CR>
+  au BufEnter,FileType typescript nnoremap <leader>mxx :TSExecute<CR>
 augroup END
 
 " Tern------------------------------------------------
@@ -556,13 +552,13 @@ let g:tern_show_signature_in_pum=1
 
 augroup JSMappings
   au!
-  au BufEnter,FileType *.js nnoremap K :TernDoc<CR>
-  au BufEnter,FileType *.js nnoremap <leader>mK :TernDocBrowse<CR>
-  au BufEnter,FileType *.js nnoremap <leader>md :TernDefPreview<CR>
-  au BufEnter,FileType *.js nnoremap <leader>mr :TernRename<CR>
-  au BufEnter,FileType *.js nnoremap <leader>mu :TernRefs<CR>
-  au BufEnter,FileType *.js nnoremap <leader>ms :TernType<CR>
-  au BufEnter,FileType *.js nnoremap <leader>mxx :JSexecute<CR>
+  au BufEnter,FileType javascript nnoremap K :TernDoc<CR>
+  au BufEnter,FileType javascript nnoremap <leader>mK :TernDocBrowse<CR>
+  au BufEnter,FileType javascript nnoremap <leader>md :TernDefPreview<CR>
+  au BufEnter,FileType javascript nnoremap <leader>mr :TernRename<CR>
+  au BufEnter,FileType javascript nnoremap <leader>mu :TernRefs<CR>
+  au BufEnter,FileType javascript nnoremap <leader>ms :TernType<CR>
+  au BufEnter,FileType javascript nnoremap <leader>mxx :JSexecute<CR>
 augroup END
 
 " Jedi-Vim ------------------------------------------------------
@@ -641,3 +637,4 @@ syntax enable
 set background=dark
 colorscheme space-vim-dark
 "colorscheme dracula
+" colorscheme hybrid

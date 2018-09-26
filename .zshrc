@@ -9,6 +9,8 @@ fi
 
 # Customize to your needs...
 
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 # open ssl fix - may not need this, try init below them
 alias initopenssl='export OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)"/include \
   export OPENSSL_LIB_DIR="$(brew --prefix openssl)"/lib \
@@ -44,6 +46,7 @@ export PATH=$PATH:$GOROOT/bin
 alias nvm='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && nvm'
 alias node='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && node'
 alias npm='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && npm'
+alias init_nodejs='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh'
 
 ###-begin-npm-completion-###
 COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
@@ -112,3 +115,8 @@ init_pyenv
 alias pipenv='unalias pipenv && eval "$(_PIPENV_COMPLETE=source-zsh pipenv)" && pipenv'
 
 alias pew='unalias pew && source $(pew shell_config) && pew'
+
+# For Android builds
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
