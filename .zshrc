@@ -23,15 +23,12 @@ alias psql-server-start='pg_ctl -D /usr/local/var/postgres start'
 alias psql-server-stop='pg_ctl -D /usr/local/var/postgres stop'
 
 # init qmake
-alias init_qmake='export PATH="/usr/local/opt/qt/bin:$PATH"'
+alias init_qmake='export PATH="/usr/local/opt/qt/bin:$PATH" \
+  export LDFLAGS="-L/usr/local/opt/qt/lib" \
+  export CPPFLAGS="-I/usr/local/opt/qt/include"'
 
 # tmuxinator completions
 source ~/.bin/tmuxinator.zsh
-
-# set vim as default editor and also alias vi command
-export EDITOR='nvim'
-export VISUAL='nvim'
-alias vi='/usr/local/bin/nvim'
 
 # intialize docker completion
 autoload -Uz compinit; compinit
@@ -46,7 +43,18 @@ export PATH=$PATH:$GOROOT/bin
 alias nvm='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && nvm'
 alias node='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && node'
 alias npm='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && npm'
-alias init_nodejs='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh'
+alias init_node='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh'
+init_node
+
+# set vim as default editor and also alias vi command
+export EDITOR='nvim'
+export VISUAL='nvim'
+
+if [ -z "$TMUX" ]; then
+  alias vi='tmux new nvim'
+else
+  alias vi='nvim'
+fi
 
 ###-begin-npm-completion-###
 COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
@@ -113,6 +121,7 @@ alias init_pyenv='export PYTHON_CONFIGURE_OPTS="--enable-framework" && export PY
 init_pyenv
 
 alias pipenv='unalias pipenv && eval "$(_PIPENV_COMPLETE=source-zsh pipenv)" && pipenv'
+alias pipenvinit='source $(pipenv --venv)/bin/activate'
 
 alias pew='unalias pew && source $(pew shell_config) && pew'
 

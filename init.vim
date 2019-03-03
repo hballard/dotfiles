@@ -8,6 +8,7 @@
 " Vim Plugins-------------------------------------------
 call plug#begin()
 
+Plug 'rakr/vim-one'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'SirVer/ultisnips'
@@ -27,6 +28,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'ervandew/supertab'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 Plug 'flazz/vim-colorschemes'
+Plug 'blueshirts/darcula'
 Plug 'henrik/vim-indexed-search'
 Plug 'honza/vim-snippets'
 Plug 'itchyny/vim-cursorword'
@@ -240,36 +242,36 @@ endif
 
 
 " Temp fix for terminal colors (one dark colorscheme)----------------
-"let g:terminal_color_0='#1b2b34'
-"let g:terminal_color_1='#ed5f67'
-"let g:terminal_color_2='#9ac895'
-"let g:terminal_color_3='#fbc963'
-"let g:terminal_color_4='#669acd'
-"let g:terminal_color_5='#c695c6'
-"let g:terminal_color_6='#5fb4b4'
-"let g:terminal_color_7='#c1c6cf'
-"let g:terminal_color_8='#65737e'
-"let g:terminal_color_9='#ed5f67'
-"let g:terminal_color_10='#9ac895'
-"let g:terminal_color_11='#fbc963'
-"let g:terminal_color_12='#a8aebb'
-"let g:terminal_color_13='#ced4df'
-"let g:terminal_color_14='#5fb4b4'
-"let g:terminal_color_15='#d9dfea'
-"let g:terminal_color_background='#1b2b34'
-"let g:terminal_color_foreground='#c1c6cf'
-
-" Temp fix for terminal colors (spacemacs dark colorscheme)----------------
-let g:terminal_color_1='#d4557d'
-let g:terminal_color_2='#5fb4b4'
+let g:terminal_color_0='#1b2b34'
+let g:terminal_color_1='#ed5f67'
+let g:terminal_color_2='#9ac895'
 let g:terminal_color_3='#fbc963'
 let g:terminal_color_4='#669acd'
 let g:terminal_color_5='#c695c6'
 let g:terminal_color_6='#5fb4b4'
-let g:terminal_color_9='#d4557d'
-let g:terminal_color_10='#86D02F'
+let g:terminal_color_7='#c1c6cf'
+let g:terminal_color_8='#65737e'
+let g:terminal_color_9='#ed5f67'
+let g:terminal_color_10='#9ac895'
 let g:terminal_color_11='#fbc963'
+let g:terminal_color_12='#a8aebb'
+let g:terminal_color_13='#ced4df'
 let g:terminal_color_14='#5fb4b4'
+let g:terminal_color_15='#d9dfea'
+let g:terminal_color_background='#1b2b34'
+let g:terminal_color_foreground='#c1c6cf'
+
+" Temp fix for terminal colors (spacemacs dark colorscheme)----------------
+" let g:terminal_color_1='#d4557d'
+" let g:terminal_color_2='#5fb4b4'
+" let g:terminal_color_3='#fbc963'
+" let g:terminal_color_4='#669acd'
+" let g:terminal_color_5='#c695c6'
+" let g:terminal_color_6='#5fb4b4'
+" let g:terminal_color_9='#d4557d'
+" let g:terminal_color_10='#86D02F'
+" let g:terminal_color_11='#fbc963'
+" let g:terminal_color_14='#5fb4b4'
 
 
 " PLUGIN SETTINGS AND MAPPINGS==========================================
@@ -366,10 +368,6 @@ au FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
 "let g:tmuxline_preset = 'nightly_fox'
 let g:tmuxline_powerline_separators = 0
-
-"Flow plugin---------------------------------------
-let g:flow#autoclose = 1
-"let g:flow#errjmp = 1
 
 " Clean out AlignMaps mappings -- part of Align plugin
 "autocmd VimEnter * AlignMapsClean
@@ -513,6 +511,25 @@ nnoremap <silent> <leader>dd <Plug>DashSearch
 
 " nvim-typescript----------------------------------------------------
 
+let g:tagbar_type_typescript = {
+  \ 'ctagsbin' : 'tstags',
+  \ 'ctagsargs' : '-f-',
+  \ 'kinds': [
+    \ 'e:enums:0:1',
+    \ 'f:function:0:1',
+    \ 't:typealias:0:1',
+    \ 'M:Module:0:1',
+    \ 'I:import:0:1',
+    \ 'i:interface:0:1',
+    \ 'C:class:0:1',
+    \ 'm:method:0:1',
+    \ 'p:property:0:1',
+    \ 'v:variable:0:1',
+    \ 'c:const:0:1',
+  \ ],
+  \ 'sort' : 0
+\ }
+
 " Disable this plugin's linting; fix for error symbol that does not go away
 let g:nvim_typescript#diagnostics_enable=0
 
@@ -629,12 +646,20 @@ let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#ale#error_symbol = '✗'
 let g:airline#extensions#ale#warning_symbol = '⚠'
 
-let g:airline_theme = 'violet'
+" let g:airline_theme = 'violet'
+let g:airline_theme = 'bubblegum'
+" let g:airline_theme = 'one'
 
 " Syntax highlighting--------------------------------------------
 syntax on
 syntax enable
 set background=dark
-colorscheme space-vim-dark
-"colorscheme dracula
+let g:one_allow_italics = 1
+colorscheme one
+" colorscheme space-vim-dark
 " colorscheme hybrid
+" colorscheme dracula
+" colorscheme darcula
+
+" hi xmlAttrib cterm=italic
+" hi jsxAttrib cterm=italic
