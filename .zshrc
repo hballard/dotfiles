@@ -1,131 +1,133 @@
-# Executes commands at the start of an interactive session.
-#
-#
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/heath/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="robbyrussell"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git colored-man-pages npm pip python docker zsh-autosuggestions aws)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+  export VISUAL='nvim'
 fi
-
-# Customize to your needs...
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-# open ssl fix - may not need this, try init below them
-alias initopenssl='export OPENSSL_INCLUDE_DIR="$(brew --prefix openssl)"/include \
-  export OPENSSL_LIB_DIR="$(brew --prefix openssl)"/lib \
-  export DEP_OPENSSL_INCLUDE="$(brew --prefix openssl)"/include \
-  export CFLAGS="-I$(brew --prefix openssl)/include" \
-  export LDFLAGS="-L$(brew --prefix openssl)/lib"'
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
 
-# start and stop postgres
-alias psql-server-start='pg_ctl -D /usr/local/var/postgres start'
-alias psql-server-stop='pg_ctl -D /usr/local/var/postgres stop'
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# init qmake
-alias init_qmake='export PATH="/usr/local/opt/qt/bin:$PATH" \
-  export LDFLAGS="-L/usr/local/opt/qt/lib" \
-  export CPPFLAGS="-I/usr/local/opt/qt/include"'
+alias vi='nvim'
 
-# tmuxinator completions
-source ~/.bin/tmuxinator.zsh
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
+eval "$(pyenv init -)"
 
-# intialize docker completion
-autoload -Uz compinit; compinit
 
-# Set GOPATH
-export GOPATH=$HOME/Code/go
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$GOROOT/bin
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+  [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
 
-###nvm package manager for node
-alias nvm='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && nvm'
-alias node='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && node'
-alias npm='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh && npm'
-alias init_node='unalias nvm node npm && export NVM_DIR=~/.nvm && source $(brew --prefix nvm)/nvm.sh'
-init_node
-
-# set vim as default editor and also alias vi command
-export EDITOR='nvim'
-export VISUAL='nvim'
-
-if [ -z "$TMUX" ]; then
-  alias vi='tmux new nvim'
-else
-  alias vi='nvim'
-fi
-
-###-begin-npm-completion-###
-COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
-COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
-export COMP_WORDBREAKS
-
-if type complete &>/dev/null; then
-  _npm_completion () {
-    local si="$IFS"
-    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
-                           COMP_LINE="$COMP_LINE" \
-                           COMP_POINT="$COMP_POINT" \
-                           npm completion -- "${COMP_WORDS[@]}" \
-                           2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  complete -F _npm_completion npm
-elif type compdef &>/dev/null; then
-  _npm_completion() {
-    si=$IFS
-    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
-                 COMP_LINE=$BUFFER \
-                 COMP_POINT=0 \
-                 npm completion -- "${words[@]}" \
-                 2>/dev/null)
-    IFS=$si
-  }
-  compdef _npm_completion npm
-elif type compctl &>/dev/null; then
-  _npm_completion () {
-    local cword line point words si
-    read -Ac words
-    read -cn cword
-    let cword-=1
-    read -l line
-    read -ln point
-    si="$IFS"
-    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
-                       COMP_LINE="$line" \
-                       COMP_POINT="$point" \
-                       npm completion -- "${words[@]}" \
-                       2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  compctl -K _npm_completion npm
-fi
-###-end-npm-completion-###
-
-# Initialize fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Initialize iterm2 shell integration
+export GOPATH=$HOME/Code/go
+
+
+export -U PATH=$PATH
+
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+eval "$(rbenv init -)"
+
+autoload -Uz compinit
+compinit -i
+
+eval "$(register-python-argcomplete pipx)"
+
+# qt settings
+export PATH="/usr/local/opt/qt/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/qt/lib"
+# export CPPFLAGS="-I/usr/local/opt/qt/include"
+
+# Created by `userpath` on 2019-11-25 04:24:39
+export PATH="$PATH:/Users/heath/.local/bin"
+
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-eval $(/usr/libexec/path_helper -s)
 
-# Stop python from creating bytecode files
-export PYTHONDONTWRITEBYTECODE=true
-
-## Alias command to update all python packages with pip
-alias pip-upgrade-all="pip freeze — local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U"
-
-# These are all for auto-completion
-alias init_pyenv='export PYTHON_CONFIGURE_OPTS="--enable-framework" && export PYENV_VIRTUALENV_DISABLE_PROMPT=1 && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"'
-init_pyenv
-
-alias pipenv='unalias pipenv && eval "$(_PIPENV_COMPLETE=source-zsh pipenv)" && pipenv'
-alias pipenvinit='source $(pipenv --venv)/bin/activate'
-
-alias pew='unalias pew && source $(pew shell_config) && pew'
-
-# For Android builds
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/platform-tools

@@ -5,3 +5,5 @@
 	email = heath.ballard@gmail.com
 [core]
 	excludesfile = /Users/heath/.gitignore
+[credential]
+	helper = store

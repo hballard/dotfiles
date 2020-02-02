@@ -217,6 +217,9 @@ augroup FileMappings
 
   " specfile syntax change
   au BufNewFile,BufFilePre,BufRead *.spec set filetype=python
+
+    " specfile syntax change
+  au BufNewFile,BufFilePre,BufRead *.ts set filetype=javascript
 augroup END
 
 set pastetoggle=<F5>
@@ -284,7 +287,7 @@ let g:terminal_color_foreground='#c1c6cf'
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
 :command! PyLineCount !find . -name '*.py' | xargs wc -l
 :command! Te Start
-:command! Usql split term://usql
+" :command! Usql split term://usql
 
 "Default SQL language to be used
 let g:sql_type_default = 'pgsql'
@@ -376,7 +379,13 @@ let g:tmuxline_powerline_separators = 0
 nnoremap <leader>mf :Neoformat<CR>
 let g:neoformat_javascript_prettier = {
       \ 'exe': './node_modules/.bin/prettier',
-      \ 'args': ['--write', '--config ~/.prettierrc'],
+      \ 'args': ['--write'],
+      \ 'replace': 1
+      \ }
+
+let g:neoformat_typescript_prettier = {
+      \ 'exe': './node_modules/.bin/prettier',
+      \ 'args': ['--write', '--config ./.prettierrc.js'],
       \ 'replace': 1
       \ }
 
@@ -543,7 +552,7 @@ let g:nvim_typescript#type_info_on_hold=1
 ":command! TSExecute write | vsplit term://tsc --outFile /dev/stdout % \| node
 " A little faster in-memory package for doing same thing as line above; must
 " install ts-node
-:command! TSExecute write | vsplit term://ts-node %
+:command! TSExecute write | vsplit term://npx ts-node %
 
 augroup TSMappings
   au!
