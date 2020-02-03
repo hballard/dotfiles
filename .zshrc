@@ -81,8 +81,6 @@ else
   export VISUAL='nvim'
 fi
 
-fpath=(/usr/local/share/zsh-completions $fpath)
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -97,27 +95,29 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 alias vi='nvim'
 
+# User configuraation
+
+autoload -Uz compinit
+compinit -i
+
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 eval "$(pyenv init -)"
-
 
 export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
   [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 export GOPATH=$HOME/Code/go
-
-
-export -U PATH=$PATH
-
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 eval "$(rbenv init -)"
 
-autoload -Uz compinit
-compinit -i
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export -U PATH=$PATH
+
+fpath=(/usr/local/share/zsh-completions $fpath)
+
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 eval "$(register-python-argcomplete pipx)"
 

@@ -12,16 +12,14 @@ Plug 'rakr/vim-one'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --go-completer --js-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py --clang-completer --go-completer --ts-completer' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'bonsaiben/bootstrap-snippets'
-Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
 Plug 'chrisbra/csv.vim'
-Plug 'davidhalter/jedi-vim'
 Plug 'docunext/closetag.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
@@ -57,7 +55,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'simnalamburt/vim-mundo'
-Plug 'ternjs/tern_for_vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tomtom/tlib_vim'
 Plug 'tpope/vim-dispatch'
@@ -209,9 +206,6 @@ augroup FileMappings
   " .lock syntax change
   au BufNewFile,BufFilePre,BufRead *.lock set filetype=json
 
-  " .tern-config syntax change
-  au BufNewFile,BufFilePre,BufRead *.tern-config set filetype=json
-
   " Pipfile syntax change
   au BufNewFile,BufFilePre,BufRead Pipfile set filetype=toml
 
@@ -235,12 +229,12 @@ endif
 "24 Bit True Color-----------------------------------------------
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
   if (has('nvim'))
-    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    " For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   endif
   " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
   if (has('termguicolors'))
-    set termguicolors
+   set termguicolors
   endif
 
 
@@ -305,7 +299,6 @@ nnoremap <leader>gd :Gdiff
 nnoremap <leader>gvd :Gvdiff
 
 " Python-mode settings------------------------------
-"let g:pymode = 0
 " turn all modules off except syntax highlighting
 let g:pymode_syntax = 1
 let g:pymode_breakpoint = 0
@@ -485,7 +478,7 @@ nnoremap <leader>au :MundoToggle<CR>
 
 " Vim-Polyglot--------------------------------------------------
 let g:python_highlight_all=1
-let g:polyglot_disabled = ['typescript']
+" let g:polyglot_disabled = ['typescript']
 
 " YouCompleteMe and UltiSnips compatibility,--------------------
 " with the help of supertab
@@ -497,8 +490,6 @@ let g:SuperTabCrMapping = 0
 " Use this to set the python completion to python set in PATH
 let g:ycm_python_binary_path = 'python'
 
-" Use this to turn off YCM language completion...
-" let g:ycm_filetype_specific_completion_to_disable = {'typescript': 1}
 
 " This is due to a bug w/ the function definition preview
 let g:ycm_add_preview_to_completeopt = 0
@@ -518,8 +509,16 @@ map <leader>ft <Plug>NERDTreeTabsToggle<CR>
 " Dash ----------------------------------------------------------
 nnoremap <silent> <leader>dd <Plug>DashSearch
 
-" nvim-typescript----------------------------------------------------
+" Key Mappings for YCM Semantic Completers-----------------------
+nnoremap K :YcmCompleter GetDoc<cr>
+nnoremap <leader>md :YcmCompleter GoToDefinition<cr>
+nnoremap <leader>mr :YcmCompleter RefactorRename<cr>
+nnoremap <leader>mu :YcmCompleter GoToReferences<cr>
+nnoremap <leader>ma :YcmCompleter GoToDeclaration<cr>
+nnoremap <leader>mi :YcmCompleter GoToImplementation<cr>
+nnoremap <leader>ms :YcmCompleter GetType<cr>
 
+" Typescript----------------------------------------------------
 let g:tagbar_type_typescript = {
   \ 'ctagsbin' : 'tstags',
   \ 'ctagsargs' : '-f-',
@@ -539,77 +538,33 @@ let g:tagbar_type_typescript = {
   \ 'sort' : 0
 \ }
 
-" Disable this plugin's linting; fix for error symbol that does not go away
-let g:nvim_typescript#diagnostics_enable=0
-
-" Echo symbol type info
-let g:nvim_typescript#type_info_on_hold=1
-
 " Custom TS commands
 :command! TSWatch Start tsc --watch --pretty
 :command! TSBuild !tsc
-
+:command! TSExecute write | vsplit term://npx ts-node %
 ":command! TSExecute write | vsplit term://tsc --outFile /dev/stdout % \| node
 " A little faster in-memory package for doing same thing as line above; must
 " install ts-node
-:command! TSExecute write | vsplit term://npx ts-node %
 
 augroup TSMappings
   au!
-  au BufEnter,FileType typescript nnoremap K :TSDoc<CR>
-  au BufEnter,FileType typescript nnoremap <leader>md :TSDefPreview<CR>
-  au BufEnter,FileType typescript nnoremap <leader>mr :TSRename<CR>
-  au BufEnter,FileType typescript nnoremap <leader>mu :TSRefs<CR>
-  au BufEnter,FileType typescript nnoremap <leader>ms :TSType<CR>
-  au BufEnter,FileType typescript nnoremap <leader>ma :TSTypeDef<CR>
-  au BufEnter,FileType typescript nnoremap <leader>mi :TSImport<CR>
   au BufEnter,FileType typescript nnoremap <leader>mxw :TSWatch<CR>
   au BufEnter,FileType typescript nnoremap <leader>mxb :TSBuild<CR>
   au BufEnter,FileType typescript nnoremap <leader>mxx :TSExecute<CR>
 augroup END
-
-" Tern------------------------------------------------
-"autocmd FileType javascript setlocal omnifunc=tern#Complete
-let g:tern_show_argument_hints='on_hold'
-let g:tern_show_signature_in_pum=1
 
 " Custom JS commands
 :command JSexecute write | vsplit term://node %
 
 augroup JSMappings
   au!
-  au BufEnter,FileType javascript nnoremap K :TernDoc<CR>
-  au BufEnter,FileType javascript nnoremap <leader>mK :TernDocBrowse<CR>
-  au BufEnter,FileType javascript nnoremap <leader>md :TernDefPreview<CR>
-  au BufEnter,FileType javascript nnoremap <leader>mr :TernRename<CR>
-  au BufEnter,FileType javascript nnoremap <leader>mu :TernRefs<CR>
-  au BufEnter,FileType javascript nnoremap <leader>ms :TernType<CR>
   au BufEnter,FileType javascript nnoremap <leader>mxx :JSexecute<CR>
 augroup END
 
-" Jedi-Vim ------------------------------------------------------
-" Python refactoring and goto..using YCM for completions
-let g:jedi#completions_enabled = 0
-
-"Set python version for jedi to use for completions; 'auto', 2, or 3 as options
-let g:jedi#force_py_version = 'auto'
-
-let g:jedi#show_call_signatures = 1
-let g:jedi#show_call_signatures_delay = 500
-
-" Custom Python commands
+" Python commands-----------------------------------------------
 :command Pyexecute write | vsplit term://python %
 
-" mappings
-let g:jedi#documentation_command = 'K'
-let g:jedi#goto_command = '<leader>md'
-let g:jedi#rename_command = '<leader>mr'
-let g:jedi#usages_command = '<leader>mu'
-let g:jedi#goto_assignments_command = '<leader>ma'
 au BufEnter *.py nmap <leader>mxx :Pyexecute<CR>
-
-let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#use_splits_not_buffers = 'bottom'
 
 " Vim-go settings------------------------------------------------
 let g:go_highlight_build_constraints = 1
@@ -635,11 +590,6 @@ let g:go_addtags_transform = "camelcase"
 
 augroup GoMappings
 au!
-  au BufEnter,FileType *.go nnoremap K :GoDescribe<cr>
-  au BufEnter,FileType *.go nnoremap <leader>md :GoDef<cr>
-  au BufEnter,FileType *.go nnoremap <leader>mr :GoRename<cr>
-  au BufEnter,FileType *.go nnoremap <leader>mu :GoImplements<cr>
-  au BufEnter,FileType *.go nnoremap <leader>ma :GoDecls<cr>
   au BufEnter,FileType *.go nnoremap <leader>mxx :GoRun<cr>
   au BufEnter,FileType *.go nnoremap <leader>mxb :GoBuild<cr>
   au BufEnter,FileType *.go nnoremap <leader>mxi :GoInstall<cr>
