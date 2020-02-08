@@ -211,9 +211,6 @@ augroup FileMappings
 
   " specfile syntax change
   au BufNewFile,BufFilePre,BufRead *.spec set filetype=python
-
-    " specfile syntax change
-  au BufNewFile,BufFilePre,BufRead *.ts set filetype=javascript
 augroup END
 
 set pastetoggle=<F5>
