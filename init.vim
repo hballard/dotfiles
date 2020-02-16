@@ -13,18 +13,17 @@ Plug 'rakr/vim-one'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe', { 'do': 'python install.py --clang-completer --go-completer --ts-completer' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 Plug 'bentayloruk/vim-react-es6-snippets'
-Plug 'bonsaiben/bootstrap-snippets'
+" Plug 'bonsaiben/bootstrap-snippets'
 Plug 'chrisbra/csv.vim'
 Plug 'docunext/closetag.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
-Plug 'ervandew/supertab'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 Plug 'flazz/vim-colorschemes'
 Plug 'blueshirts/darcula'
@@ -42,18 +41,16 @@ Plug 'mhinz/vim-hugefile'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'myusuf3/numbers.vim'
 Plug 'othree/csscomplete.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'jodosha/vim-godebug'
-Plug 'python-mode/python-mode'
 Plug 'qpkorr/vim-bufkill'
 Plug 'rking/ag.vim'
 Plug 'ryanoasis/vim-webdevicons'
-Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'terryma/vim-multiple-cursors'
@@ -70,7 +67,6 @@ Plug 'vim-scripts/BufOnly.vim'
 Plug 'vim-scripts/SQLComplete.vim'
 Plug 'vim-scripts/ScrollColors'
 Plug 'vim-scripts/loremipsum'
-Plug 'w0rp/ale'
 Plug 'zirrostig/vim-schlepp'
 
 call plug#end()
@@ -300,24 +296,6 @@ nnoremap <leader>gm :G
 nnoremap <leader>gd :Gdiff
 nnoremap <leader>gvd :Gvdiff
 
-" Python-mode settings------------------------------
-" turn all modules off except syntax highlighting
-let g:pymode_syntax = 1
-let g:pymode_breakpoint = 0
-let g:pymode_doc = 0
-let g:pymode_folding = 0
-let g:pymode_indent = 0
-let g:pymode_lint = 0
-let g:pymode_motion = 0
-let g:pymode_options = 0
-let g:pymode_options_colorcolumn = 0
-let g:pymode_rope = 0
-let g:pymode_rope_completion = 0
-let g:pymode_run = 0
-let g:pymode_trim_whitespaces = 0
-let g:pymode_virtualenv = 0
-let g:pymode_warnings = 0
-
 " EasyMotion Mappings---------------------------------
 map <leader>jj <Plug>(easymotion-s)
 map <leader>jt <Plug>(easymotion-bd-t)
@@ -339,12 +317,7 @@ let g:test#runner_commands = ['PyTest', 'Mocha']
 let g:test#python#runner = 'pytest'
 let g:test#python#pytest#options = '--verbose'
 
-" Virtualenv settings------------------------------
-nnoremap <leader>mVw :VirtualEnvList<CR>
-nnoremap <leader>mVd :VirtualEnvDeactivate<CR>
-nnoremap <leader>mVa :VirtualEnvActivate
 let g:virtualenv_stl_format = '[%n]'
-"let g:virtualenv_auto_activate = 1
 
 " Markdown live preview---------------------------
 nnoremap <leader>mcp :Mgrip<CR>
@@ -366,31 +339,6 @@ au FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
 " Clean out AlignMaps mappings -- part of Align plugin
 "autocmd VimEnter * AlignMapsClean
-
-" Neoformat----------------------------------------
-nnoremap <leader>mf :Neoformat<CR>
-
-let g:neoformat_javascript_prettier = {
-      \ 'exe': './node_modules/.bin/prettier',
-      \ 'args': ['--write', '--config .prettierrc.js'],
-      \ 'replace': 1
-      \ }
-
-let g:neoformat_typescript_prettier = {
-      \ 'exe': './node_modules/.bin/prettier',
-      \ 'args': ['--write', '--config .prettierrc.js'],
-      \ 'replace': 1
-      \ }
-
-let g:neoformat_typescriptreact_prettier = {
-      \ 'exe': './node_modules/.bin/prettier',
-      \ 'args': ['--write', '--config .prettierrc.js'],
-      \ 'replace': 1
-      \ }
-
-let g:neoformat_enabled_javascript = ['prettier']
-let g:neoformat_enabled_typescript = ['prettier']
-let g:neoformat_enabled_typescriptreact = ['prettier']
 
 " Indentline settings------------------------------
 let g:indentLine_color_term = 237
@@ -436,11 +384,11 @@ nnoremap <leader>ss :FzfBLines<CR>
 nnoremap <leader>sS :FzfLines<CR>
 
 " Use HTML snippets in Javascript files
-autocmd FileType javascript UltiSnipsAddFiletypes html
+autocmd FileType javascriptreact,typescriptreact UltiSnipsAddFiletypes html
 
 " Closetag configuration----------------------------
-au FileType html,htmljinja,javascript let b:closetag_html_style=1
-autocmd Filetype html,xml,xsl,htm,htmljinja,javascript source ~/.config/nvim/plugged/closetag.vim/plugin/closetag.vim
+au FileType html,htmljinja,javascript,typescript let b:closetag_html_style=1
+autocmd Filetype html,xml,xsl,htm,htmljinja,javascript,typescript source ~/.config/nvim/plugged/closetag.vim/plugin/closetag.vim
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
@@ -467,20 +415,6 @@ if executable('ag')
 map <leader>jr :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
-" Ale Linter settings--------------------------------
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '⚠ '
-let g:ale_statusline_format = ['✗ %d', '⚠  %d', '⬥ ok']
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_linters = {'python': ['flake8', 'mypy']}
-let g:ale_python_mypy_options = '--strict-optional --ignore-missing-stubs'
-"let g:ale_fixers = {'python': ['isort']}
-"let g:ale_linter_aliases = {'jsx': 'css'}
-nmap <leader>ep <Plug>(ale_previous_wrap)
-nmap <leader>en <Plug>(ale_next_wrap)
-
 " Mundo-----------------------------------------------
  "let g:mundo_width = 40
 " let g:mundo_preview_height = 15
@@ -489,21 +423,6 @@ nnoremap <leader>au :MundoToggle<CR>
 " Vim-Polyglot--------------------------------------------------
 let g:python_highlight_all=1
 " let g:polyglot_disabled = ['typescript']
-
-" YouCompleteMe and UltiSnips compatibility,--------------------
-" with the help of supertab
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-let g:SuperTabCrMapping = 0
-
-" Use this to set the python completion to python set in PATH
-let g:ycm_python_binary_path = 'python'
-
-
-" This is due to a bug w/ the function definition preview
-let g:ycm_add_preview_to_completeopt = 0
-set completeopt-=preview
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = '<tab>'
@@ -519,14 +438,145 @@ map <leader>ft <Plug>NERDTreeTabsToggle<CR>
 " Dash ----------------------------------------------------------
 nnoremap <silent> <leader>dd <Plug>DashSearch
 
+" COC.vim -------------------------------------------------------
+set nobackup
+set nowritebackup
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <leader>md <Plug>(coc-definition)
+nmap <leader>ms <Plug>(coc-type-definition)
+nmap <leader>mi <Plug>(coc-implementation)
+nmap <leader>mu <Plug>(coc-references)
+nmap <leader>mr <Plug>(coc-rename)
+nmap <leader>ma  <Plug>(coc-codeaction)
+" Show commands
+nnoremap <silent> <leader>mcc  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <leader>mco  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <leader>mcs  :<C-u>CocList -I symbols<cr>
+
 " Key Mappings for YCM Semantic Completers-----------------------
-nnoremap K :YcmCompleter GetDoc<cr>
-nnoremap <leader>md :YcmCompleter GoToDefinition<cr>
-nnoremap <leader>mr :YcmCompleter RefactorRename<cr>
-nnoremap <leader>mu :YcmCompleter GoToReferences<cr>
-nnoremap <leader>ma :YcmCompleter GoToDeclaration<cr>
-nnoremap <leader>mi :YcmCompleter GoToImplementation<cr>
-nnoremap <leader>ms :YcmCompleter GetType<cr>
+" nnoremap K :YcmCompleter GetDoc<cr>
+" nnoremap <leader>md :YcmCompleter GoToDefinition<cr>
+" nnoremap <leader>mr :YcmCompleter RefactorRename<cr>
+" nnoremap <leader>mu :YcmCompleter GoToReferences<cr>
+" nnoremap <leader>ma :YcmCompleter GoToDeclaration<cr>
+" nnoremap <leader>mi :YcmCompleter GoToImplementation<cr>
+" nnoremap <leader>ms :YcmCompleter GetType<cr>
+
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for format selected region
+xmap <leader>mf  <Plug>(coc-format-selected)
+nmap <leader>mf  <Plug>(coc-format-selected)
+nmap <leader>mf  <Plug>(coc-format)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>ma  <Plug>(coc-codeaction-selected)
+nmap <leader>ma  <Plug>(coc-codeaction-selected)
+
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Create mappings for function text object, requires document symbols feature of languageserver.
+" xmap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap if <Plug>(coc-funcobj-i)
+" omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 Imports   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Using CocList
+" Show all diagnostics
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" Use <tab> to expand snippet
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
 
 " Typescript----------------------------------------------------
 let g:tagbar_type_typescript = {
@@ -604,16 +654,14 @@ au!
   au BufEnter,FileType *.go nnoremap <leader>mxb :GoBuild<cr>
   au BufEnter,FileType *.go nnoremap <leader>mxi :GoInstall<cr>
   au BufEnter,FileType *.go nnoremap <leader>mgc :GoCoverage<cr>
-  au BufEnter,FileType *.go nnoremap <leader>mcc :GoCallers<cr>
+  " au BufEnter,FileType *.go nnoremap <leader>mcc :GoCallers<cr>
 augroup END
 
 " Airline settings-----------------------------------------------
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#virtualenv#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#ale#error_symbol = '✗'
-let g:airline#extensions#ale#warning_symbol = '⚠'
+let g:airline#extensions#coc#enabled = 1
 
 " let g:airline_theme = 'violet'
 let g:airline_theme = 'bubblegum'
@@ -632,6 +680,3 @@ colorscheme one
 " colorscheme hybrid
 " colorscheme dracula
 " colorscheme darcula
-
-" hi xmlAttrib cterm=italic
-" hi jsxAttrib cterm=italic
