@@ -8,6 +8,7 @@
 " Vim Plugins-------------------------------------------
 call plug#begin()
 
+Plug 'mhinz/vim-startify'
 Plug 'rakr/vim-one'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -280,6 +281,10 @@ let g:terminal_color_foreground='#c1c6cf'
 :command! Te Start
 " :command! Usql split term://usql
 
+" Startify settings----------------------------------------------------------
+let g:startify_custom_header = ['   Welcome Back Heath!']
+
+
 "Default SQL language to be used
 let g:sql_type_default = 'pgsql'
 
@@ -359,25 +364,33 @@ let g:NERDSpaceDelims = 1
 " CSS Autocomplete--------------------------------
 au FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
-"let g:tmuxline_preset = 'nightly_fox'
-let g:tmuxline_powerline_separators = 0
-
 " Clean out AlignMaps mappings -- part of Align plugin
 "autocmd VimEnter * AlignMapsClean
 
 " Neoformat----------------------------------------
 nnoremap <leader>mf :Neoformat<CR>
+
 let g:neoformat_javascript_prettier = {
       \ 'exe': './node_modules/.bin/prettier',
-      \ 'args': ['--write'],
+      \ 'args': ['--write', '--config .prettierrc.js'],
       \ 'replace': 1
       \ }
 
 let g:neoformat_typescript_prettier = {
       \ 'exe': './node_modules/.bin/prettier',
-      \ 'args': ['--write', '--config ./.prettierrc.js'],
+      \ 'args': ['--write', '--config .prettierrc.js'],
       \ 'replace': 1
       \ }
+
+let g:neoformat_typescriptreact_prettier = {
+      \ 'exe': './node_modules/.bin/prettier',
+      \ 'args': ['--write', '--config .prettierrc.js'],
+      \ 'replace': 1
+      \ }
+
+let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_typescript = ['prettier']
+let g:neoformat_enabled_typescriptreact = ['prettier']
 
 " Indentline settings------------------------------
 let g:indentLine_color_term = 237
@@ -605,6 +618,9 @@ let g:airline#extensions#ale#warning_symbol = '⚠'
 " let g:airline_theme = 'violet'
 let g:airline_theme = 'bubblegum'
 " let g:airline_theme = 'one'
+
+"let g:tmuxline_preset = 'nightly_fox'
+let g:tmuxline_powerline_separators = 0
 
 " Syntax highlighting--------------------------------------------
 syntax on
