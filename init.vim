@@ -486,16 +486,6 @@ nnoremap <silent> <leader>mco  :<C-u>CocList outline<cr>
 " Search workspace symbols
 nnoremap <silent> <leader>mcs  :<C-u>CocList -I symbols<cr>
 
-" Key Mappings for YCM Semantic Completers-----------------------
-" nnoremap K :YcmCompleter GetDoc<cr>
-" nnoremap <leader>md :YcmCompleter GoToDefinition<cr>
-" nnoremap <leader>mr :YcmCompleter RefactorRename<cr>
-" nnoremap <leader>mu :YcmCompleter GoToReferences<cr>
-" nnoremap <leader>ma :YcmCompleter GoToDeclaration<cr>
-" nnoremap <leader>mi :YcmCompleter GoToImplementation<cr>
-" nnoremap <leader>ms :YcmCompleter GetType<cr>
-
-
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -511,8 +501,6 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for format selected region
-xmap <leader>mf  <Plug>(coc-format-selected)
-nmap <leader>mf  <Plug>(coc-format-selected)
 nmap <leader>mf  <Plug>(coc-format)
 
 augroup mygroup
