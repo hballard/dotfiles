@@ -1,14 +1,8 @@
 " ALL KEYMAPPINGS ARE THE SAME OR VERY SIMILAR TO EMACS 'SPACEMACS' DISTRO
 
 " Vim Plug====================================================
-
-" Vim Plug Functions------------------------------------
-"  none
-
-" Vim Plugins-------------------------------------------
 call plug#begin()
 
-Plug 'mhinz/vim-startify'
 Plug 'rakr/vim-one'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -140,7 +134,7 @@ set textwidth=80
 " highlight ColorColumn ctermbg=7
 
 " Clear search highlights
-noremap <silent><leader>s/ :nohls<CR>
+noremap <silent><leader>t/ :nohls<CR>
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
@@ -169,7 +163,6 @@ set ttyfast                " Faster redrawing.
 set lazyredraw             " Only redraw when necessary.
 "set backspace=2   " Backspace deletes like most programs in insert mode
 set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
-"set history=50
 set ruler         " show the cursor position all the time
 set hidden
 set showcmd       " display incomplete commands
@@ -213,8 +206,7 @@ augroup END
 set pastetoggle=<F5>
 set clipboard=unnamed
 
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
+" Have Vim jump to the last position when reopening a file
 if has('autocmd')
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\"" | endif
@@ -230,27 +222,6 @@ endif
 if (has('termguicolors'))
   set termguicolors
 endif
-
-
-" Temp fix for terminal colors (one dark colorscheme)----------------
-let g:terminal_color_0='#1b2b34'
-let g:terminal_color_1='#ed5f67'
-let g:terminal_color_2='#9ac895'
-let g:terminal_color_3='#fbc963'
-let g:terminal_color_4='#669acd'
-let g:terminal_color_5='#c695c6'
-let g:terminal_color_6='#5fb4b4'
-let g:terminal_color_7='#c1c6cf'
-let g:terminal_color_8='#65737e'
-let g:terminal_color_9='#ed5f67'
-let g:terminal_color_10='#9ac895'
-let g:terminal_color_11='#fbc963'
-let g:terminal_color_12='#a8aebb'
-let g:terminal_color_13='#ced4df'
-let g:terminal_color_14='#5fb4b4'
-let g:terminal_color_15='#d9dfea'
-let g:terminal_color_background='#1b2b34'
-let g:terminal_color_foreground='#c1c6cf'
 
 " Temp fix for terminal colors (spacemacs dark colorscheme)----------------
 " let g:terminal_color_1='#d4557d'
@@ -275,11 +246,9 @@ let g:terminal_color_foreground='#c1c6cf'
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
 :command! PyLineCount !find . -name '*.py' | xargs wc -l
 :command! Te Start
-" :command! Usql split term://usql
 
 " Startify settings----------------------------------------------------------
 let g:startify_custom_header = ['   Welcome Back Heath!']
-
 
 "Default SQL language to be used
 let g:sql_type_default = 'pgsql'
@@ -336,9 +305,6 @@ let g:NERDSpaceDelims = 1
 
 " CSS Autocomplete--------------------------------
 au FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
-
-" Clean out AlignMaps mappings -- part of Align plugin
-"autocmd VimEnter * AlignMapsClean
 
 " Indentline settings------------------------------
 let g:indentLine_color_term = 237
@@ -422,7 +388,6 @@ nnoremap <leader>au :MundoToggle<CR>
 
 " Vim-Polyglot--------------------------------------------------
 let g:python_highlight_all=1
-" let g:polyglot_disabled = ['typescript']
 
 " better key bindings for UltiSnipsExpandTrigger
 let g:UltiSnipsExpandTrigger = '<tab>'
@@ -433,6 +398,11 @@ let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 " NerdTree-------------------------------------------------------
 let g:NERDTreeShowHidden=1
 let g:NERDTreeWinSize=40
+
+" Open NerdTree upon startup if no input provided
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
 map <leader>ft <Plug>NERDTreeTabsToggle<CR>
 
 " Dash ----------------------------------------------------------
@@ -468,23 +438,28 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
 " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use `[g` and `]g` to navigate diagnostics
-" nmap <silent> [g <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" Show all diagnostics
+nnoremap <silent> <leader>el  :<C-u>CocList diagnostics<cr>
+" Use to navigate diagnostics
+nmap <silent> <leader>ep <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>en <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <leader>md <Plug>(coc-definition)
-nmap <leader>ms <Plug>(coc-type-definition)
-nmap <leader>mi <Plug>(coc-implementation)
-nmap <leader>mu <Plug>(coc-references)
-nmap <leader>mr <Plug>(coc-rename)
-nmap <leader>ma  <Plug>(coc-codeaction)
-" Show commands
-nnoremap <silent> <leader>mcc  :<C-u>CocList commands<cr>
+nmap <silent> <leader>md <Plug>(coc-definition)
+nmap <silent> <leader>ms <Plug>(coc-type-definition)
+nmap <silent> <leader>mi <Plug>(coc-implementation)
+nmap <silent> <leader>mu <Plug>(coc-references)
+nmap <silent> <leader>mr <Plug>(coc-rename)
+nmap <silent> <leader>ma  <Plug>(coc-codeaction)
 " Find symbol of current document
-nnoremap <silent> <leader>mco  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>mo  :<C-u>CocList outline<cr>
+
+" Show commands
+nnoremap <silent> <leader>mlc  :<C-u>CocList commands<cr>
 " Search workspace symbols
-nnoremap <silent> <leader>mcs  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>mls  :<C-u>CocList -I symbols<cr>
+" Manage extensions
+nnoremap <silent> <leader>mle  :<C-u>CocList extensions<cr>
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -501,7 +476,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for format selected region
-nmap <leader>mf  <Plug>(coc-format)
+nmap <silent> <leader>mf  <Plug>(coc-format)
 
 augroup mygroup
   autocmd!
@@ -512,11 +487,11 @@ augroup mygroup
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>ma  <Plug>(coc-codeaction-selected)
-nmap <leader>ma  <Plug>(coc-codeaction-selected)
+xmap <silent> <leader>ma  <Plug>(coc-codeaction-selected)
+nmap <silent> <leader>ma  <Plug>(coc-codeaction-selected)
 
 " Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <silent> <leader>qf  <Plug>(coc-fix-current)
 
 " Create mappings for function text object, requires document symbols feature of languageserver.
 " xmap if <Plug>(coc-funcobj-i)
@@ -540,18 +515,6 @@ command! -nargs=0 Imports   :call     CocAction('runCommand', 'editor.action.org
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" Using CocList
-" Show all diagnostics
-" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Do default action for next item.
-" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
 " Use <tab> to expand snippet
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? coc#_select_confirm() :
@@ -565,6 +528,14 @@ function! s:check_back_space() abort
 endfunction
 
 let g:coc_snippet_next = '<tab>'
+
+" Using CocList
+" Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " Typescript----------------------------------------------------
 let g:tagbar_type_typescript = {
@@ -601,7 +572,7 @@ augroup TSMappings
   au BufEnter,FileType typescript nnoremap <leader>mxx :TSExecute<CR>
 augroup END
 
-" Custom JS commands
+" Custom JS commands--------------------------------------------
 :command JSexecute write | vsplit term://node %
 
 augroup JSMappings
@@ -651,8 +622,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#virtualenv#enabled = 1
 let g:airline#extensions#coc#enabled = 1
 
-" let g:airline_theme = 'violet'
 let g:airline_theme = 'bubblegum'
+" let g:airline_theme = 'violet'
 " let g:airline_theme = 'one'
 
 "let g:tmuxline_preset = 'nightly_fox'
