@@ -342,7 +342,7 @@ nnoremap <leader>ff :FZF<CR>
 nnoremap <leader>/ :FzfAg<CR>
 nnoremap <leader>bb :FzfBuffers<CR>
 nnoremap <leader>is :FzfSnippets<CR>
-nnoremap <leader>fr :FzfHistory<CR>
+nnoremap <leader>fh :FzfHistory<CR>
 nnoremap <leader>ji :FzfBTags<CR>
 nnoremap <leader>jI :FzfTags<CR>
 nnoremap <leader>sc :FzfCommands<CR>
@@ -407,7 +407,7 @@ nnoremap <silent> <leader>dd <Plug>DashSearch
 " COC.vim -------------------------------------------------------
 set nobackup
 set nowritebackup
-set cmdheight=2
+" set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
@@ -456,6 +456,8 @@ nnoremap <silent> <leader>mlc  :<C-u>CocList commands<cr>
 nnoremap <silent> <leader>mls  :<C-u>CocList -I symbols<cr>
 " Manage extensions
 nnoremap <silent> <leader>mle  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <leader>mla  :<C-u>CocAction<cr>
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
