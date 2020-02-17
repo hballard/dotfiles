@@ -14,8 +14,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 Plug 'bentayloruk/vim-react-es6-snippets'
 " Plug 'bonsaiben/bootstrap-snippets'
+Plug 'alvan/vim-closetag'
 Plug 'chrisbra/csv.vim'
-Plug 'docunext/closetag.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
@@ -247,8 +247,8 @@ endif
 :command! PyLineCount !find . -name '*.py' | xargs wc -l
 :command! Te Start
 
-" Startify settings----------------------------------------------------------
-let g:startify_custom_header = ['   Welcome Back Heath!']
+" Closetag settings----------------------------------------------------------
+let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.phtml,*.jsx,*.tsx,*.jinja'
 
 "Default SQL language to be used
 let g:sql_type_default = 'pgsql'
@@ -350,11 +350,7 @@ nnoremap <leader>ss :FzfBLines<CR>
 nnoremap <leader>sS :FzfLines<CR>
 
 " Use HTML snippets in Javascript files
-autocmd FileType javascriptreact,typescriptreact UltiSnipsAddFiletypes html
-
-" Closetag configuration----------------------------
-au FileType html,htmljinja,javascript,typescript let b:closetag_html_style=1
-autocmd Filetype html,xml,xsl,htm,htmljinja,javascript,typescript source ~/.config/nvim/plugged/closetag.vim/plugin/closetag.vim
+" autocmd FileType javascriptreact,typescriptreact UltiSnipsAddFiletypes html
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
