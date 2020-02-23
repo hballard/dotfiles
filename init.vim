@@ -8,6 +8,7 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'SirVer/ultisnips'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'ervandew/supertab'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
@@ -260,7 +261,7 @@ let g:html_indent_tags = 'li\|p'
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gS :Gw<CR>
 nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>g. :Glogg<CR>
+nnoremap <leader>gl :Glogg<CR>
 nnoremap <leader>gm :G
 nnoremap <leader>gd :Gdiff
 nnoremap <leader>gvd :Gvdiff
@@ -338,16 +339,16 @@ endfunction
 au! User FzfStatusLine call <SID>fzf_statusline()
 
 " FZF  mappings
-nnoremap <leader>ff :FZF<CR>
+nnoremap <leader>sf :FZF<CR>
 nnoremap <leader>/ :FzfAg<CR>
-nnoremap <leader>bb :FzfBuffers<CR>
-nnoremap <leader>is :FzfSnippets<CR>
-nnoremap <leader>fh :FzfHistory<CR>
-nnoremap <leader>ji :FzfBTags<CR>
-nnoremap <leader>jI :FzfTags<CR>
+nnoremap <leader>sb :FzfBuffers<CR>
+nnoremap <leader>ss :FzfSnippets<CR>
+nnoremap <leader>sh :FzfHistory<CR>
+nnoremap <leader>st :FzfBTags<CR>
+nnoremap <leader>sT :FzfTags<CR>
 nnoremap <leader>sc :FzfCommands<CR>
-nnoremap <leader>ss :FzfBLines<CR>
-nnoremap <leader>sS :FzfLines<CR>
+nnoremap <leader>sl :FzfBLines<CR>
+nnoremap <leader>sL :FzfLines<CR>
 
 " Use HTML snippets in Javascript files
 " autocmd FileType javascriptreact,typescriptreact UltiSnipsAddFiletypes html
@@ -356,9 +357,9 @@ nnoremap <leader>sS :FzfLines<CR>
 let g:jsx_ext_required = 0
 
 " CtrlsF mappings-----------------------------------
-nmap <leader>sp <Plug>CtrlSFPrompt
-vmap <leader>sp <Plug>CtrlSFVwordPath
-vmap <leader>sP <Plug>CtrlSFVwordExec
+nmap <leader>sg <Plug>CtrlSFPrompt
+vmap <leader>sg <Plug>CtrlSFVwordPath
+vmap <leader>sG <Plug>CtrlSFVwordExec
 nnoremap <leader>so :CtrlSFOpen<CR>
 
 "  Ack and Ag---------------------------------------
@@ -386,10 +387,14 @@ nnoremap <leader>au :MundoToggle<CR>
 let g:python_highlight_all=1
 
 " better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = '<tab>'
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+" let g:UltiSnipsExpandTrigger = '<tab>'
+" let g:UltiSnipsJumpForwardTrigger = '<tab>'
+" let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 "let g:UltiSnipsUsePythonVersion=3
+
+" SuperTab-------------------------------------------------------
+" let g:SuperTabDefaultCompletionType = '<C-n>'
+" let g:SuperTabCrMapping = 0
 
 " NerdTree-------------------------------------------------------
 let g:NERDTreeShowHidden=1
@@ -407,7 +412,6 @@ nnoremap <silent> <leader>dd <Plug>DashSearch
 " COC.vim -------------------------------------------------------
 set nobackup
 set nowritebackup
-" set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
@@ -447,20 +451,21 @@ nmap <silent> <leader>mi <Plug>(coc-implementation)
 nmap <silent> <leader>mu <Plug>(coc-references)
 nmap <silent> <leader>mr <Plug>(coc-rename)
 nmap <silent> <leader>ma  <Plug>(coc-codeaction)
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 " Find symbol of current document
 nnoremap <silent> <leader>mo  :<C-u>CocList outline<cr>
 
+" Show list
+nnoremap <silent> <leader>mll  :<C-u>CocList<cr>
 " Show commands
 nnoremap <silent> <leader>mlc  :<C-u>CocList commands<cr>
 " Search workspace symbols
 nnoremap <silent> <leader>mls  :<C-u>CocList -I symbols<cr>
 " Manage extensions
 nnoremap <silent> <leader>mle  :<C-u>CocList extensions<cr>
-" Show commands
+" Show actions
 nnoremap <silent> <leader>mla  :<C-u>CocAction<cr>
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -491,12 +496,6 @@ nmap <silent> <leader>ma  <Plug>(coc-codeaction-selected)
 " Fix autofix problem of current line
 nmap <silent> <leader>qf  <Plug>(coc-fix-current)
 
-" Create mappings for function text object, requires document symbols feature of languageserver.
-" xmap if <Plug>(coc-funcobj-i)
-" xmap af <Plug>(coc-funcobj-a)
-" omap if <Plug>(coc-funcobj-i)
-" omap af <Plug>(coc-funcobj-a)
-
 " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
@@ -526,14 +525,6 @@ function! s:check_back_space() abort
 endfunction
 
 let g:coc_snippet_next = '<tab>'
-
-" Using CocList
-" Do default action for next item.
-" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 " Typescript----------------------------------------------------
 let g:tagbar_type_typescript = {
@@ -622,7 +613,6 @@ let g:airline#extensions#coc#enabled = 1
 
 let g:airline_theme = 'bubblegum'
 " let g:airline_theme = 'violet'
-" let g:airline_theme = 'one'
 
 "let g:tmuxline_preset = 'nightly_fox'
 let g:tmuxline_powerline_separators = 0
@@ -634,6 +624,5 @@ set background=dark
 let g:one_allow_italics = 1
 colorscheme one
 " colorscheme space-vim-dark
+" colorscheme gruvbox
 " colorscheme hybrid
-" colorscheme dracula
-" colorscheme darcula
