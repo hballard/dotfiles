@@ -93,7 +93,11 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias vi='nvim'
+if [ -n "$TMUX" ]; then
+  alias vi="nvim"
+else
+  alias vi="tmux new-session 'nvim'"
+fi
 
 # User configuraation
 

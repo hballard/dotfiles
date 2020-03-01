@@ -3,23 +3,22 @@
 " Vim Plug====================================================
 call plug#begin()
 
-Plug 'rakr/vim-one'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'SirVer/ultisnips'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'ervandew/supertab'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
+Plug 'liuchengxu/vista.vim'
 Plug 'bentayloruk/vim-react-es6-snippets'
-" Plug 'bonsaiben/bootstrap-snippets'
 Plug 'alvan/vim-closetag'
 Plug 'chrisbra/csv.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
+Plug 'rakr/vim-one'
+Plug 'arzg/vim-colors-xcode'
 Plug 'flazz/vim-colorschemes'
 Plug 'blueshirts/darcula'
 Plug 'henrik/vim-indexed-search'
@@ -30,8 +29,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'liuchengxu/space-vim-dark'
-Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-hugefile'
 Plug 'mitsuhiko/vim-jinja'
 Plug 'myusuf3/numbers.vim'
@@ -262,9 +259,8 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gS :Gw<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gl :Glogg<CR>
-nnoremap <leader>gm :G
-nnoremap <leader>gd :Gdiff
-nnoremap <leader>gvd :Gvdiff
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>gvd :Gvdiff<CR>
 
 " EasyMotion Mappings---------------------------------
 map <leader>jj <Plug>(easymotion-s)
@@ -344,14 +340,11 @@ nnoremap <leader>/ :FzfAg<CR>
 nnoremap <leader>sb :FzfBuffers<CR>
 nnoremap <leader>ss :FzfSnippets<CR>
 nnoremap <leader>sh :FzfHistory<CR>
-nnoremap <leader>st :FzfBTags<CR>
+nnoremap <leader>st :Vista finder<CR>
 nnoremap <leader>sT :FzfTags<CR>
 nnoremap <leader>sc :FzfCommands<CR>
 nnoremap <leader>sl :FzfBLines<CR>
 nnoremap <leader>sL :FzfLines<CR>
-
-" Use HTML snippets in Javascript files
-" autocmd FileType javascriptreact,typescriptreact UltiSnipsAddFiletypes html
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
@@ -373,10 +366,12 @@ if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor
  endif
 
-" TagBar---------------------------------------------
-" toggle tagbar display
-map <leader>jr :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
+" Vista.vim---------------------------------------------
+map <leader>jr :Vista<CR>
+let g:vista_default_executive = 'coc'
+let g:vista_sidebar_width = 45
+let g:vista_finder_alternative_executives = ['ctags']
+let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
 
 " Mundo-----------------------------------------------
  "let g:mundo_width = 40
@@ -453,15 +448,15 @@ nmap <silent> <leader>mr <Plug>(coc-rename)
 nmap <silent> <leader>ma  <Plug>(coc-codeaction)
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-" Find symbol of current document
-nnoremap <silent> <leader>mo  :<C-u>CocList outline<cr>
 
 " Show list
 nnoremap <silent> <leader>mll  :<C-u>CocList<cr>
 " Show commands
 nnoremap <silent> <leader>mlc  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <leader>mls  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <leader>mls  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>mlS  :<C-u>CocList -I symbols<cr>
 " Manage extensions
 nnoremap <silent> <leader>mle  :<C-u>CocList extensions<cr>
 " Show actions
