@@ -64,6 +64,17 @@ Plug 'zirrostig/vim-schlepp'
 
 call plug#end()
 
+" whichkey-------------------------------------------------------------------
+" By default timeoutlen is 1000 ms
+set timeoutlen=500
+call which_key#register('<Space>', "g:which_key_map")
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
+let g:which_key_map = {}
+let g:which_key_map.m = { 'name' : '+major-mode' }
+let g:which_key_map["'"] = 'open-terminal'
+let g:which_key_map['!'] = { 'name' : 'which_key_ignore' }
+
 " NON-PLUGIN RELATED CONFIG SETTINGS================================
 
 filetype indent on
@@ -79,6 +90,17 @@ nnoremap <leader>wh <c-w>h
 nnoremap <leader>wd :q<CR>
 nnoremap <leader>ws :sp<CR>
 nnoremap <leader>wv :vs<CR>
+let g:which_key_map.w = {
+      \ 'name' : '+window',
+      \ 'j' : 'down'    ,
+      \ 'k' : 'up',
+      \ 'l' : 'right',
+      \ 'h' : 'left',
+      \ 'd' : 'delete',
+      \ 's' : 'horizontal-split',
+      \ 'v' : 'vertical-split',
+      \ }
+
 
 " Keymap to open default shell
 nnoremap <leader>' :sp term://zsh<CR>i
@@ -86,6 +108,15 @@ nnoremap <leader>' :sp term://zsh<CR>i
 " Keymap to edit init.vim / .vimrc
 nnoremap <leader>fed :e $MYVIMRC<CR>
 nnoremap <leader>feR :source $MYVIMRC<CR>
+let g:which_key_map.f = {
+        \ 'name' : '+file',
+        \ 't' : 'toggle-file-explorer',
+        \ }
+let g:which_key_map.f.e = {
+        \ 'name' : '+edit',
+        \ 'd' : 'edit-config-file',
+        \ 'R' : 'reload-config-file',
+        \ }
 
 " Press i to enter insert mode, and ii to exit.
 inoremap ii <Esc>
@@ -106,22 +137,35 @@ cmap w!! %!sudo tee > /dev/null %
 " tab navigation mappings
 nnoremap <leader>tn :tabn<CR>
 nnoremap <leader>tp :tabp<CR>
-nnoremap <leader>tm :tabm
 nnoremap <leader>tN :tabnew<CR>
 nnoremap <leader>ts :tab split<CR>
 nnoremap <leader>td :q<CR>
+let g:which_key_map.t = {
+        \ 'name' : '+tab',
+        \ 'n' : 'next-tab',
+        \ 'p' : 'previous-tab',
+        \ 'N' : 'new-tab',
+        \ 's' : 'split-tab',
+        \ 'd' : 'delete-tab',
+        \ }
 
 " buffer navigation mappings
 nnoremap <leader>bn :bn<CR>
 nnoremap <leader>bp :bp<CR>
-nnoremap <leader>bm :bm
 nnoremap <leader>bd :bd!<CR>
+let g:which_key_map.t = {
+        \ 'name' : '+buffer',
+        \ 'n' : 'next-buffer',
+        \ 'p' : 'previous-buffer',
+        \ 'd' : 'delete-buffer',
+        \ }
 
 " show registers
 nnoremap <leader>re :register<CR>
-
-" toggle scroll of windows
-nnoremap <leader>wsc :set scb!<CR>
+let g:which_key_map.r = {
+        \ 'name' : '+registers',
+        \ 'e' : 'show-register',
+        \ }
 
 " autocompletion of files and commands behaves like shell
 " complete only the common part, list the options that match
@@ -254,17 +298,6 @@ let g:sql_type_default = 'pgsql'
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
-
-" whichkey-------------------------------------------------------------------
-" By default timeoutlen is 1000 ms
-set timeoutlen=500
-call which_key#register('<Space>', "g:which_key_map")
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
-let g:which_key_map = {}
-let g:which_key_map.m = { 'name' : '+major-mode' }
-let g:which_key_map["'"] = 'open-terminal'
-let g:which_key_map['!'] = { 'name' : 'which_key_ignore' }
 
 " Fugitive (git) Mappings----------------------------
 nnoremap <leader>gs :Gstatus<CR>
@@ -462,9 +495,6 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 map <leader>ft <Plug>NERDTreeTabsToggle<CR>
-
-" Dash ----------------------------------------------------------
-nnoremap <silent> <leader>dd <Plug>DashSearch
 
 " COC.vim -------------------------------------------------------
 set nobackup
