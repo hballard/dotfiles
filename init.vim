@@ -17,10 +17,11 @@ Plug 'chrisbra/csv.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
+Plug 'liuchengxu/space-vim-theme'
 Plug 'rakr/vim-one'
-Plug 'arzg/vim-colors-xcode'
 Plug 'flazz/vim-colorschemes'
 Plug 'blueshirts/darcula'
+Plug 'liuchengxu/vim-which-key'
 Plug 'henrik/vim-indexed-search'
 Plug 'honza/vim-snippets'
 Plug 'itchyny/vim-cursorword'
@@ -254,21 +255,46 @@ let g:sql_type_default = 'pgsql'
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
+" whichkey-------------------------------------------------------------------
+" By default timeoutlen is 1000 ms
+set timeoutlen=500
+call which_key#register('<Space>', "g:which_key_map")
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
+let g:which_key_map = {}
+let g:which_key_map.m = { 'name' : '+major-mode' }
+let g:which_key_map["'"] = 'open-terminal'
+let g:which_key_map['!'] = { 'name' : 'which_key_ignore' }
+
 " Fugitive (git) Mappings----------------------------
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gS :Gw<CR>
 nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gl :Glogg<CR>
 nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>gvd :Gvdiff<CR>
+nnoremap <leader>gv :Gvdiff<CR>
+" let g:which_key_map.g = { 'name' : '+git' }
+" let g:which_key_map.g.s = 'git-status'
+let g:which_key_map.g = {
+      \ 'name' : '+git/version-control',
+      \ 's' : 'git-status'    ,
+      \ 'S' : 'git-write',
+      \ 'b' : 'git-blame',
+      \ 'l' : 'git-log',
+      \ 'd' : 'git-diff',
+      \ 'v' : 'git-vdiff',
+      \ }
 
 " EasyMotion Mappings---------------------------------
 map <leader>jj <Plug>(easymotion-s)
-map <leader>jt <Plug>(easymotion-bd-t)
 map <leader>jw <Plug>(easymotion-bd-w)
 map <leader>je <Plug>(easymotion-bd-e)
-map <leader>jl <Plug>(easymotion-bd-jk)
-map <leader>jn <Plug>(easymotion-bd-n)
+let g:which_key_map.j = {
+      \ 'name' : '+jump',
+      \ 'j' : 'jump-to-character',
+      \ 'w' : 'jump-to-beginning-of-word',
+      \ 'e' : 'jump-to-ending-of-word',
+      \ }
 
 " Vim-test configurations---------------------------
 nmap <silent> <leader>mtt :TestNearest<CR>
@@ -276,6 +302,14 @@ nmap <silent> <leader>mtm :TestFile<CR>
 nmap <silent> <leader>mta :TestSuite<CR>
 nmap <silent> <leader>mtl :TestLast<CR>
 nmap <silent> <leader>mtv :TestVisit<CR>
+let g:which_key_map.m.t = {
+      \ 'name' : '+test',
+      \ 't' : 'test-nearest',
+      \ 'm' : 'test-file',
+      \ 'a' : 'test-suite',
+      \ 'l' : 'test-last',
+      \ 'v' : 'test-visit',
+      \ }
 
 " make test commands execute using dispatch.vim
 let g:test#strategy = 'neovim'
@@ -286,8 +320,13 @@ let g:test#python#pytest#options = '--verbose'
 let g:virtualenv_stl_format = '[%n]'
 
 " Markdown live preview---------------------------
-nnoremap <leader>mcp :Mgrip<CR>
-nnoremap <leader>mcP :Mpreview<CR>
+nnoremap <leader>mpp :Mgrip<CR>
+nnoremap <leader>mpP :Mpreview<CR>
+let g:which_key_map.m.p = {
+      \ 'name' : '+preview',
+      \ 'p' : 'preview-with-mgrip',
+      \ 'P' : 'preview-with-github',
+      \ }
 
 " Vim schlep -------------------------------------
 vmap <unique> <up>    <Plug>SchleppUp
@@ -297,7 +336,12 @@ vmap <unique> <right> <Plug>SchleppRight
 
 " NerdCommenter config----------------------------
 map <leader>; <Plug>NERDCommenterToggle
+let g:which_key_map[';'] = 'toggle-comment'
 nmap <leader>ca <Plug>NERDCommenterAppend
+let g:which_key_map.c = {
+      \ 'name' : '+comment',
+      \ 'a' : 'append-comment'
+      \}
 let g:NERDSpaceDelims = 1
 
 " CSS Autocomplete--------------------------------
@@ -343,8 +387,20 @@ nnoremap <leader>sh :FzfHistory<CR>
 nnoremap <leader>st :Vista finder<CR>
 nnoremap <leader>sT :FzfTags<CR>
 nnoremap <leader>sc :FzfCommands<CR>
-nnoremap <leader>sl :FzfBLines<CR>
-nnoremap <leader>sL :FzfLines<CR>
+nnoremap <leader>sl :FzfLines<CR>
+let g:which_key_map['/'] = 'fuzzy-match-project'
+let g:which_key_map.s = {
+      \ 'name' : '+search/fuzzy-match',
+      \ 'f' : 'fuzzy-match-filenames',
+      \ 'b' : 'fuzzy-match-buffers',
+      \ 's' : 'fuzzy-match-snippets',
+      \ 'h' : 'fuzzy-match-file-history',
+      \ 't' : 'fuzzy-match-buffer-tags',
+      \ 'T' : 'fuzzy-match-project-tags',
+      \ 'c' : 'fuzzy-match-commands',
+      \ 'l' : 'fuzzy-match-buffer-lines',
+      \}
+let g:which_key_map.s.w = { 'name' : 'which_key_ignore' }
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
@@ -354,6 +410,9 @@ nmap <leader>sg <Plug>CtrlSFPrompt
 vmap <leader>sg <Plug>CtrlSFVwordPath
 vmap <leader>sG <Plug>CtrlSFVwordExec
 nnoremap <leader>so :CtrlSFOpen<CR>
+let g:which_key_map.s.g = 'search-word-project-prompt'
+let g:which_key_map.s.G = 'search-word-project-noprompt'
+let g:which_key_map.s.o = 'search-word-project-toggle'
 
 "  Ack and Ag---------------------------------------
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
@@ -368,6 +427,7 @@ if executable('ag')
 
 " Vista.vim---------------------------------------------
 map <leader>jr :Vista<CR>
+let g:which_key_map.j.r = 'jump-to-symbol'
 let g:vista_default_executive = 'coc'
 let g:vista_sidebar_width = 45
 let g:vista_finder_alternative_executives = ['ctags']
@@ -377,6 +437,8 @@ let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
  "let g:mundo_width = 40
 " let g:mundo_preview_height = 15
 nnoremap <leader>au :MundoToggle<CR>
+let g:which_key_map.a = { 'name' : '+applications' }
+let g:which_key_map.a.u = 'change-history-toggle'
 
 " Vim-Polyglot--------------------------------------------------
 let g:python_highlight_all=1
