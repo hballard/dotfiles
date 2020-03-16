@@ -3,6 +3,7 @@
 " Vim Plug====================================================
 call plug#begin()
 
+Plug 'liuchengxu/vim-which-key'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -21,7 +22,6 @@ Plug 'liuchengxu/space-vim-theme'
 Plug 'rakr/vim-one'
 Plug 'flazz/vim-colorschemes'
 Plug 'blueshirts/darcula'
-Plug 'liuchengxu/vim-which-key'
 Plug 'henrik/vim-indexed-search'
 Plug 'honza/vim-snippets'
 Plug 'itchyny/vim-cursorword'
@@ -65,22 +65,228 @@ Plug 'zirrostig/vim-schlepp'
 call plug#end()
 
 " whichkey-------------------------------------------------------------------
+let g:mapleader = ' '
 " By default timeoutlen is 1000 ms
 set timeoutlen=500
 call which_key#register('<Space>', "g:which_key_map")
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 let g:which_key_map = {}
-let g:which_key_map.m = { 'name' : '+major-mode' }
-let g:which_key_map["'"] = 'open-terminal'
+
 let g:which_key_map['!'] = { 'name' : 'which_key_ignore' }
+let g:which_key_map["'"] = 'open-terminal'
+let g:which_key_map[';'] = 'toggle-comment'
+let g:which_key_map['/'] = 'fuzzy-match-project'
+let g:which_key_map.a = { 'name' : 'which_key_ignore' }
+let g:which_key_map.h = { 'name' : 'which_key_ignore' }
+let g:which_key_map.H = { 'name' : 'which_key_ignore' }
+
+let g:which_key_map.m = {
+      \ 'name' : '+major-mode',
+      \ 'd' : 'show-definition',
+      \ 's' : 'show-type-definition',
+      \ 'i' : 'show-implementation',
+      \ 'I' : 'organize-imports',
+      \ 'f' : 'format-buffer',
+      \ 'u' : 'show-references',
+      \ 'r' : 'rename-symbol',
+      \ 'a' : 'suggest-code-action',
+      \ 'K' : 'show-documentation',
+      \ '=' : 'which_key_ignore',
+      \}
+
+let g:which_key_map.m.t = {
+      \ 'name' : '+test',
+      \ 't' : 'nearest-function',
+      \ 'm' : 'whole-file',
+      \ 'a' : 'whole-suite',
+      \ 'l' : 'last',
+      \ 'v' : 'visit',
+      \ }
+
+let g:which_key_map.m.p = {
+      \ 'name' : '+markdown-preview',
+      \ 'p' : 'preview-with-mgrip',
+      \ 'P' : 'preview-with-github',
+      \ }
+
+let g:which_key_map.m.l = {
+        \ 'name' : '+coc-list',
+        \ 'l' : 'all',
+        \ 'c' : 'commands',
+        \ 's' : 'outline',
+        \ 'S' : 'symbols',
+        \ 'e' : 'extensions',
+        \ 'a' : 'actions',
+        \ }
+
+let g:which_key_map.m.x = {
+        \ 'name' : '+execute',
+        \ 'x' : 'run',
+        \ 'b' : 'build',
+        \ 'w' : 'watch',
+        \ 'c' : 'coverage(go-only)',
+        \ }
+
+let g:which_key_map.w = {
+      \ 'name' : '+window',
+      \ 'j' : 'down'    ,
+      \ 'k' : 'up',
+      \ 'l' : 'right',
+      \ 'h' : 'left',
+      \ 'J' : 'decrease-split-vertical'    ,
+      \ 'K' : 'increase-split-vertical',
+      \ 'L' : 'increase-split-horizontal',
+      \ 'H' : 'decrease-split-horizontal',
+      \ 'd' : 'delete',
+      \ 's' : 'horizontal-split',
+      \ 'v' : 'vertical-split',
+      \ '=' : 'which_key_ignore',
+      \ }
+
+let g:which_key_map.f = {
+        \ 'name' : '+file',
+        \ }
+
+let g:which_key_map.f.e = {
+        \ 'name' : '+edit',
+        \ 'd' : 'edit-config-file',
+        \ 'R' : 'reload-config-file',
+        \ }
+
+let g:which_key_map.t = {
+        \ 'name' : '+toggle',
+        \ '/' : 'search-highlights',
+        \ 'm' : 'mundo-history',
+        \ 's' : 'symbols',
+        \ 'f' : 'file-tree',
+        \ 'r' : 'project-search-results',
+        \ 'ml' : 'which_key_ignore',
+        \ 'sp' : 'which_key_ignore',
+        \ '#' : 'which_key_ignore',
+        \ '=' : 'which_key_ignore',
+        \ ',' : 'which_key_ignore',
+        \ ';' : 'which_key_ignore',
+        \ ':' : 'which_key_ignore',
+        \ '<' : 'which_key_ignore',
+        \ '?' : 'which_key_ignore',
+        \ '@' : 'which_key_ignore',
+        \ 't' : 'which_key_ignore',
+        \ '|' : 'which_key_ignore',
+        \ '~' : 'which_key_ignore',
+        \ }
+let g:which_key_map.t.a = { 'name' : 'which_key_ignore' }
+let g:which_key_map.t.W = { 'name' : 'which_key_ignore' }
+
+let g:which_key_map.T = {
+        \ 'name' : '+tab',
+        \ 'n' : 'next-tab',
+        \ 'p' : 'previous-tab',
+        \ 'N' : 'new-tab',
+        \ 's' : 'split-tab',
+        \ 'd' : 'delete-tab',
+        \ '#' : 'which_key_ignore',
+        \ '=' : 'which_key_ignore',
+        \ ',' : 'which_key_ignore',
+        \ ';' : 'which_key_ignore',
+        \ ':' : 'which_key_ignore',
+        \ '<' : 'which_key_ignore',
+        \ '?' : 'which_key_ignore',
+        \ '@' : 'which_key_ignore',
+        \ 't' : 'which_key_ignore',
+        \ '|' : 'which_key_ignore',
+        \ '~' : 'which_key_ignore',
+        \ 'sp' : 'which_key_ignore',
+        \ }
+let g:which_key_map.T.a = { 'name' : 'which_key_ignore' }
+let g:which_key_map.T.W = { 'name' : 'which_key_ignore' }
+
+let g:which_key_map.b = {
+        \ 'name' : '+buffer',
+        \ 'n' : 'next-buffer',
+        \ 'p' : 'previous-buffer',
+        \ 'd' : 'delete-buffer',
+        \ 'a' : 'which_key_ignore',
+        \ 'f' : 'which_key_ignore',
+        \ 'w' : 'which_key_ignore',
+        \ 'b' : 'which_key_ignore',
+        \ }
+
+let g:which_key_map.r = {
+        \ 'name' : '+registers',
+        \ 'e' : 'show-register',
+        \ }
+
+let g:which_key_map.g = {
+      \ 'name' : '+git/version-control',
+      \ 's' : 'status'    ,
+      \ 'S' : 'write',
+      \ 'b' : 'blame',
+      \ 'l' : 'log',
+      \ 'd' : 'horizontal-diff',
+      \ 'v' : 'vertical-diff',
+      \ }
+
+let g:which_key_map.j = {
+      \ 'name' : '+jump',
+      \ 'j' : 'to-character',
+      \ 'w' : 'to-beginning-of-word',
+      \ 'e' : 'to-ending-of-word',
+      \ }
+
+let g:which_key_map.c = {
+      \ 'name' : '+comment',
+      \ '$' : 'to-EOL',
+      \ 'a' : 'append',
+      \ 'b' : 'align-both',
+      \ 'c' : 'comment',
+      \ 'i' : 'invert',
+      \ 'l' : 'align-left',
+      \ 'm' : 'minimal',
+      \ 'n' : 'nested',
+      \ 's' : 'sexy',
+      \ 'u' : 'uncomment',
+      \ 'y' : 'yank',
+      \}
+
+let g:which_key_map.s = {
+      \ 'name' : '+search/fuzzy-match',
+      \ 'f' : 'filenames',
+      \ 'b' : 'buffers',
+      \ 's' : 'snippets',
+      \ 'h' : 'file-history',
+      \ 't' : 'buffer-tags',
+      \ 'T' : 'project-tags',
+      \ 'c' : 'commands',
+      \ 'l' : 'buffer-lines',
+      \ 'g' : 'project-search-prompt',
+      \ 'G' : 'project-search-noprompt',
+      \}
+let g:which_key_map.s.w = { 'name' : 'which_key_ignore' }
+
+" let g:which_key_map.a = {
+      " \ 'name' : '+applications',
+      " \ 'u' : 'change-history-toggle',
+      " \}
+
+let g:which_key_map.e = {
+      \ 'name' : '+errors/warnings',
+      \ 'l' : 'list',
+      \ 'n' : 'next',
+      \ 'p' : 'previous',
+      \}
 
 " NON-PLUGIN RELATED CONFIG SETTINGS================================
 
 filetype indent on
 set number
 set numberwidth=4
-let g:mapleader = ' '
+
+" mapping for better splits
+nnoremap <leader>wJ 5<C-W>-
+nnoremap <leader>wK 5<C-W>+
+nnoremap <leader>wL 5<C-W>>
+nnoremap <leader>wH 5<C-W><
 
 " Easier movement between windows / splits
 nnoremap <leader>wj <c-w>j
@@ -90,16 +296,6 @@ nnoremap <leader>wh <c-w>h
 nnoremap <leader>wd :q<CR>
 nnoremap <leader>ws :sp<CR>
 nnoremap <leader>wv :vs<CR>
-let g:which_key_map.w = {
-      \ 'name' : '+window',
-      \ 'j' : 'down'    ,
-      \ 'k' : 'up',
-      \ 'l' : 'right',
-      \ 'h' : 'left',
-      \ 'd' : 'delete',
-      \ 's' : 'horizontal-split',
-      \ 'v' : 'vertical-split',
-      \ }
 
 
 " Keymap to open default shell
@@ -108,16 +304,6 @@ nnoremap <leader>' :sp term://zsh<CR>i
 " Keymap to edit init.vim / .vimrc
 nnoremap <leader>fed :e $MYVIMRC<CR>
 nnoremap <leader>feR :source $MYVIMRC<CR>
-let g:which_key_map.f = {
-        \ 'name' : '+file',
-        \ 't' : 'toggle-file-explorer',
-        \ }
-let g:which_key_map.f.e = {
-        \ 'name' : '+edit',
-        \ 'd' : 'edit-config-file',
-        \ 'R' : 'reload-config-file',
-        \ }
-
 " Press i to enter insert mode, and ii to exit.
 inoremap ii <Esc>
 
@@ -135,37 +321,19 @@ tnoremap <Esc> <c-\><c-n>
 cmap w!! %!sudo tee > /dev/null %
 
 " tab navigation mappings
-nnoremap <leader>tn :tabn<CR>
-nnoremap <leader>tp :tabp<CR>
-nnoremap <leader>tN :tabnew<CR>
-nnoremap <leader>ts :tab split<CR>
-nnoremap <leader>td :q<CR>
-let g:which_key_map.t = {
-        \ 'name' : '+tab',
-        \ 'n' : 'next-tab',
-        \ 'p' : 'previous-tab',
-        \ 'N' : 'new-tab',
-        \ 's' : 'split-tab',
-        \ 'd' : 'delete-tab',
-        \ }
+nnoremap <leader>Tn :tabn<CR>
+nnoremap <leader>Tp :tabp<CR>
+nnoremap <leader>TN :tabnew<CR>
+nnoremap <leader>Ts :tab split<CR>
+nnoremap <leader>Td :q<CR>
 
 " buffer navigation mappings
 nnoremap <leader>bn :bn<CR>
 nnoremap <leader>bp :bp<CR>
 nnoremap <leader>bd :bd!<CR>
-let g:which_key_map.t = {
-        \ 'name' : '+buffer',
-        \ 'n' : 'next-buffer',
-        \ 'p' : 'previous-buffer',
-        \ 'd' : 'delete-buffer',
-        \ }
 
 " show registers
 nnoremap <leader>re :register<CR>
-let g:which_key_map.r = {
-        \ 'name' : '+registers',
-        \ 'e' : 'show-register',
-        \ }
 
 " autocompletion of files and commands behaves like shell
 " complete only the common part, list the options that match
@@ -182,12 +350,6 @@ noremap <silent><leader>t/ :nohls<CR>
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
-
-" mapping for better splits
-nnoremap <leader>wJ 5<C-W>-
-nnoremap <leader>wK 5<C-W>+
-nnoremap <leader>wL 5<C-W>>
-nnoremap <leader>wH 5<C-W><
 
 "Font and colors cleanup
 "set guifont=Source\ Code\ Pro\ for\ Powerline:h14
@@ -306,28 +468,11 @@ nnoremap <leader>gb :Gblame<CR>
 nnoremap <leader>gl :Glogg<CR>
 nnoremap <leader>gd :Gdiff<CR>
 nnoremap <leader>gv :Gvdiff<CR>
-" let g:which_key_map.g = { 'name' : '+git' }
-" let g:which_key_map.g.s = 'git-status'
-let g:which_key_map.g = {
-      \ 'name' : '+git/version-control',
-      \ 's' : 'git-status'    ,
-      \ 'S' : 'git-write',
-      \ 'b' : 'git-blame',
-      \ 'l' : 'git-log',
-      \ 'd' : 'git-diff',
-      \ 'v' : 'git-vdiff',
-      \ }
 
 " EasyMotion Mappings---------------------------------
 map <leader>jj <Plug>(easymotion-s)
 map <leader>jw <Plug>(easymotion-bd-w)
 map <leader>je <Plug>(easymotion-bd-e)
-let g:which_key_map.j = {
-      \ 'name' : '+jump',
-      \ 'j' : 'jump-to-character',
-      \ 'w' : 'jump-to-beginning-of-word',
-      \ 'e' : 'jump-to-ending-of-word',
-      \ }
 
 " Vim-test configurations---------------------------
 nmap <silent> <leader>mtt :TestNearest<CR>
@@ -335,14 +480,6 @@ nmap <silent> <leader>mtm :TestFile<CR>
 nmap <silent> <leader>mta :TestSuite<CR>
 nmap <silent> <leader>mtl :TestLast<CR>
 nmap <silent> <leader>mtv :TestVisit<CR>
-let g:which_key_map.m.t = {
-      \ 'name' : '+test',
-      \ 't' : 'test-nearest',
-      \ 'm' : 'test-file',
-      \ 'a' : 'test-suite',
-      \ 'l' : 'test-last',
-      \ 'v' : 'test-visit',
-      \ }
 
 " make test commands execute using dispatch.vim
 let g:test#strategy = 'neovim'
@@ -355,11 +492,6 @@ let g:virtualenv_stl_format = '[%n]'
 " Markdown live preview---------------------------
 nnoremap <leader>mpp :Mgrip<CR>
 nnoremap <leader>mpP :Mpreview<CR>
-let g:which_key_map.m.p = {
-      \ 'name' : '+preview',
-      \ 'p' : 'preview-with-mgrip',
-      \ 'P' : 'preview-with-github',
-      \ }
 
 " Vim schlep -------------------------------------
 vmap <unique> <up>    <Plug>SchleppUp
@@ -369,12 +501,7 @@ vmap <unique> <right> <Plug>SchleppRight
 
 " NerdCommenter config----------------------------
 map <leader>; <Plug>NERDCommenterToggle
-let g:which_key_map[';'] = 'toggle-comment'
 nmap <leader>ca <Plug>NERDCommenterAppend
-let g:which_key_map.c = {
-      \ 'name' : '+comment',
-      \ 'a' : 'append-comment'
-      \}
 let g:NERDSpaceDelims = 1
 
 " CSS Autocomplete--------------------------------
@@ -421,19 +548,6 @@ nnoremap <leader>st :Vista finder<CR>
 nnoremap <leader>sT :FzfTags<CR>
 nnoremap <leader>sc :FzfCommands<CR>
 nnoremap <leader>sl :FzfLines<CR>
-let g:which_key_map['/'] = 'fuzzy-match-project'
-let g:which_key_map.s = {
-      \ 'name' : '+search/fuzzy-match',
-      \ 'f' : 'fuzzy-match-filenames',
-      \ 'b' : 'fuzzy-match-buffers',
-      \ 's' : 'fuzzy-match-snippets',
-      \ 'h' : 'fuzzy-match-file-history',
-      \ 't' : 'fuzzy-match-buffer-tags',
-      \ 'T' : 'fuzzy-match-project-tags',
-      \ 'c' : 'fuzzy-match-commands',
-      \ 'l' : 'fuzzy-match-buffer-lines',
-      \}
-let g:which_key_map.s.w = { 'name' : 'which_key_ignore' }
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
@@ -442,10 +556,7 @@ let g:jsx_ext_required = 0
 nmap <leader>sg <Plug>CtrlSFPrompt
 vmap <leader>sg <Plug>CtrlSFVwordPath
 vmap <leader>sG <Plug>CtrlSFVwordExec
-nnoremap <leader>so :CtrlSFOpen<CR>
-let g:which_key_map.s.g = 'search-word-project-prompt'
-let g:which_key_map.s.G = 'search-word-project-noprompt'
-let g:which_key_map.s.o = 'search-word-project-toggle'
+nnoremap <leader>tr :CtrlSFOpen<CR>
 
 "  Ack and Ag---------------------------------------
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
@@ -459,8 +570,7 @@ if executable('ag')
  endif
 
 " Vista.vim---------------------------------------------
-map <leader>jr :Vista<CR>
-let g:which_key_map.j.r = 'jump-to-symbol'
+map <leader>ts :Vista<CR>
 let g:vista_default_executive = 'coc'
 let g:vista_sidebar_width = 45
 let g:vista_finder_alternative_executives = ['ctags']
@@ -469,22 +579,10 @@ let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
 " Mundo-----------------------------------------------
  "let g:mundo_width = 40
 " let g:mundo_preview_height = 15
-nnoremap <leader>au :MundoToggle<CR>
-let g:which_key_map.a = { 'name' : '+applications' }
-let g:which_key_map.a.u = 'change-history-toggle'
+nnoremap <leader>tm :MundoToggle<CR>
 
 " Vim-Polyglot--------------------------------------------------
 let g:python_highlight_all=1
-
-" better key bindings for UltiSnipsExpandTrigger
-" let g:UltiSnipsExpandTrigger = '<tab>'
-" let g:UltiSnipsJumpForwardTrigger = '<tab>'
-" let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
-"let g:UltiSnipsUsePythonVersion=3
-
-" SuperTab-------------------------------------------------------
-" let g:SuperTabDefaultCompletionType = '<C-n>'
-" let g:SuperTabCrMapping = 0
 
 " NerdTree-------------------------------------------------------
 let g:NERDTreeShowHidden=1
@@ -494,7 +592,7 @@ let g:NERDTreeWinSize=40
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-map <leader>ft <Plug>NERDTreeTabsToggle<CR>
+map <leader>tf <Plug>NERDTreeTabsToggle<CR>
 
 " COC.vim -------------------------------------------------------
 set nobackup
@@ -531,13 +629,26 @@ nnoremap <silent> <leader>el  :<C-u>CocList diagnostics<cr>
 nmap <silent> <leader>ep <Plug>(coc-diagnostic-prev)
 nmap <silent> <leader>en <Plug>(coc-diagnostic-next)
 
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
+" use `:Imports` to organize import of current buffer
+command! -nargs=0 Imports :call CocAction('runCommand', 'editor.action.organizeImport')
+
 " Remap keys for gotos
 nmap <silent> <leader>md <Plug>(coc-definition)
 nmap <silent> <leader>ms <Plug>(coc-type-definition)
 nmap <silent> <leader>mi <Plug>(coc-implementation)
+nmap <silent> <leader>mI :Imports<CR>
 nmap <silent> <leader>mu <Plug>(coc-references)
 nmap <silent> <leader>mr <Plug>(coc-rename)
 nmap <silent> <leader>ma  <Plug>(coc-codeaction)
+nmap <silent> <leader>mK :call <SID>show_documentation()<CR>
+" Remap for format selected region
+nmap <silent> <leader>mf  <Plug>(coc-format)
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -565,9 +676,6 @@ endfunction
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Remap for format selected region
-nmap <silent> <leader>mf  <Plug>(coc-format)
-
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
@@ -581,20 +689,11 @@ xmap <silent> <leader>ma  <Plug>(coc-codeaction-selected)
 nmap <silent> <leader>ma  <Plug>(coc-codeaction-selected)
 
 " Fix autofix problem of current line
-nmap <silent> <leader>qf  <Plug>(coc-fix-current)
+" nmap <silent> <leader>qf  <Plug>(coc-fix-current)
 
 " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" use `:OR` for organize import of current buffer
-command! -nargs=0 Imports   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
@@ -614,24 +713,6 @@ endfunction
 let g:coc_snippet_next = '<tab>'
 
 " Typescript----------------------------------------------------
-let g:tagbar_type_typescript = {
-  \ 'ctagsbin' : 'tstags',
-  \ 'ctagsargs' : '-f-',
-  \ 'kinds': [
-    \ 'e:enums:0:1',
-    \ 'f:function:0:1',
-    \ 't:typealias:0:1',
-    \ 'M:Module:0:1',
-    \ 'I:import:0:1',
-    \ 'i:interface:0:1',
-    \ 'C:class:0:1',
-    \ 'm:method:0:1',
-    \ 'p:property:0:1',
-    \ 'v:variable:0:1',
-    \ 'c:const:0:1',
-  \ ],
-  \ 'sort' : 0
-\ }
 
 " Custom TS commands
 :command! TSWatch Start tsc --watch --pretty
@@ -650,16 +731,11 @@ augroup END
 
 " Custom JS commands--------------------------------------------
 :command JSexecute write | vsplit term://node %
-
-augroup JSMappings
-  au!
-  au BufEnter,FileType javascript nnoremap <leader>mxx :JSexecute<CR>
-augroup END
+au BufEnter,FileType javascript nnoremap <leader>mxx :JSexecute<CR>
 
 " Python commands-----------------------------------------------
 :command Pyexecute write | vsplit term://python %
-
-au BufEnter *.py nmap <leader>mxx :Pyexecute<CR>
+au BufEnter,Filetype python nnoremap <leader>mxx :Pyexecute<CR>
 
 " Vim-go settings------------------------------------------------
 let g:go_highlight_build_constraints = 1
@@ -676,19 +752,12 @@ let g:go_fmt_command = "goimports"
 let g:go_auto_type_info = 1
 let g:go_addtags_transform = "camelcase"
 
-"if has("nvim")
-    "let g:go_term_enabled = 1
-    "let g:go_term_mode = "vsplit"
-    "let g:go_term_height = 30
-    "let g:go_term_width = 30
-  "endif
-
 augroup GoMappings
 au!
   au BufEnter,FileType *.go nnoremap <leader>mxx :GoRun<cr>
   au BufEnter,FileType *.go nnoremap <leader>mxb :GoBuild<cr>
   au BufEnter,FileType *.go nnoremap <leader>mxi :GoInstall<cr>
-  au BufEnter,FileType *.go nnoremap <leader>mgc :GoCoverage<cr>
+  au BufEnter,FileType *.go nnoremap <leader>mxc :GoCoverage<cr>
   " au BufEnter,FileType *.go nnoremap <leader>mcc :GoCallers<cr>
 augroup END
 
