@@ -123,9 +123,10 @@ let g:which_key_map.m.l = {
 let g:which_key_map.m.x = {
         \ 'name' : '+execute',
         \ 'x' : 'run',
+        \ 'X' : 'run-project(golang/rust)',
         \ 'b' : 'build',
-        \ 'w' : 'watch',
-        \ 'c' : 'coverage(go-only)',
+        \ 'w' : 'watch(typescript-only)',
+        \ 'c' : 'coverage(golang)/check-types',
         \ }
 
 let g:which_key_map.w = {
@@ -149,7 +150,7 @@ let g:which_key_map.f = {
         \ }
 
 let g:which_key_map.f.e = {
-        \ 'name' : '+edit',
+        \ 'name' : '+config-file',
         \ 'd' : 'edit-config-file',
         \ 'R' : 'reload-config-file',
         \ }
@@ -299,7 +300,7 @@ nnoremap <leader>wv :vs<CR>
 
 
 " Keymap to open default shell
-nnoremap <leader>' :sp term://zsh<CR>i
+nnoremap <leader>' :5sp term://zsh<CR>i
 
 " Keymap to edit init.vim / .vimrc
 nnoremap <leader>fed :e $MYVIMRC<CR>
@@ -494,13 +495,13 @@ nnoremap <leader>mpp :Mgrip<CR>
 nnoremap <leader>mpP :Mpreview<CR>
 
 " Vim schlep -------------------------------------
-vmap <unique> <up>    <Plug>SchleppUp
-vmap <unique> <down>  <Plug>SchleppDown
-vmap <unique> <left>  <Plug>SchleppLeft
-vmap <unique> <right> <Plug>SchleppRight
+vnoremap <unique> <up>    <Plug>SchleppUp
+vnoremap <unique> <down>  <Plug>SchleppDown
+vnoremap <unique> <left>  <Plug>SchleppLeft
+vnoremap <unique> <right> <Plug>SchleppRight
 
 " NerdCommenter config----------------------------
-map <leader>; <Plug>NERDCommenterToggle
+nmap <leader>; <Plug>NERDCommenterToggle
 nmap <leader>ca <Plug>NERDCommenterAppend
 let g:NERDSpaceDelims = 1
 
@@ -730,12 +731,23 @@ augroup TSMappings
 augroup END
 
 " Custom JS commands--------------------------------------------
-:command JSexecute write | vsplit term://node %
+:command! JSexecute write | vsplit term://node %
 au BufEnter,FileType javascript nnoremap <leader>mxx :JSexecute<CR>
 
 " Python commands-----------------------------------------------
-:command Pyexecute write | vsplit term://python %
+:command! Pyexecute write | vsplit term://python %
 au BufEnter,Filetype python nnoremap <leader>mxx :Pyexecute<CR>
+
+" Rust settings--------------------------------------------------
+:command! RustExecute write | vsplit term://cargo run %
+:command! RustExecuteProject write | vsplit term://cargo run
+:command! RustBuild write | vsplit term://cargo build 
+:command! RustCheck write | vsplit term://cargo check
+au BufEnter,Filetype rust nnoremap <leader>mxx :RustExecute<CR>
+au BufEnter,Filetype rust nnoremap <leader>mxX :RustExecuteProject<CR>
+au BufEnter,Filetype rust nnoremap <leader>mxb :RustBuild<CR>
+au BufEnter,Filetype rust nnoremap <leader>mxc :RustCheck<CR>
+
 
 " Vim-go settings------------------------------------------------
 let g:go_highlight_build_constraints = 1
