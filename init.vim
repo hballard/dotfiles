@@ -3,6 +3,7 @@
 " Vim Plug====================================================
 call plug#begin()
 
+Plug 'SirVer/ultisnips'
 Plug 'liuchengxu/vim-which-key'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -147,6 +148,7 @@ let g:which_key_map.w = {
 
 let g:which_key_map.f = {
         \ 'name' : '+file',
+        \ 'c' : 'project-files-LOC-count',
         \ }
 
 let g:which_key_map.f.e = {
@@ -284,27 +286,27 @@ set number
 set numberwidth=4
 
 " mapping for better splits
-nnoremap <leader>wJ 5<C-W>-
-nnoremap <leader>wK 5<C-W>+
-nnoremap <leader>wL 5<C-W>>
-nnoremap <leader>wH 5<C-W><
+nnoremap <silent><leader>wJ 5<C-W>-
+nnoremap <silent><leader>wK 5<C-W>+
+nnoremap <silent><leader>wL 5<C-W>>
+nnoremap <silent><leader>wH 5<C-W><
 
 " Easier movement between windows / splits
-nnoremap <leader>wj <c-w>j
-nnoremap <leader>wk <c-w>k
-nnoremap <leader>wl <c-w>l
-nnoremap <leader>wh <c-w>h
-nnoremap <leader>wd :q<CR>
-nnoremap <leader>ws :sp<CR>
-nnoremap <leader>wv :vs<CR>
+nnoremap <silent><leader>wj <c-w>j
+nnoremap <silent><leader>wk <c-w>k
+nnoremap <silent><leader>wl <c-w>l
+nnoremap <silent><leader>wh <c-w>h
+nnoremap <silent><leader>wd :q<CR>
+nnoremap <silent><leader>ws :sp<CR>
+nnoremap <silent><leader>wv :vs<CR>
 
 
 " Keymap to open default shell
-nnoremap <leader>' :5sp term://zsh<CR>i
+nnoremap <silent><leader>' :5sp term://zsh<CR>i
 
 " Keymap to edit init.vim / .vimrc
-nnoremap <leader>fed :e $MYVIMRC<CR>
-nnoremap <leader>feR :source $MYVIMRC<CR>
+nnoremap <silent><leader>fed :e $MYVIMRC<CR>
+nnoremap <silent><leader>feR :source $MYVIMRC<CR>
 " Press i to enter insert mode, and ii to exit.
 inoremap ii <Esc>
 
@@ -322,19 +324,19 @@ tnoremap <Esc> <c-\><c-n>
 cmap w!! %!sudo tee > /dev/null %
 
 " tab navigation mappings
-nnoremap <leader>Tn :tabn<CR>
-nnoremap <leader>Tp :tabp<CR>
-nnoremap <leader>TN :tabnew<CR>
-nnoremap <leader>Ts :tab split<CR>
-nnoremap <leader>Td :q<CR>
+nnoremap <silent><leader>Tn :tabn<CR>
+nnoremap <silent><leader>Tp :tabp<CR>
+nnoremap <silent><leader>TN :tabnew<CR>
+nnoremap <silent><leader>Ts :tab split<CR>
+nnoremap <silent><leader>Td :q<CR>
 
 " buffer navigation mappings
-nnoremap <leader>bn :bn<CR>
-nnoremap <leader>bp :bp<CR>
-nnoremap <leader>bd :bd!<CR>
+nnoremap <silent><leader>bn :bn<CR>
+nnoremap <silent><leader>bp :bp<CR>
+nnoremap <silent><leader>bd :bd!<CR>
 
 " show registers
-nnoremap <leader>re :register<CR>
+nnoremap <silent><leader>re :register<CR>
 
 " autocompletion of files and commands behaves like shell
 " complete only the common part, list the options that match
@@ -451,7 +453,9 @@ endif
 :command! Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
 :command! PyLineCount !find . -name '*.py' | xargs wc -l
-:command! Te Start
+:command! RustLineCount !find . -name '*.rs' | xargs wc -l
+:command! GoLineCount !find . -name '*.go' | xargs wc -l
+" :command! Te Start
 
 " Closetag settings----------------------------------------------------------
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.phtml,*.jsx,*.tsx,*.jinja'
@@ -463,17 +467,17 @@ let g:sql_type_default = 'pgsql'
 let g:html_indent_tags = 'li\|p'
 
 " Fugitive (git) Mappings----------------------------
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gS :Gw<CR>
-nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gl :Glogg<CR>
-nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>gv :Gvdiff<CR>
+nnoremap <silent><leader>gs :Gstatus<CR>
+nnoremap <silent><leader>gS :Gw<CR>
+nnoremap <silent><leader>gb :Gblame<CR>
+nnoremap <silent><leader>gl :Glogg<CR>
+nnoremap <silent><leader>gd :Gdiff<CR>
+nnoremap <silent><leader>gv :Gvdiff<CR>
 
 " EasyMotion Mappings---------------------------------
-map <leader>jj <Plug>(easymotion-s)
-map <leader>jw <Plug>(easymotion-bd-w)
-map <leader>je <Plug>(easymotion-bd-e)
+map <silent><leader>jj <Plug>(easymotion-s)
+map <silent><leader>jw <Plug>(easymotion-bd-w)
+map <silent><leader>je <Plug>(easymotion-bd-e)
 
 " Vim-test configurations---------------------------
 nmap <silent> <leader>mtt :TestNearest<CR>
@@ -491,8 +495,8 @@ let g:test#python#pytest#options = '--verbose'
 let g:virtualenv_stl_format = '[%n]'
 
 " Markdown live preview---------------------------
-nnoremap <leader>mpp :Mgrip<CR>
-nnoremap <leader>mpP :Mpreview<CR>
+nnoremap <silent><leader>mpp :Mgrip<CR>
+nnoremap <silent><leader>mpP :Mpreview<CR>
 
 " Vim schlep -------------------------------------
 vnoremap <unique> <up>    <Plug>SchleppUp
@@ -501,8 +505,8 @@ vnoremap <unique> <left>  <Plug>SchleppLeft
 vnoremap <unique> <right> <Plug>SchleppRight
 
 " NerdCommenter config----------------------------
-nmap <leader>; <Plug>NERDCommenterToggle
-nmap <leader>ca <Plug>NERDCommenterAppend
+nmap <silent><leader>; <Plug>NERDCommenterToggle
+nmap <silent><leader>ca <Plug>NERDCommenterAppend
 let g:NERDSpaceDelims = 1
 
 " CSS Autocomplete--------------------------------
@@ -540,24 +544,24 @@ endfunction
 au! User FzfStatusLine call <SID>fzf_statusline()
 
 " FZF  mappings
-nnoremap <leader>sf :FZF<CR>
-nnoremap <leader>/ :FzfAg<CR>
-nnoremap <leader>sb :FzfBuffers<CR>
-nnoremap <leader>ss :FzfSnippets<CR>
-nnoremap <leader>sh :FzfHistory<CR>
-nnoremap <leader>st :Vista finder<CR>
-nnoremap <leader>sT :FzfTags<CR>
-nnoremap <leader>sc :FzfCommands<CR>
-nnoremap <leader>sl :FzfLines<CR>
+nnoremap <silent><leader>sf :FZF<CR>
+nnoremap <silent><leader>/ :FzfAg<CR>
+nnoremap <silent><leader>sb :FzfBuffers<CR>
+nnoremap <silent><leader>ss :FzfSnippets<CR>
+nnoremap <silent><leader>sh :FzfHistory<CR>
+nnoremap <silent><leader>st :Vista finder<CR>
+nnoremap <silent><leader>sT :FzfTags<CR>
+nnoremap <silent><leader>sc :FzfCommands<CR>
+nnoremap <silent><leader>sl :FzfLines<CR>
 
 " Allow JSX in normal JS files
 let g:jsx_ext_required = 0
 
 " CtrlsF mappings-----------------------------------
-nmap <leader>sg <Plug>CtrlSFPrompt
-vmap <leader>sg <Plug>CtrlSFVwordPath
-vmap <leader>sG <Plug>CtrlSFVwordExec
-nnoremap <leader>tr :CtrlSFOpen<CR>
+nmap <silent><leader>sg <Plug>CtrlSFPrompt
+vmap <silent><leader>sg <Plug>CtrlSFVwordPath
+vmap <silent><leader>sG <Plug>CtrlSFVwordExec
+nnoremap <silent><leader>tr :CtrlSFOpen<CR>
 
 "  Ack and Ag---------------------------------------
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
@@ -571,7 +575,7 @@ if executable('ag')
  endif
 
 " Vista.vim---------------------------------------------
-map <leader>ts :Vista<CR>
+map <silent><leader>ts :Vista<CR>
 let g:vista_default_executive = 'coc'
 let g:vista_sidebar_width = 45
 let g:vista_finder_alternative_executives = ['ctags']
@@ -580,7 +584,7 @@ let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
 " Mundo-----------------------------------------------
  "let g:mundo_width = 40
 " let g:mundo_preview_height = 15
-nnoremap <leader>tm :MundoToggle<CR>
+nnoremap <silent><leader>tm :MundoToggle<CR>
 
 " Vim-Polyglot--------------------------------------------------
 let g:python_highlight_all=1
@@ -593,7 +597,7 @@ let g:NERDTreeWinSize=40
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-map <leader>tf <Plug>NERDTreeTabsToggle<CR>
+map <silent><leader>tf <Plug>NERDTreeTabsToggle<CR>
 
 " COC.vim -------------------------------------------------------
 set nobackup
@@ -722,31 +726,39 @@ let g:coc_snippet_next = '<tab>'
 ":command! TSExecute write | vsplit term://tsc --outFile /dev/stdout % \| node
 " A little faster in-memory package for doing same thing as line above; must
 " install ts-node
-
 augroup TSMappings
   au!
-  au BufEnter,FileType typescript nnoremap <leader>mxw :TSWatch<CR>
-  au BufEnter,FileType typescript nnoremap <leader>mxb :TSBuild<CR>
-  au BufEnter,FileType typescript nnoremap <leader>mxx :TSExecute<CR>
+  au BufEnter,FileType typescript nnoremap <silent><leader>mxw :TSWatch<CR>
+  au BufEnter,FileType typescript nnoremap <silent><leader>mxb :TSBuild<CR>
+  au BufEnter,FileType typescript nnoremap <silent><leader>mxx :TSExecute<CR>
+  au BufEnter,FileType typescript,typescriptreact nnoremap <silent><leader>fc :TSLineCount<CR>
 augroup END
 
 " Custom JS commands--------------------------------------------
 :command! JSexecute write | vsplit term://node %
-au BufEnter,FileType javascript nnoremap <leader>mxx :JSexecute<CR>
-
+augroup JSMappings
+  au BufEnter,FileType javascript nnoremap <silent><leader>mxx :JSexecute<CR>
+  au BufEnter,FileType javascript,javascriptreact nnoremap <silent><leader>fc :JSLineCount<CR>
+augroup END
 " Python commands-----------------------------------------------
 :command! Pyexecute write | vsplit term://python %
-au BufEnter,Filetype python nnoremap <leader>mxx :Pyexecute<CR>
+augroup PythonMappings
+  au BufEnter,Filetype python nnoremap <silent><leader>mxx :Pyexecute<CR>
+  au BufEnter,Filetype python nnoremap <silent><leader>fc :PyLineCount<CR>
+augroup END
 
 " Rust settings--------------------------------------------------
 :command! RustExecute write | vsplit term://cargo run %
 :command! RustExecuteProject write | vsplit term://cargo run
 :command! RustBuild write | vsplit term://cargo build 
 :command! RustCheck write | vsplit term://cargo check
-au BufEnter,Filetype rust nnoremap <leader>mxx :RustExecute<CR>
-au BufEnter,Filetype rust nnoremap <leader>mxX :RustExecuteProject<CR>
-au BufEnter,Filetype rust nnoremap <leader>mxb :RustBuild<CR>
-au BufEnter,Filetype rust nnoremap <leader>mxc :RustCheck<CR>
+augroup RustMappings
+  au BufEnter,Filetype rust nnoremap <silent><leader>mxx :RustExecute<CR>
+  au BufEnter,Filetype rust nnoremap <silent><leader>mxX :RustExecuteProject<CR>
+  au BufEnter,Filetype rust nnoremap <silent><leader>mxb :RustBuild<CR>
+  au BufEnter,Filetype rust nnoremap <silent><leader>mxc :RustCheck<CR>
+  au BufEnter,Filetype rust nnoremap <silent><leader>fc :RustLineCount<CR>
+augroup ENDI
 
 
 " Vim-go settings------------------------------------------------
@@ -766,11 +778,12 @@ let g:go_addtags_transform = "camelcase"
 
 augroup GoMappings
 au!
-  au BufEnter,FileType *.go nnoremap <leader>mxx :GoRun<cr>
-  au BufEnter,FileType *.go nnoremap <leader>mxb :GoBuild<cr>
-  au BufEnter,FileType *.go nnoremap <leader>mxi :GoInstall<cr>
-  au BufEnter,FileType *.go nnoremap <leader>mxc :GoCoverage<cr>
-  " au BufEnter,FileType *.go nnoremap <leader>mcc :GoCallers<cr>
+  au BufEnter,FileType *.go nnoremap <silent><leader>mxx :GoRun<cr>
+  au BufEnter,FileType *.go nnoremap <silent><leader>mxb :GoBuild<cr>
+  au BufEnter,FileType *.go nnoremap <silent><leader>mxi :GoInstall<cr>
+  au BufEnter,FileType *.go nnoremap <silent><leader>mxc :GoCoverage<cr>
+  au BufEnter,FileType *.go nnoremap <silent><leader>fc :GoLineCount<cr>
+  " au BufEnter,FileType *.go nnoremap <silent><leader>mcc :GoCallers<cr>
 augroup END
 
 " Airline settings-----------------------------------------------
