@@ -93,6 +93,7 @@ let g:which_key_map.m = {
       \ 'r' : 'rename-symbol',
       \ 'a' : 'suggest-code-action',
       \ 'K' : 'show-documentation',
+      \ 'c' : 'project-LOC-count',
       \ '=' : 'which_key_ignore',
       \}
 
@@ -148,7 +149,6 @@ let g:which_key_map.w = {
 
 let g:which_key_map.f = {
         \ 'name' : '+file',
-        \ 'c' : 'project-files-LOC-count',
         \ }
 
 let g:which_key_map.f.e = {
@@ -731,20 +731,20 @@ augroup TSMappings
   au BufEnter,FileType typescript nnoremap <silent><leader>mxw :TSWatch<CR>
   au BufEnter,FileType typescript nnoremap <silent><leader>mxb :TSBuild<CR>
   au BufEnter,FileType typescript nnoremap <silent><leader>mxx :TSExecute<CR>
-  au BufEnter,FileType typescript,typescriptreact nnoremap <silent><leader>fc :TSLineCount<CR>
+  au BufEnter,FileType typescript,typescriptreact nnoremap <silent><leader>mc :TSLineCount<CR>
 augroup END
 
 " Custom JS commands--------------------------------------------
 :command! JSexecute write | vsplit term://node %
 augroup JSMappings
   au BufEnter,FileType javascript nnoremap <silent><leader>mxx :JSexecute<CR>
-  au BufEnter,FileType javascript,javascriptreact nnoremap <silent><leader>fc :JSLineCount<CR>
+  au BufEnter,FileType javascript,javascriptreact nnoremap <silent><leader>mc :JSLineCount<CR>
 augroup END
 " Python commands-----------------------------------------------
 :command! Pyexecute write | vsplit term://python %
 augroup PythonMappings
   au BufEnter,Filetype python nnoremap <silent><leader>mxx :Pyexecute<CR>
-  au BufEnter,Filetype python nnoremap <silent><leader>fc :PyLineCount<CR>
+  au BufEnter,Filetype python nnoremap <silent><leader>mc :PyLineCount<CR>
 augroup END
 
 " Rust settings--------------------------------------------------
@@ -757,7 +757,7 @@ augroup RustMappings
   au BufEnter,Filetype rust nnoremap <silent><leader>mxX :RustExecuteProject<CR>
   au BufEnter,Filetype rust nnoremap <silent><leader>mxb :RustBuild<CR>
   au BufEnter,Filetype rust nnoremap <silent><leader>mxc :RustCheck<CR>
-  au BufEnter,Filetype rust nnoremap <silent><leader>fc :RustLineCount<CR>
+  au BufEnter,Filetype rust nnoremap <silent><leader>mc :RustLineCount<CR>
 augroup ENDI
 
 
@@ -782,7 +782,7 @@ au!
   au BufEnter,FileType *.go nnoremap <silent><leader>mxb :GoBuild<cr>
   au BufEnter,FileType *.go nnoremap <silent><leader>mxi :GoInstall<cr>
   au BufEnter,FileType *.go nnoremap <silent><leader>mxc :GoCoverage<cr>
-  au BufEnter,FileType *.go nnoremap <silent><leader>fc :GoLineCount<cr>
+  au BufEnter,FileType *.go nnoremap <silent><leader>mc :GoLineCount<cr>
   " au BufEnter,FileType *.go nnoremap <silent><leader>mcc :GoCallers<cr>
 augroup END
 
