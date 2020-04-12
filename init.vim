@@ -65,7 +65,7 @@ Plug 'zirrostig/vim-schlepp'
 
 call plug#end()
 
-" whichkey-------------------------------------------------------------------
+" whichkey plugin-------------------------------------------------------------------
 let g:mapleader = ' '
 " By default timeoutlen is 1000 ms
 set timeoutlen=500
@@ -448,11 +448,11 @@ endif
 
 " external shell commands, and custom functions -----------------------------
 :command! Glogg Start tig
-:command! JSLineCount !find . -name '*.js' -not -path "./node_modules/*" | xargs wc -l
-:command! TSLineCount !find . -name '*.ts*' -not -path "./node_modules/*" | xargs wc -l
 :command! Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
 :command! PyLineCount !find . -name '*.py' | xargs wc -l
+:command! JSLineCount !find . -name '*.js' -not -path "./node_modules/*" | xargs wc -l
+:command! TSLineCount !find . -name '*.ts*' -not -path "./node_modules/*" | xargs wc -l
 :command! RustLineCount !find . -name '*.rs' | xargs wc -l
 :command! GoLineCount !find . -name '*.go' | xargs wc -l
 " :command! Te Start
@@ -606,27 +606,15 @@ set updatetime=300
 set shortmess+=c
 set signcolumn=yes
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+let g:UltiSnipsExpandTrigger = "<nop>"
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Show all diagnostics
 nnoremap <silent> <leader>el  :<C-u>CocList diagnostics<cr>
@@ -702,20 +690,6 @@ xmap <silent> <TAB> <Plug>(coc-range-select)
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-" Use <tab> to expand snippet
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<tab>'
 
 " Typescript----------------------------------------------------
 
