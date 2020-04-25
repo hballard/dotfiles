@@ -65,7 +65,7 @@ Plug 'zirrostig/vim-schlepp'
 
 call plug#end()
 
-" whichkey plugin-------------------------------------------------------------------
+" WHICHKEY PLUGIN====================================================
 let g:mapleader = ' '
 " By default timeoutlen is 1000 ms
 set timeoutlen=500
@@ -267,11 +267,6 @@ let g:which_key_map.s = {
       \}
 let g:which_key_map.s.w = { 'name' : 'which_key_ignore' }
 
-" let g:which_key_map.a = {
-      " \ 'name' : '+applications',
-      " \ 'u' : 'change-history-toggle',
-      " \}
-
 let g:which_key_map.e = {
       \ 'name' : '+errors/warnings',
       \ 'l' : 'list',
@@ -338,14 +333,12 @@ nnoremap <silent><leader>bd :bd!<CR>
 " show registers
 nnoremap <silent><leader>re :register<CR>
 
-" autocompletion of files and commands behaves like shell
+" Autocompletion of files and commands behaves like shell
 " complete only the common part, list the options that match
 set wildmode=list:longest
 
 " Make it obvious where 80 characters is
 set textwidth=80
-" set colorcolumn=+1
-" highlight ColorColumn ctermbg=7
 
 " Clear search highlights
 noremap <silent><leader>t/ :nohls<CR>
@@ -354,22 +347,14 @@ noremap <silent><leader>t/ :nohls<CR>
 set splitbelow
 set splitright
 
-"Font and colors cleanup
-"set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- be
-
-" highlighting
 set relativenumber
-
-"set cursorline
-"autocmd InsertEnter,InsertLeave * set cul!
-
 set updatetime=2000
 set foldmethod=indent
 set foldlevel=99
-set ttyfast                " Faster redrawing.
-set lazyredraw             " Only redraw when necessary.
-"set backspace=2   " Backspace deletes like most programs in insert mode
+set ttyfast       " Faster redrawing.
+set lazyredraw    " Only redraw when necessary.
+set backspace=2   " Backspace deletes like most programs in insert mode
 set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
 set ruler         " show the cursor position all the time
 set hidden
@@ -411,6 +396,7 @@ augroup FileMappings
   au BufNewFile,BufFilePre,BufRead *.spec set filetype=python
 augroup END
 
+" Enable toggling of paste-mode
 set pastetoggle=<F5>
 set clipboard=unnamed
 
@@ -421,32 +407,17 @@ if has('autocmd')
 endif
 
 "24 Bit True Color-----------------------------------------------
-"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-" For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
 if (has('nvim'))
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
 if (has('termguicolors'))
   set termguicolors
 endif
 
-" Temp fix for terminal colors (spacemacs dark colorscheme)----------------
-" let g:terminal_color_1='#d4557d'
-" let g:terminal_color_2='#5fb4b4'
-" let g:terminal_color_3='#fbc963'
-" let g:terminal_color_4='#669acd'
-" let g:terminal_color_5='#c695c6'
-" let g:terminal_color_6='#5fb4b4'
-" let g:terminal_color_9='#d4557d'
-" let g:terminal_color_10='#86D02F'
-" let g:terminal_color_11='#fbc963'
-" let g:terminal_color_14='#5fb4b4'
 
+" PLUGIN SETTINGS AND MAPPINGS================================================
 
-" PLUGIN SETTINGS AND MAPPINGS==========================================
-
-" external shell commands, and custom functions -----------------------------
+" external shell command mappings -------------------
 :command! Glogg Start tig
 :command! Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
@@ -455,18 +426,17 @@ endif
 :command! TSLineCount !find . -name '*.ts*' -not -path "./node_modules/*" | xargs wc -l
 :command! RustLineCount !find . -name '*.rs' | xargs wc -l
 :command! GoLineCount !find . -name '*.go' | xargs wc -l
-" :command! Te Start
 
-" Closetag settings----------------------------------------------------------
+" Closetag plugin settings---------------------------
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.phtml,*.jsx,*.tsx,*.jinja'
 
-"Default SQL language to be used
+" default SQL language to be used
 let g:sql_type_default = 'pgsql'
 
-" Treat <li> and <p> tags like the block tags they are
+" treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
-" Fugitive (git) Mappings----------------------------
+" Fugitive Plugin (git) Mappings----------------------------
 nnoremap <silent><leader>gs :Gstatus<CR>
 nnoremap <silent><leader>gS :Gw<CR>
 nnoremap <silent><leader>gb :Gblame<CR>
@@ -474,12 +444,12 @@ nnoremap <silent><leader>gl :Glogg<CR>
 nnoremap <silent><leader>gd :Gdiff<CR>
 nnoremap <silent><leader>gv :Gvdiff<CR>
 
-" EasyMotion Mappings---------------------------------
+" EasyMotion Plugin Mappings---------------------------------
 map <silent><leader>jj <Plug>(easymotion-s)
 map <silent><leader>jw <Plug>(easymotion-bd-w)
 map <silent><leader>je <Plug>(easymotion-bd-e)
 
-" Vim-test configurations---------------------------
+" Vim-test Plugin configurations---------------------------
 nmap <silent> <leader>mtt :TestNearest<CR>
 nmap <silent> <leader>mtm :TestFile<CR>
 nmap <silent> <leader>mta :TestSuite<CR>
@@ -491,28 +461,27 @@ let g:test#strategy = 'neovim'
 let g:test#runner_commands = ['PyTest', 'Mocha']
 let g:test#python#runner = 'pytest'
 let g:test#python#pytest#options = '--verbose'
-
 let g:virtualenv_stl_format = '[%n]'
 
-" Markdown live preview---------------------------
+" Markdown live preview plugin---------------------------
 nnoremap <silent><leader>mpp :Mgrip<CR>
 nnoremap <silent><leader>mpP :Mpreview<CR>
 
-" Vim schlep -------------------------------------
+" Vim schlep plugin -------------------------------------
 vnoremap <unique> <up>    <Plug>SchleppUp
 vnoremap <unique> <down>  <Plug>SchleppDown
 vnoremap <unique> <left>  <Plug>SchleppLeft
 vnoremap <unique> <right> <Plug>SchleppRight
 
-" NerdCommenter config----------------------------
+" NerdCommenter Plugin config----------------------------
 nmap <silent><leader>; <Plug>NERDCommenterToggle
 nmap <silent><leader>ca <Plug>NERDCommenterAppend
 let g:NERDSpaceDelims = 1
 
-" CSS Autocomplete--------------------------------
+" CSS Autocomplete Plugin--------------------------------
 au FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
-" Indentline settings------------------------------
+" Indentline Plugin settings------------------------------
 let g:indentLine_color_term = 237
 let g:indentLine_char = '|'
 
@@ -529,7 +498,7 @@ let g:NERDTreeIndicatorMapCustom = {
     \ 'Unknown'   : '?'
     \ }
 
-" FZF settings--------------------------------------
+" FZF Plugin settings--------------------------------------
 let g:fzf_command_prefix = 'Fzf'
 
 " fzf statusline mapping
@@ -543,7 +512,7 @@ endfunction
 
 au! User FzfStatusLine call <SID>fzf_statusline()
 
-" FZF  mappings
+" FZF mappings
 nnoremap <silent><leader>sf :FZF<CR>
 nnoremap <silent><leader>/ :FzfAg<CR>
 nnoremap <silent><leader>sb :FzfBuffers<CR>
@@ -554,16 +523,13 @@ nnoremap <silent><leader>sT :FzfTags<CR>
 nnoremap <silent><leader>sc :FzfCommands<CR>
 nnoremap <silent><leader>sl :FzfLines<CR>
 
-" Allow JSX in normal JS files
-let g:jsx_ext_required = 0
-
-" CtrlsF mappings-----------------------------------
+" CtrlsF Plugin mappings-----------------------------------
 nmap <silent><leader>sg <Plug>CtrlSFPrompt
 vmap <silent><leader>sg <Plug>CtrlSFVwordPath
 vmap <silent><leader>sG <Plug>CtrlSFVwordExec
 nnoremap <silent><leader>tr :CtrlSFOpen<CR>
 
-"  Ack and Ag---------------------------------------
+"  Ack and Ag Plugin---------------------------------------
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
     let g:ackprg = 'ag --vimgrep'
@@ -574,22 +540,22 @@ if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor
  endif
 
-" Vista.vim---------------------------------------------
+" Vista.vim Plugin---------------------------------------------
 map <silent><leader>ts :Vista<CR>
 let g:vista_default_executive = 'coc'
 let g:vista_sidebar_width = 45
 let g:vista_finder_alternative_executives = ['ctags']
 let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
 
-" Mundo-----------------------------------------------
+" Mundo Plugin-----------------------------------------------
  "let g:mundo_width = 40
 " let g:mundo_preview_height = 15
 nnoremap <silent><leader>tm :MundoToggle<CR>
 
-" Vim-Polyglot--------------------------------------------------
+" Vim-Polyglot Plugin--------------------------------------------------
 let g:python_highlight_all=1
 
-" NerdTree-------------------------------------------------------
+" NerdTree Plugin-------------------------------------------------------
 let g:NERDTreeShowHidden=1
 let g:NERDTreeWinSize=40
 
@@ -599,7 +565,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 map <silent><leader>tf <Plug>NERDTreeTabsToggle<CR>
 
-" COC.vim -------------------------------------------------------
+" COC.vim Plugin-------------------------------------------------------
 set nobackup
 set nowritebackup
 set updatetime=300
@@ -611,10 +577,9 @@ let g:UltiSnipsExpandTrigger = "<nop>"
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Use <tab> to confirm completion instead of <CR>, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Show all diagnostics
 nnoremap <silent> <leader>el  :<C-u>CocList diagnostics<cr>
@@ -681,9 +646,6 @@ augroup end
 xmap <silent> <leader>ma  <Plug>(coc-codeaction-selected)
 nmap <silent> <leader>ma  <Plug>(coc-codeaction-selected)
 
-" Fix autofix problem of current line
-" nmap <silent> <leader>qf  <Plug>(coc-fix-current)
-
 " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
@@ -691,15 +653,16 @@ xmap <silent> <TAB> <Plug>(coc-range-select)
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" Typescript----------------------------------------------------
+" Typescript Plugin----------------------------------------------------
 
 " Custom TS commands
 :command! TSWatch Start tsc --watch --pretty
 :command! TSBuild !tsc
+" A little faster in-memory package for doing same thing as line below; must
+" install ts-node
 :command! TSExecute write | vsplit term://npx ts-node %
 ":command! TSExecute write | vsplit term://tsc --outFile /dev/stdout % \| node
-" A little faster in-memory package for doing same thing as line above; must
-" install ts-node
+
 augroup TSMappings
   au!
   au BufEnter,FileType typescript nnoremap <silent><leader>mxw :TSWatch<CR>
@@ -710,12 +673,18 @@ augroup END
 
 " Custom JS commands--------------------------------------------
 :command! JSexecute write | vsplit term://node %
+
 augroup JSMappings
   au BufEnter,FileType javascript nnoremap <silent><leader>mxx :JSexecute<CR>
   au BufEnter,FileType javascript,javascriptreact nnoremap <silent><leader>mc :JSLineCount<CR>
 augroup END
+
+" Allow JSX in normal JS files
+" let g:jsx_ext_required = 0
+
 " Python commands-----------------------------------------------
 :command! Pyexecute write | vsplit term://python %
+
 augroup PythonMappings
   au BufEnter,Filetype python nnoremap <silent><leader>mxx :Pyexecute<CR>
   au BufEnter,Filetype python nnoremap <silent><leader>mc :PyLineCount<CR>
@@ -726,6 +695,7 @@ augroup END
 :command! RustExecuteProject write | vsplit term://cargo run
 :command! RustBuild write | vsplit term://cargo build 
 :command! RustCheck write | vsplit term://cargo check
+
 augroup RustMappings
   au BufEnter,Filetype rust nnoremap <silent><leader>mxx :RustExecute<CR>
   au BufEnter,Filetype rust nnoremap <silent><leader>mxX :RustExecuteProject<CR>
@@ -735,7 +705,7 @@ augroup RustMappings
 augroup ENDI
 
 
-" Vim-go settings------------------------------------------------
+" Vim-go Plugin settings------------------------------------------------
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
@@ -760,7 +730,7 @@ au!
   " au BufEnter,FileType *.go nnoremap <silent><leader>mcc :GoCallers<cr>
 augroup END
 
-" Airline settings-----------------------------------------------
+" Airline Plugin settings-----------------------------------------------
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#virtualenv#enabled = 1
@@ -772,12 +742,12 @@ let g:airline_theme = 'bubblegum'
 "let g:tmuxline_preset = 'nightly_fox'
 let g:tmuxline_powerline_separators = 0
 
-" Syntax highlighting--------------------------------------------
+" Syntax highlighting and background mode / theme------------------------
 syntax on
 syntax enable
 set background=dark
-let g:one_allow_italics = 1
 colorscheme one
+let g:one_allow_italics = 1
 " colorscheme space-vim-dark
 " colorscheme gruvbox
 " colorscheme hybrid
