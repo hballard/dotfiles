@@ -3,7 +3,6 @@
 " Vim Plug====================================================
 call plug#begin()
 
-Plug 'SirVer/ultisnips'
 Plug 'liuchengxu/vim-which-key'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
@@ -24,6 +23,7 @@ Plug 'rakr/vim-one'
 Plug 'flazz/vim-colorschemes'
 Plug 'blueshirts/darcula'
 Plug 'henrik/vim-indexed-search'
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'itchyny/vim-cursorword'
 Plug 'janko-m/vim-test'
@@ -38,7 +38,7 @@ Plug 'othree/csscomplete.vim'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'jodosha/vim-godebug'
 Plug 'qpkorr/vim-bufkill'
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -228,6 +228,17 @@ let g:which_key_map.g = {
       \ 'l' : 'log',
       \ 'd' : 'horizontal-diff',
       \ 'v' : 'vertical-diff',
+      \ }
+
+let g:which_key_map.p = {
+      \ 'name' : '+vim-plug',
+      \ 'i' : 'install'    ,
+      \ 'c' : 'clean',
+      \ 'd' : 'diff',
+      \ 'u' : 'update',
+      \ 'U' : 'upgrade',
+      \ 's' : 'status',
+      \ 'S' : 'snapshot',
       \ }
 
 let g:which_key_map.j = {
@@ -486,7 +497,8 @@ let g:indentLine_color_term = 237
 let g:indentLine_char = '|'
 
 " Nerdtree git plugin settings---------------------
-let g:NERDTreeIndicatorMapCustom = {
+
+let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ 'Modified'  : '✹',
     \ 'Staged'    : '✚',
     \ 'Untracked' : '✭',
@@ -512,6 +524,21 @@ endfunction
 
 au! User FzfStatusLine call <SID>fzf_statusline()
 
+" Ultisnips
+" turn off ultisnips and let COC-snippets handle
+" use ultisnips for only fzfsnippets buffer
+
+let g:UltiSnipsExpandTrigger = "<nop>"
+
+" Vim-Plug mappings
+nnoremap <silent><leader>pi :PlugInstall<CR>
+nnoremap <silent><leader>pc :PlugClean<CR>
+nnoremap <silent><leader>ps :PlugStatus<CR>
+nnoremap <silent><leader>pS :PlugSnapshot<CR>
+nnoremap <silent><leader>pu :PlugUpdate<CR>
+nnoremap <silent><leader>pU :PlugUpgrade<CR>
+nnoremap <silent><leader>pd :PlugDiff<CR>
+
 " FZF mappings
 nnoremap <silent><leader>sf :FZF<CR>
 nnoremap <silent><leader>/ :FzfAg<CR>
@@ -529,15 +556,16 @@ vmap <silent><leader>sg <Plug>CtrlSFVwordPath
 vmap <silent><leader>sG <Plug>CtrlSFVwordExec
 nnoremap <silent><leader>tr :CtrlSFOpen<CR>
 
-"  Ack and Ag Plugin---------------------------------------
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
+"  Ack Plugin---------------------------------------
+" Use ripgrep over ack
+
+if executable('rg')
+    let g:ackprg = 'rg --vimgrep'
 endif
 
-if executable('ag')
+if executable('rg')
     " Use Ag over Grep
-    set grepprg=ag\ --nogroup\ --nocolor
+    set grepprg=rg\ --no-heading\ --color\ never
  endif
 
 " Vista.vim Plugin---------------------------------------------
@@ -571,8 +599,6 @@ set nowritebackup
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
-
-let g:UltiSnipsExpandTrigger = "<nop>"
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()

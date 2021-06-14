@@ -2,8 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/heath/.oh-my-zsh"
-
+export ZSH="$HOME/.oh-my-zsh" 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -57,18 +56,24 @@ ZSH_THEME="robbyrussell"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+export NVM_COMPLETION=true
+
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man-pages npm pip python docker zsh-autosuggestions aws)
+plugins=(git
+  zsh-nvm
+  colored-man-pages
+  npm
+  pip
+  python
+)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -80,9 +85,6 @@ else
   export EDITOR='nvim'
   export VISUAL='nvim'
 fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -107,9 +109,9 @@ compinit -i
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 eval "$(pyenv init -)"
 
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
-  [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
+# export NVM_DIR="$HOME/.nvm"
+  # [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+  # [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
 
 export GOPATH=$HOME/Code/go
 
@@ -126,12 +128,9 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "$(register-python-argcomplete pipx)"
 
 # qt settings
-export PATH="/usr/local/opt/qt/bin:$PATH"
+# export PATH="/usr/local/opt/qt/bin:$PATH"
 # export LDFLAGS="-L/usr/local/opt/qt/lib"
 # export CPPFLAGS="-I/usr/local/opt/qt/include"
 
 # Created by `userpath` on 2019-11-25 04:24:39
-export PATH="$PATH:/Users/heath/.local/bin"
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
+export PATH="$PATH:/Users/$USER/.local/bin"
