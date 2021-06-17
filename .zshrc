@@ -65,13 +65,14 @@ export NVM_COMPLETION=true
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git
   zsh-nvm
+  zsh-completions
+  zsh-autosuggestions
+  zsh-syntax-highlighting
   colored-man-pages
   npm
   pip
   python
 )
-
-source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -91,9 +92,8 @@ fi
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias zshconfig="vi ~/.zshrc"
+alias ohmyzshconfig="vi ~/.oh-my-zsh"
 
 if [ -n "$TMUX" ]; then
   alias vi="nvim"
@@ -106,31 +106,34 @@ fi
 autoload -Uz compinit
 compinit -i
 
+source $ZSH/oh-my-zsh.sh
+
+# Python config and completions
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
+
 eval "$(pyenv init -)"
-
-# export NVM_DIR="$HOME/.nvm"
-  # [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
-  # [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
-
-export GOPATH=$HOME/Code/go
-
-eval "$(rbenv init -)"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export -U PATH=$PATH
-
-fpath=(/usr/local/share/zsh-completions $fpath)
-
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 eval "$(register-python-argcomplete pipx)"
 
+eval "$(pipenv --completion)"
+
+source $(pew shell_config)
+
+
+#Ruby config and completions
+eval "$(rbenv init -)"
+
+#Go config and completions
+export GOPATH=$HOME/Code/libraries/go
+
+#fzf config and completions
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # qt settings
-# export PATH="/usr/local/opt/qt/bin:$PATH"
+export PATH="$HOME/Code/libraries/Qt/6.1.1/clang_64/bin:$PATH"
 # export LDFLAGS="-L/usr/local/opt/qt/lib"
 # export CPPFLAGS="-I/usr/local/opt/qt/include"
 
 # Created by `userpath` on 2019-11-25 04:24:39
 export PATH="$PATH:/Users/$USER/.local/bin"
+
