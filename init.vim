@@ -7,6 +7,7 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'moll/vim-bbye'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
@@ -336,10 +337,11 @@ nnoremap <silent><leader>TN :tabnew<CR>
 nnoremap <silent><leader>Ts :tab split<CR>
 nnoremap <silent><leader>Td :q<CR>
 
+"vim-bbye fix for :bdelete; provides :Bdelete and :Bwipeout commands
 " buffer navigation mappings
 nnoremap <silent><leader>bn :bn<CR>
 nnoremap <silent><leader>bp :bp<CR>
-nnoremap <silent><leader>bd :bd!<CR>
+nnoremap <silent><leader>bd :Bdelete!<CR>
 
 " show registers
 nnoremap <silent><leader>re :register<CR>

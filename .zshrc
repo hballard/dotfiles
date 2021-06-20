@@ -56,8 +56,6 @@ ZSH_THEME="robbyrussell"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-export NVM_COMPLETION=true
-
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -95,7 +93,7 @@ fi
 alias zshconfig="vi ~/.zshrc"
 alias ohmyzshconfig="vi ~/.oh-my-zsh"
 
-if [ -n "$TMUX" ]; then
+if [[ -n "$TMUX" ]]; then
   alias vi="nvim"
 else
   alias vi="tmux new-session 'nvim'"
@@ -119,20 +117,25 @@ eval "$(pipenv --completion)"
 
 source $(pew shell_config)
 
-
-#Ruby config and completions
+# Ruby config and completions
 eval "$(rbenv init -)"
 
-#Go config and completions
+# Go config and completions
 export GOPATH=$HOME/Code/libraries/go
 
-#fzf config and completions
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf config and completions
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+# Rust config and completions
+# fpath+=~/.zfunc
+# rustup completions zsh cargo > ~/.zfunc/_cargo
+# rustup completions zsh > ~/.zfunc/_rustup
 
 # qt settings
-export PATH="$HOME/Code/libraries/Qt/6.1.1/clang_64/bin:$PATH"
-# export LDFLAGS="-L/usr/local/opt/qt/lib"
-# export CPPFLAGS="-I/usr/local/opt/qt/include"
+export QTPATH=$HOME/Code/libraries/Qt/6.1.1/clang_64
+export PATH="$QTPATH/bin:$PATH"
+export LDFLAGS="-L$QTPATH/lib"
+export CPPFLAGS="-I$QTPATH/include"
 
 # Created by `userpath` on 2019-11-25 04:24:39
 export PATH="$PATH:/Users/$USER/.local/bin"
