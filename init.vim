@@ -543,7 +543,7 @@ nnoremap <silent><leader>pd :PlugDiff<CR>
 
 " FZF mappings
 nnoremap <silent><leader>sf :FZF<CR>
-nnoremap <silent><leader>/ :FzfAg<CR>
+nnoremap <silent><leader>/ :FzfRg<CR>
 nnoremap <silent><leader>sb :FzfBuffers<CR>
 nnoremap <silent><leader>ss :FzfSnippets<CR>
 nnoremap <silent><leader>sh :FzfHistory<CR>
