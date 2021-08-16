@@ -7,7 +7,6 @@
 
 " Vim Plugins-------------------------------------------
 call plug#begin()
-
 Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'SirVer/ultisnips'
