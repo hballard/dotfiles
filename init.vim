@@ -4,7 +4,7 @@
 call plug#begin()
 
 Plug 'liuchengxu/vim-which-key'
-Plug 'Lokaltog/vim-easymotion'
+Plug 'phaazon/hop.nvim'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'moll/vim-bbye'
@@ -43,7 +43,8 @@ Plug 'mileszs/ack.vim'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'sheerun/vim-polyglot'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+" Plug 'sheerun/vim-polyglot'
 Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'HerringtonDarkholme/yats.vim'
@@ -69,7 +70,7 @@ call plug#end()
 " WHICHKEY PLUGIN====================================================
 let g:mapleader = ' '
 " By default timeoutlen is 1000 ms
-set timeoutlen=500
+set timeoutlen=250
 call which_key#register('<Space>', "g:which_key_map")
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
@@ -244,9 +245,10 @@ let g:which_key_map.p = {
 
 let g:which_key_map.j = {
       \ 'name' : '+jump',
-      \ 'j' : 'to-character',
       \ 'w' : 'to-beginning-of-word',
-      \ 'e' : 'to-ending-of-word',
+      \ 'j' : 'to-first-character',
+      \ 'e' : 'to-first-two-characters',
+      \ 'l' : 'to-line',
       \ }
 
 let g:which_key_map.c = {
@@ -270,6 +272,7 @@ let g:which_key_map.s = {
       \ 'b' : 'buffers',
       \ 's' : 'snippets',
       \ 'h' : 'file-history',
+      \ 'H' : 'help-tags',
       \ 't' : 'buffer-tags',
       \ 'T' : 'project-tags',
       \ 'c' : 'commands',
@@ -458,9 +461,17 @@ nnoremap <silent><leader>gd :Gdiff<CR>
 nnoremap <silent><leader>gv :Gvdiff<CR>
 
 " EasyMotion Plugin Mappings---------------------------------
-map <silent><leader>jj <Plug>(easymotion-s)
-map <silent><leader>jw <Plug>(easymotion-bd-w)
-map <silent><leader>je <Plug>(easymotion-bd-e)
+" map <silent><leader>jj <Plug>(easymotion-s)
+" map <silent><leader>jw <Plug>(easymotion-bd-w)
+" map <silent><leader>je <Plug>(easymotion-bd-e)
+
+" autocmd User EasyMotionPromptBegin silent! CocDisable
+" autocmd User EasyMotionPromptEnd silent! CocEnable
+
+map <silent><leader>jj :HopChar1<CR>
+map <silent><leader>jw :HopWord<CR>
+map <silent><leader>je :HopChar2<CR>
+map <silent><leader>jl :HopLine<CR>
 
 " Vim-test Plugin configurations---------------------------
 nmap <silent> <leader>mtt :TestNearest<CR>
@@ -551,6 +562,7 @@ nnoremap <silent><leader>st :Vista finder<CR>
 nnoremap <silent><leader>sT :FzfTags<CR>
 nnoremap <silent><leader>sc :FzfCommands<CR>
 nnoremap <silent><leader>sl :FzfLines<CR>
+nnoremap <silent><leader>sH :FzfHelptags<CR>
 
 " CtrlsF Plugin mappings-----------------------------------
 nmap <silent><leader>sg <Plug>CtrlSFPrompt
@@ -583,7 +595,24 @@ let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
 nnoremap <silent><leader>tm :MundoToggle<CR>
 
 " Vim-Polyglot Plugin--------------------------------------------------
-let g:python_highlight_all=1
+" let g:python_highlight_all=1
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    -- disable = { "c", "rust" },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
 
 " NerdTree Plugin-------------------------------------------------------
 let g:NERDTreeShowHidden=1
@@ -753,7 +782,7 @@ au!
   au BufEnter,FileType *.go nnoremap <silent><leader>mxx :GoRun<cr>
   au BufEnter,FileType *.go nnoremap <silent><leader>mxb :GoBuild<cr>
   au BufEnter,FileType *.go nnoremap <silent><leader>mxi :GoInstall<cr>
-  au BufEnter,FileType *.go nnoremap <silent><leader>mxc :GoCoverage<cr>
+  au BufEnter,FileType *.o nnoremap <silent><leader>mxc :GoCoverage<cr>
   au BufEnter,FileType *.go nnoremap <silent><leader>mc :GoLineCount<cr>
   " au BufEnter,FileType *.go nnoremap <silent><leader>mcc :GoCallers<cr>
 augroup END
@@ -763,6 +792,7 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#virtualenv#enabled = 1
 let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#vista#enabled = 1
 
 let g:airline_theme = 'bubblegum'
 " let g:airline_theme = 'violet'
@@ -775,7 +805,6 @@ syntax on
 syntax enable
 set background=dark
 colorscheme one
-let g:one_allow_italics = 1
-" colorscheme space-vim-dark
+let g:one_allow_italics = 1 " colorscheme space-vim-dark
 " colorscheme gruvbox
 " colorscheme hybrid

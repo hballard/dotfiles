@@ -99,6 +99,12 @@ else
   alias vi="tmux new-session 'nvim'"
 fi
 
+if [[ -n "$TMUX" ]]; then
+  alias lvim="lvim"
+else
+  alias lvim="tmux new-session 'lvim'"
+fi
+
 # User configuraation
 
 autoload -Uz compinit
