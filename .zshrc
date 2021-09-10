@@ -112,17 +112,7 @@ compinit -i
 
 source $ZSH/oh-my-zsh.sh
 
-# Python config and completions
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
-
-eval "$(pyenv init -)"
-
-eval "$(register-python-argcomplete pipx)"
-
-eval "$(pipenv --completion)"
-
-source $(pew shell_config)
-
 # Ruby config and completions
 eval "$(rbenv init -)"
 
@@ -145,4 +135,20 @@ export CPPFLAGS="-I$QTPATH/include"
 
 # Created by `userpath` on 2019-11-25 04:24:39
 export PATH="$PATH:/Users/$USER/.local/bin"
+
+# Python config and completions
+
+eval "$(pyenv init -)"
+
+eval "$(register-python-argcomplete pipx)"
+
+eval "$(pipenv --completion)"
+
+source $(pew shell_config)
+
+# fix for pipenv shell when opening another tmux window while in venv
+if [[ -n "$VIRTUAL_ENV" ]]; then
+  export PATH="$VIRTUAL_ENV/bin:$PATH"
+fi
+
 
