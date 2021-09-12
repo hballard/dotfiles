@@ -3,50 +3,43 @@
 " Vim Plug====================================================
 call plug#begin()
 
-Plug 'liuchengxu/vim-which-key'
-Plug 'phaazon/hop.nvim'
 Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'moll/vim-bbye'
+Plug 'SirVer/ultisnips'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
-Plug 'ap/vim-css-color'
-Plug 'liuchengxu/vista.vim'
-Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'alvan/vim-closetag'
+Plug 'ap/vim-css-color'
+Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'chrisbra/csv.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
-Plug 'liuchengxu/space-vim-theme'
-Plug 'rakr/vim-one'
-Plug 'flazz/vim-colorschemes'
-Plug 'blueshirts/darcula'
 Plug 'henrik/vim-indexed-search'
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'itchyny/vim-cursorword'
 Plug 'janko-m/vim-test'
 Plug 'jiangmiao/auto-pairs'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'mhinz/vim-hugefile'
-Plug 'mitsuhiko/vim-jinja'
-Plug 'myusuf3/numbers.vim'
-Plug 'othree/csscomplete.vim'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'jodosha/vim-godebug'
-Plug 'qpkorr/vim-bufkill'
+Plug 'navarasu/onedark.nvim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'liuchengxu/vim-which-key'
+Plug 'liuchengxu/vista.vim'
+Plug 'mhinz/vim-hugefile'
 Plug 'mileszs/ack.vim'
+Plug 'mitsuhiko/vim-jinja'
+Plug 'moll/vim-bbye'
+Plug 'myusuf3/numbers.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'phaazon/hop.nvim'
+Plug 'qpkorr/vim-bufkill'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'HerringtonDarkholme/yats.vim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tomtom/tlib_vim'
@@ -59,9 +52,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/Align'
 Plug 'vim-scripts/BufOnly.vim'
-Plug 'vim-scripts/SQLComplete.vim'
 Plug 'vim-scripts/ScrollColors'
 Plug 'vim-scripts/loremipsum'
+Plug 'yuezk/vim-js'
 Plug 'zirrostig/vim-schlepp'
 
 call plug#end()
@@ -71,14 +64,14 @@ let g:mapleader = ' '
 " By default timeoutlen is 1000 ms
 set timeoutlen=250
 call which_key#register('<Space>', "g:which_key_map")
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
+nnoremap <silent><leader> :WhichKey '<Space>'<CR>
+vnoremap <silent><leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 let g:which_key_map = {}
 
 let g:which_key_map['!'] = { 'name' : 'which_key_ignore' }
 let g:which_key_map["'"] = 'open-terminal'
 let g:which_key_map[';'] = 'toggle-comment'
-let g:which_key_map['/'] = 'fuzzy-match-project'
+let g:which_key_map['/'] = 'rgrep-project'
 let g:which_key_map.a = { 'name' : 'which_key_ignore' }
 let g:which_key_map.h = { 'name' : 'which_key_ignore' }
 let g:which_key_map.H = { 'name' : 'which_key_ignore' }
@@ -86,6 +79,7 @@ let g:which_key_map.H = { 'name' : 'which_key_ignore' }
 let g:which_key_map.m = {
       \ 'name' : '+major-mode',
       \ 'd' : 'show-definition',
+      \ 'D' : 'peek-definition',
       \ 's' : 'show-type-definition',
       \ 'i' : 'show-implementation',
       \ 'I' : 'organize-imports',
@@ -267,7 +261,8 @@ let g:which_key_map.c = {
 
 let g:which_key_map.s = {
       \ 'name' : '+search/fuzzy-match',
-      \ 'f' : 'filenames',
+      \ 'f' : 'git-files',
+      \ 'F' : 'files',
       \ 'b' : 'buffers',
       \ 's' : 'snippets',
       \ 'h' : 'file-history',
@@ -327,7 +322,7 @@ nnoremap j gj
 set mouse=a
 
 " Remap terminal escape keys
-tnoremap <Esc> <c-\><c-n>
+tnoremap <Esc> <c-\> <c-n>
 
 " Force Saving Files that Require Root Permission ('w!!')
 cmap w!! %!sudo tee > /dev/null %
@@ -336,8 +331,8 @@ cmap w!! %!sudo tee > /dev/null %
 nnoremap <silent><leader>Tn :tabn<CR>
 nnoremap <silent><leader>Tp :tabp<CR>
 nnoremap <silent><leader>TN :tabnew<CR>
-nnoremap <silent><leader>Ts :tab split<CR>
-nnoremap <silent><leader>Td :q<CR>
+nnoremap <silent><leader>Ts :tab s plit<CR>
+nnoremap <silent><leader>Td :q<CR> 
 
 "vim-bbye fix for :bdelete; provides :Bdelete and :Bwipeout commands
 " buffer navigation mappings
@@ -459,25 +454,22 @@ nnoremap <silent><leader>gl :Glogg<CR>
 nnoremap <silent><leader>gd :Gdiff<CR>
 nnoremap <silent><leader>gv :Gvdiff<CR>
 
-" EasyMotion Plugin Mappings---------------------------------
-" map <silent><leader>jj <Plug>(easymotion-s)
-" map <silent><leader>jw <Plug>(easymotion-bd-w)
-" map <silent><leader>je <Plug>(easymotion-bd-e)
+" Hop Plugin Mappings---------------------------------------
+nnoremap <silent><leader>jj :HopChar1<CR>
+nnoremap <silent><leader>jw :HopWord<CR>
+nnoremap <silent><leader>je :HopChar2<CR>
+nnoremap <silent><leader>jl :HopLine<CR>
 
-" autocmd User EasyMotionPromptBegin silent! CocDisable
-" autocmd User EasyMotionPromptEnd silent! CocEnable
-
-map <silent><leader>jj :HopChar1<CR>
-map <silent><leader>jw :HopWord<CR>
-map <silent><leader>je :HopChar2<CR>
-map <silent><leader>jl :HopLine<CR>
+lua << EOF
+require'hop'.setup()
+EOF
 
 " Vim-test Plugin configurations---------------------------
-nmap <silent> <leader>mtt :TestNearest<CR>
-nmap <silent> <leader>mtm :TestFile<CR>
-nmap <silent> <leader>mta :TestSuite<CR>
-nmap <silent> <leader>mtl :TestLast<CR>
-nmap <silent> <leader>mtv :TestVisit<CR>
+nmap <silent><leader>mtt :TestNearest<CR>
+nmap <silent><leader>mtm :TestFile<CR>
+nmap <silent><leader>mta :TestSuite<CR>
+nmap <silent><leader>mtl :TestLast<CR>
+nmap <silent><leader>mtv :TestVisit<CR>
 
 " make test commands execute using dispatch.vim
 let g:test#strategy = 'neovim'
@@ -552,7 +544,8 @@ nnoremap <silent><leader>pU :PlugUpgrade<CR>
 nnoremap <silent><leader>pd :PlugDiff<CR>
 
 " FZF mappings
-nnoremap <silent><leader>sf :FZF<CR>
+nnoremap <silent><leader>sF :FZF<CR>
+nnoremap <silent><leader>sf :FzfGFiles<CR>
 nnoremap <silent><leader>/ :FzfRg<CR>
 nnoremap <silent><leader>sb :FzfBuffers<CR>
 nnoremap <silent><leader>ss :FzfSnippets<CR>
@@ -593,9 +586,7 @@ let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
 " let g:mundo_preview_height = 15
 nnoremap <silent><leader>tm :MundoToggle<CR>
 
-" Vim-Polyglot Plugin--------------------------------------------------
-" let g:python_highlight_all=1
-
+" Treesitter Plugin--------------------------------------------------
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -607,7 +598,7 @@ require'nvim-treesitter.configs'.setup {
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = true,
   },
 }
 EOF
@@ -620,7 +611,7 @@ let g:NERDTreeWinSize=40
 " Open NerdTree upon startup if no input provided
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
+   
 map <silent><leader>tf <Plug>NERDTreeTabsToggle<CR>
 
 " COC.vim Plugin-------------------------------------------------------
@@ -635,13 +626,13 @@ inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <tab> to confirm completion instead of <CR>, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
+" inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
 
 " Show all diagnostics
-nnoremap <silent> <leader>el  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><leader>el  :<C-u>CocList diagnostics<cr>
 " Use to navigate diagnostics
-nmap <silent> <leader>ep <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>en <Plug>(coc-diagnostic-next)
+nmap <silent><leader>ep <Plug>(coc-diagnostic-prev)
+nmap <silent><leader>en <Plug>(coc-diagnostic-next)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -653,31 +644,13 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 Imports :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Remap keys for gotos
-nmap <silent> <leader>md <Plug>(coc-definition)
-nmap <silent> <leader>ms <Plug>(coc-type-definition)
-nmap <silent> <leader>mi <Plug>(coc-implementation)
-nmap <silent> <leader>mI :Imports<CR>
-nmap <silent> <leader>mu <Plug>(coc-references)
-nmap <silent> <leader>mr <Plug>(coc-rename)
-nmap <silent> <leader>ma  <Plug>(coc-codeaction)
-nmap <silent> <leader>mK :call <SID>show_documentation()<CR>
-" Remap for format selected region
-nmap <silent> <leader>mf  <Plug>(coc-format)
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-" Show list
-nnoremap <silent> <leader>mll  :<C-u>CocList<cr>
-" Show commands
-nnoremap <silent> <leader>mlc  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <leader>mls  :<C-u>CocList outline<cr>
-" Search workspace symbols
-nnoremap <silent> <leader>mlS  :<C-u>CocList -I symbols<cr>
-" Manage extensions
-nnoremap <silent> <leader>mle  :<C-u>CocList extensions<cr>
-" Show actions
-nnoremap <silent> <leader>mla  :<C-u>CocAction<cr>
+nmap <silent><leader>md <Plug>(coc-definition)
+nmap <silent><leader>ms <Plug>(coc-type-definition)
+nmap <silent><leader>mi <Plug>(coc-implementation)
+nmap <silent><leader>mI :Imports<CR>
+nmap <silent><leader>mu <Plug>(coc-references)
+nmap <silent><leader>mr <Plug>(coc-rename)
+nmap <silent><leader>ma  <Plug>(coc-codeaction)
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -686,6 +659,25 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+nmap <silent><leader>mK :call <SID>show_documentation()<CR>
+" Remap for format selected region
+nmap <silent><leader>mf  <Plug>(coc-format)
+" Use K to show documentation in preview window
+nnoremap <silent>K :call <SID>show_documentation()<CR>
+
+" Show list
+nnoremap <silent><leader>mll  :<C-u>CocList<cr>
+" Show commands
+nnoremap <silent><leader>mlc  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent><leader>mls  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent><leader>mlS  :<C-u>CocList -I symbols<cr>
+" Manage extensions
+nnoremap <silent><leader>mle  :<C-u>CocList extensions<cr>
+" Show actions
+nnoremap <silent><leader>mla  :<C-u>CocAction<cr>
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -699,12 +691,12 @@ augroup mygroup
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <silent> <leader>ma  <Plug>(coc-codeaction-selected)
-nmap <silent> <leader>ma  <Plug>(coc-codeaction-selected)
+xmap <silent><leader>ma  <Plug>(coc-codeaction-selected)
+nmap <silent><leader>ma  <Plug>(coc-codeaction-selected)
 
 " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
-xmap <silent> <TAB> <Plug>(coc-range-select)
+nmap <silent><TAB> <Plug>(coc-range-select)
+xmap <silent><TAB> <Plug>(coc-range-select)
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
@@ -781,7 +773,7 @@ au!
   au BufEnter,FileType *.go nnoremap <silent><leader>mxx :GoRun<cr>
   au BufEnter,FileType *.go nnoremap <silent><leader>mxb :GoBuild<cr>
   au BufEnter,FileType *.go nnoremap <silent><leader>mxi :GoInstall<cr>
-  au BufEnter,FileType *.o nnoremap <silent><leader>mxc :GoCoverage<cr>
+  au BufEnter,FileType *.go nnoremap <silent><leader>mxc :GoCoverage<cr>
   au BufEnter,FileType *.go nnoremap <silent><leader>mc :GoLineCount<cr>
   " au BufEnter,FileType *.go nnoremap <silent><leader>mcc :GoCallers<cr>
 augroup END
@@ -793,17 +785,12 @@ let g:airline#extensions#virtualenv#enabled = 1
 let g:airline#extensions#coc#enabled = 1
 let g:airline#extensions#vista#enabled = 1
 
-let g:airline_theme = 'bubblegum'
-" let g:airline_theme = 'violet'
-
-"let g:tmuxline_preset = 'nightly_fox'
+" Tmuxline
 let g:tmuxline_powerline_separators = 0
 
 " Syntax highlighting and background mode / theme------------------------
 syntax on
 syntax enable
+let g:onedark_style = 'darker'
 set background=dark
-colorscheme one
-let g:one_allow_italics = 1 " colorscheme space-vim-dark
-" colorscheme gruvbox
-" colorscheme hybrid
+colorscheme onedark
