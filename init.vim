@@ -21,9 +21,8 @@ Plug 'itchyny/vim-cursorword'
 Plug 'janko-m/vim-test'
 Plug 'jiangmiao/auto-pairs'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'jodosha/vim-godebug'
-Plug 'navarasu/onedark.nvim'
+Plug 'joshdick/onedark.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'liuchengxu/vim-which-key'
@@ -54,7 +53,6 @@ Plug 'vim-scripts/Align'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'vim-scripts/ScrollColors'
 Plug 'vim-scripts/loremipsum'
-Plug 'yuezk/vim-js'
 Plug 'zirrostig/vim-schlepp'
 
 call plug#end()
@@ -71,6 +69,8 @@ let g:which_key_map = {}
 let g:which_key_map['!'] = { 'name' : 'which_key_ignore' }
 let g:which_key_map["'"] = 'open-terminal'
 let g:which_key_map[';'] = 'toggle-comment'
+let g:which_key_map['q'] = 'quit'
+let g:which_key_map['S'] = 'save'
 let g:which_key_map['/'] = 'rgrep-project'
 let g:which_key_map.a = { 'name' : 'which_key_ignore' }
 let g:which_key_map.h = { 'name' : 'which_key_ignore' }
@@ -204,6 +204,7 @@ let g:which_key_map.b = {
         \ 'n' : 'next-buffer',
         \ 'p' : 'previous-buffer',
         \ 'd' : 'delete-buffer',
+        \ 'o' : 'delete-all-buffers',
         \ 'a' : 'which_key_ignore',
         \ 'f' : 'which_key_ignore',
         \ 'w' : 'which_key_ignore',
@@ -266,9 +267,9 @@ let g:which_key_map.s = {
       \ 'b' : 'buffers',
       \ 's' : 'snippets',
       \ 'h' : 'file-history',
-      \ 'H' : 'help-tags',
-      \ 't' : 'buffer-tags',
-      \ 'T' : 'project-tags',
+      \ 'H' : 'help-topics',
+      \ 't' : 'buffer-symbols',
+      \ 'T' : 'project-symbols',
       \ 'c' : 'commands',
       \ 'l' : 'buffer-lines',
       \ 'g' : 'project-search-prompt',
@@ -288,6 +289,13 @@ let g:which_key_map.e = {
 filetype indent on
 set number
 set numberwidth=4
+
+" default SQL language to be used
+let g:sql_type_default = 'pgsql'
+
+" keymap to write buffer and quit
+nnoremap <silent><leader>q :q<cr>
+nnoremap <silent><leader>S :w<cr>
 
 " mapping for better splits
 nnoremap <silent><leader>wJ 5<C-W>-
@@ -339,15 +347,19 @@ nnoremap <silent><leader>Td :q<CR>
 nnoremap <silent><leader>bn :bn<CR>
 nnoremap <silent><leader>bp :bp<CR>
 nnoremap <silent><leader>bd :Bdelete!<CR>
+nnoremap <silent><leader>bo :Bo<CR>
 
 " show registers
 nnoremap <silent><leader>re :register<CR>
 
 " Autocompletion of files and commands behaves like shell
 " complete only the common part, list the options that match
-set wildmode=list:longest
+" set wildmode=list:longest
 
-" Make it obvious where 80 characters is
+set wildmode=full
+set wildoptions+=pum
+
+"Make it obvious where 80 characters is
 set textwidth=80
 
 " Clear search highlights
@@ -440,16 +452,13 @@ endif
 " Closetag plugin settings---------------------------
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.phtml,*.jsx,*.tsx,*.jinja'
 
-" default SQL language to be used
-let g:sql_type_default = 'pgsql'
-
 " treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
 " Fugitive Plugin (git) Mappings----------------------------
-nnoremap <silent><leader>gs :Gstatus<CR>
+nnoremap <silent><leader>gs :Git<CR>
 nnoremap <silent><leader>gS :Gw<CR>
-nnoremap <silent><leader>gb :Gblame<CR>
+nnoremap <silent><leader>gb :Git blame<CR>
 nnoremap <silent><leader>gl :Glogg<CR>
 nnoremap <silent><leader>gd :Gdiff<CR>
 nnoremap <silent><leader>gv :Gvdiff<CR>
@@ -528,13 +537,25 @@ endfunction
 
 au! User FzfStatusLine call <SID>fzf_statusline()
 
-" Ultisnips
+" Coc-snippets, Ultisnips, and Snipmate--------------------
 " turn off ultisnips and let COC-snippets handle
 " use ultisnips for only fzfsnippets buffer
-
 let g:UltiSnipsExpandTrigger = "<nop>"
 
-" Vim-Plug mappings
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+" Vim-Plug mappings----------------------------------------
 nnoremap <silent><leader>pi :PlugInstall<CR>
 nnoremap <silent><leader>pc :PlugClean<CR>
 nnoremap <silent><leader>ps :PlugStatus<CR>
@@ -543,7 +564,7 @@ nnoremap <silent><leader>pu :PlugUpdate<CR>
 nnoremap <silent><leader>pU :PlugUpgrade<CR>
 nnoremap <silent><leader>pd :PlugDiff<CR>
 
-" FZF mappings
+" FZF mappings---------------------------------------------
 nnoremap <silent><leader>sF :FZF<CR>
 nnoremap <silent><leader>sf :FzfGFiles<CR>
 nnoremap <silent><leader>/ :FzfRg<CR>
@@ -577,7 +598,7 @@ if executable('rg')
 " Vista.vim Plugin---------------------------------------------
 map <silent><leader>ts :Vista<CR>
 let g:vista_default_executive = 'coc'
-let g:vista_sidebar_width = 45
+let g:vista_sidebar_width = 40
 let g:vista_finder_alternative_executives = ['ctags']
 let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
 
@@ -603,7 +624,6 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
-
 " NerdTree Plugin-------------------------------------------------------
 let g:NERDTreeShowHidden=1
 let g:NERDTreeWinSize=40
@@ -621,12 +641,42 @@ set updatetime=300
 set shortmess+=c
 set signcolumn=yes
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Use <tab> to confirm completion instead of <CR>, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-" inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Command Line auto-completion
+augroup command_window
+    function! ReInitCoc()
+        execute("CocDisable")
+        execute("CocEnable")
+    endfunction
+    autocmd CmdwinEnter * startinsert
+    autocmd CmdwinEnter * call ReInitCoc()
+augroup END
+
 
 " Show all diagnostics
 nnoremap <silent><leader>el  :<C-u>CocList diagnostics<cr>
@@ -791,6 +841,10 @@ let g:tmuxline_powerline_separators = 0
 " Syntax highlighting and background mode / theme------------------------
 syntax on
 syntax enable
-let g:onedark_style = 'darker'
 set background=dark
+let g:onedark_color_overrides = {
+\ "background": {"gui": "#1F2329", "cterm": "235", "cterm16": "0" },
+\}
+let g:onedark_terminal_italics = 1
+" let g:onedark_style = 'darker'
 colorscheme onedark
