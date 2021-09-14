@@ -3,10 +3,6 @@
 " Vim Plug====================================================
 call plug#begin()
 
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'SirVer/ultisnips'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'alvan/vim-closetag'
 Plug 'ap/vim-css-color'
@@ -27,6 +23,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'liuchengxu/vista.vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'mhinz/vim-hugefile'
 Plug 'mileszs/ack.vim'
 Plug 'mitsuhiko/vim-jinja'
@@ -40,6 +37,7 @@ Plug 'ryanoasis/vim-webdevicons'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'simnalamburt/vim-mundo'
+Plug 'SirVer/ultisnips'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tomtom/tlib_vim'
 Plug 'tpope/vim-dispatch'
@@ -53,17 +51,24 @@ Plug 'vim-scripts/Align'
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'vim-scripts/ScrollColors'
 Plug 'vim-scripts/loremipsum'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Yggdroot/indentLine'
 Plug 'zirrostig/vim-schlepp'
 
 call plug#end()
 
 " WHICHKEY PLUGIN====================================================
+" Not a fan of floating windows for this
 let g:mapleader = ' '
 " By default timeoutlen is 1000 ms
-set timeoutlen=250
+set timeoutlen=450
 call which_key#register('<Space>', "g:which_key_map")
 nnoremap <silent><leader> :WhichKey '<Space>'<CR>
 vnoremap <silent><leader> :<c-u>WhichKeyVisual '<Space>'<CR>
+let g:which_key_floating_opts = { 'width': '-2' }
+autocmd! FileType which_key
+autocmd  FileType which_key set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 let g:which_key_map = {}
 
 let g:which_key_map['!'] = { 'name' : 'which_key_ignore' }
@@ -271,6 +276,7 @@ let g:which_key_map.s = {
       \ 't' : 'buffer-symbols',
       \ 'T' : 'project-symbols',
       \ 'c' : 'commands',
+      \ 'C' : 'buffer-commits',
       \ 'l' : 'buffer-lines',
       \ 'g' : 'project-search-prompt',
       \ 'G' : 'project-search-noprompt',
@@ -312,13 +318,13 @@ nnoremap <silent><leader>wd :q<CR>
 nnoremap <silent><leader>ws :sp<CR>
 nnoremap <silent><leader>wv :vs<CR>
 
-
 " Keymap to open default shell
 nnoremap <silent><leader>' :5sp term://zsh<CR>i
 
 " Keymap to edit init.vim / .vimrc
 nnoremap <silent><leader>fed :e $MYVIMRC<CR>
 nnoremap <silent><leader>feR :source $MYVIMRC<CR>
+
 " Press i to enter insert mode, and ii to exit.
 inoremap ii <Esc>
 
@@ -340,22 +346,21 @@ nnoremap <silent><leader>Tn :tabn<CR>
 nnoremap <silent><leader>Tp :tabp<CR>
 nnoremap <silent><leader>TN :tabnew<CR>
 nnoremap <silent><leader>Ts :tab s plit<CR>
-nnoremap <silent><leader>Td :q<CR> 
+nnoremap <silent><leader>Td :q<CR>
 
-"vim-bbye fix for :bdelete; provides :Bdelete and :Bwipeout commands
 " buffer navigation mappings
+"vim-bbye fix for :bdelete; provides :Bdelete and :Bwipeout commands
 nnoremap <silent><leader>bn :bn<CR>
 nnoremap <silent><leader>bp :bp<CR>
 nnoremap <silent><leader>bd :Bdelete!<CR>
 nnoremap <silent><leader>bo :Bo<CR>
+nnoremap <silent><S-h> :bp<CR>
+nnoremap <silent><S-l> :bn<CR>
 
 " show registers
 nnoremap <silent><leader>re :register<CR>
 
-" Autocompletion of files and commands behaves like shell
-" complete only the common part, list the options that match
-" set wildmode=list:longest
-
+" Autocompletion of files and commands
 set wildmode=full
 set wildoptions+=pum
 
@@ -436,9 +441,6 @@ if (has('termguicolors'))
   set termguicolors
 endif
 
-
-" PLUGIN SETTINGS AND MAPPINGS================================================
-
 " external shell command mappings -------------------
 :command! Glogg Start tig
 :command! Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
@@ -448,6 +450,8 @@ endif
 :command! TSLineCount !find . -name '*.ts*' -not -path "./node_modules/*" | xargs wc -l
 :command! RustLineCount !find . -name '*.rs' | xargs wc -l
 :command! GoLineCount !find . -name '*.go' | xargs wc -l
+
+" PLUGIN SETTINGS AND MAPPINGS================================================
 
 " Closetag plugin settings---------------------------
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.phtml,*.jsx,*.tsx,*.jinja'
@@ -501,9 +505,6 @@ vnoremap <unique> <right> <Plug>SchleppRight
 nmap <silent><leader>; <Plug>NERDCommenterToggle
 nmap <silent><leader>ca <Plug>NERDCommenterAppend
 let g:NERDSpaceDelims = 1
-
-" CSS Autocomplete Plugin--------------------------------
-au FileType css setlocal omnifunc=csscomplete#CompleteCSS noci
 
 " Indentline Plugin settings------------------------------
 let g:indentLine_color_term = 237
@@ -565,7 +566,7 @@ nnoremap <silent><leader>pU :PlugUpgrade<CR>
 nnoremap <silent><leader>pd :PlugDiff<CR>
 
 " FZF mappings---------------------------------------------
-nnoremap <silent><leader>sF :FZF<CR>
+nnoremap <silent><leader>sF :FzfFiles<CR>
 nnoremap <silent><leader>sf :FzfGFiles<CR>
 nnoremap <silent><leader>/ :FzfRg<CR>
 nnoremap <silent><leader>sb :FzfBuffers<CR>
@@ -574,6 +575,7 @@ nnoremap <silent><leader>sh :FzfHistory<CR>
 nnoremap <silent><leader>st :Vista finder<CR>
 nnoremap <silent><leader>sT :FzfTags<CR>
 nnoremap <silent><leader>sc :FzfCommands<CR>
+nnoremap <silent><leader>sC :FzfCommits<CR>
 nnoremap <silent><leader>sl :FzfLines<CR>
 nnoremap <silent><leader>sH :FzfHelptags<CR>
 
@@ -585,15 +587,10 @@ nnoremap <silent><leader>tr :CtrlSFOpen<CR>
 
 "  Ack Plugin---------------------------------------
 " Use ripgrep over ack
-
 if executable('rg')
     let g:ackprg = 'rg --vimgrep'
-endif
-
-if executable('rg')
-    " Use Ag over Grep
     set grepprg=rg\ --no-heading\ --color\ never
- endif
+endif
 
 " Vista.vim Plugin---------------------------------------------
 map <silent><leader>ts :Vista<CR>
@@ -631,7 +628,7 @@ let g:NERDTreeWinSize=40
 " Open NerdTree upon startup if no input provided
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-   
+
 map <silent><leader>tf <Plug>NERDTreeTabsToggle<CR>
 
 " COC.vim Plugin-------------------------------------------------------
@@ -791,7 +788,7 @@ augroup END
 " Rust settings--------------------------------------------------
 :command! RustExecute write | vsplit term://cargo run %
 :command! RustExecuteProject write | vsplit term://cargo run
-:command! RustBuild write | vsplit term://cargo build 
+:command! RustBuild write | vsplit term://cargo build
 :command! RustCheck write | vsplit term://cargo check
 
 augroup RustMappings
@@ -846,5 +843,4 @@ let g:onedark_color_overrides = {
 \ "background": {"gui": "#1F2329", "cterm": "235", "cterm16": "0" },
 \}
 let g:onedark_terminal_italics = 1
-" let g:onedark_style = 'darker'
 colorscheme onedark
