@@ -10,6 +10,7 @@ Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'chrisbra/csv.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
+Plug 'ellisonleao/glow.nvim'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 Plug 'henrik/vim-indexed-search'
 Plug 'honza/vim-snippets'
@@ -53,7 +54,6 @@ Plug 'vim-scripts/ScrollColors'
 Plug 'vim-scripts/loremipsum'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
-Plug 'zirrostig/vim-schlepp'
 
 call plug#end()
 
@@ -108,8 +108,8 @@ let g:which_key_map.m.t = {
 
 let g:which_key_map.m.p = {
       \ 'name' : '+markdown-preview',
-      \ 'p' : 'preview-with-mgrip',
-      \ 'P' : 'preview-with-github',
+      \ 'p' : 'preview-in-terminal',
+      \ 'P' : 'preview-in-browser',
       \ }
 
 let g:which_key_map.m.l = {
@@ -443,7 +443,7 @@ endif
 
 " external shell command mappings -------------------
 :command! Glogg Start tig
-:command! Mgrip Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
+:command! MPreview Start! open -a Google\ Chrome.app http://localhost:6419 & grip %
 :command! PyClean !find . -name '*.pyc' | xargs rm -f
 :command! PyLineCount !find . -name '*.py' | xargs wc -l
 :command! JSLineCount !find . -name '*.js' -not -path "./node_modules/*" | xargs wc -l
@@ -453,7 +453,7 @@ endif
 
 " PLUGIN SETTINGS AND MAPPINGS================================================
 
-" Closetag plugin settings---------------------------
+" Closetag plugin settings----------------------------------
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.phtml,*.jsx,*.tsx,*.jinja'
 
 " treat <li> and <p> tags like the block tags they are
@@ -491,15 +491,11 @@ let g:test#python#runner = 'pytest'
 let g:test#python#pytest#options = '--verbose'
 let g:virtualenv_stl_format = '[%n]'
 
-" Markdown live preview plugin---------------------------
-nnoremap <silent><leader>mpp :Mgrip<CR>
-nnoremap <silent><leader>mpP :Mpreview<CR>
+" Markdown browser preview mapping---------------------------
+nnoremap <silent><leader>mpP :MPreview<CR>
 
-" Vim schlep plugin -------------------------------------
-vnoremap <unique> <up>    <Plug>SchleppUp
-vnoremap <unique> <down>  <Plug>SchleppDown
-vnoremap <unique> <left>  <Plug>SchleppLeft
-vnoremap <unique> <right> <Plug>SchleppRight
+" Markdown Glow plugin settings--------------------------------------
+noremap <silent><leader>mpp :Glow<CR>
 
 " NerdCommenter Plugin config----------------------------
 nmap <silent><leader>; <Plug>NERDCommenterToggle
@@ -584,6 +580,7 @@ nmap <silent><leader>sg <Plug>CtrlSFPrompt
 vmap <silent><leader>sg <Plug>CtrlSFVwordPath
 vmap <silent><leader>sG <Plug>CtrlSFVwordExec
 nnoremap <silent><leader>tr :CtrlSFOpen<CR>
+let g:ctrlsf_ackprg = 'rg'
 
 "  Ack Plugin---------------------------------------
 " Use ripgrep over ack
