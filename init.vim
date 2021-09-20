@@ -37,7 +37,7 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'simnalamburt/vim-mundo'
+Plug 'mbbill/undotree'
 Plug 'SirVer/ultisnips'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tomtom/tlib_vim'
@@ -84,8 +84,7 @@ let g:which_key_map.H = { 'name' : 'which_key_ignore' }
 let g:which_key_map.m = {
       \ 'name' : '+major-mode',
       \ 'd' : 'show-definition',
-      \ 'D' : 'peek-definition',
-      \ 's' : 'show-type-definition',
+      \ 'T' : 'show-type-definition',
       \ 'i' : 'show-implementation',
       \ 'I' : 'organize-imports',
       \ 'f' : 'format-buffer',
@@ -160,7 +159,7 @@ let g:which_key_map.f.e = {
 let g:which_key_map.t = {
         \ 'name' : '+toggle',
         \ '/' : 'search-highlights',
-        \ 'm' : 'mundo-history',
+        \ 'm' : 'file-undo-history',
         \ 's' : 'symbols',
         \ 'f' : 'file-tree',
         \ 'r' : 'project-search-results',
@@ -596,10 +595,10 @@ let g:vista_sidebar_width = 40
 let g:vista_finder_alternative_executives = ['ctags']
 let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
 
-" Mundo Plugin-----------------------------------------------
- "let g:mundo_width = 40
-" let g:mundo_preview_height = 15
-nnoremap <silent><leader>tm :MundoToggle<CR>
+" Undotree Plugin-----------------------------------------------
+nnoremap <silent><leader>tm :UndotreeToggle<CR>
+let g:undotree_SplitWidth = 37
+let g:undotree_SetFocusWhenToggle = 1
 
 " Treesitter Plugin--------------------------------------------------
 lua <<EOF
@@ -689,7 +688,7 @@ command! -nargs=0 Imports :call CocAction('runCommand', 'editor.action.organizeI
 
 " Remap keys for gotos
 nmap <silent><leader>md <Plug>(coc-definition)
-nmap <silent><leader>ms <Plug>(coc-type-definition)
+nmap <silent><leader>mT <Plug>(coc-type-definition)
 nmap <silent><leader>mi <Plug>(coc-implementation)
 nmap <silent><leader>mI :Imports<CR>
 nmap <silent><leader>mu <Plug>(coc-references)
