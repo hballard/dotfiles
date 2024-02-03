@@ -107,14 +107,15 @@ fi
 
 # User configuraation
 
+# Rust config and completions
+fpath+=~/.zfunc
+
 autoload -Uz compinit
 compinit -i
 
 source $ZSH/oh-my-zsh.sh
 
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
-# Ruby config and completions
-eval "$(rbenv init -)"
 
 # Go config and completions
 export GOPATH=$HOME/Code/libraries/go
@@ -122,10 +123,11 @@ export GOPATH=$HOME/Code/libraries/go
 # fzf config and completions
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
-# Rust config and completions
-# fpath+=~/.zfunc
-# rustup completions zsh cargo > ~/.zfunc/_cargo
-# rustup completions zsh > ~/.zfunc/_rustup
+cdf() {
+  local dir
+  dir=$(find $PWD -type d | fzf)
+  [ -n "$dir" ] && cd "$dir"
+}
 
 # qt settings
 export QTPATH=$HOME/Code/libraries/Qt/6.1.1/clang_64
@@ -133,22 +135,21 @@ export PATH="$QTPATH/bin:$PATH"
 export LDFLAGS="-L$QTPATH/lib"
 export CPPFLAGS="-I$QTPATH/include"
 
-# Created by `userpath` on 2019-11-25 04:24:39
-export PATH="$PATH:/Users/$USER/.local/bin"
-
 # Python config and completions
 
 eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 
 eval "$(register-python-argcomplete pipx)"
-
-eval "$(pipenv --completion)"
-
-source $(pew shell_config)
 
 # fix for pipenv shell when opening another tmux window while in venv
 if [[ -n "$VIRTUAL_ENV" ]]; then
   export PATH="$VIRTUAL_ENV/bin:$PATH"
 fi
 
+# Created by `pipx` on 2022-09-03 04:04:08
+export PATH="$PATH:/Users/heathballard/.local/bin"
 
+# bun
+export BUN_INSTALL="$HOME/Library/Application Support/reflex/bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

@@ -1,4 +1,4 @@
-" ALL KEYMAPPINGS ARE THE SAME OR VERY SIMILAR TO EMACS 'SPACEMACS' DISTRO
+" KEYMAPPINGS ARE THE SAME OR VERY SIMILAR TO EMACS 'SPACEMACS' DISTRO
 
 " Vim Plug====================================================
 call plug#begin()
@@ -12,6 +12,7 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ellisonleao/glow.nvim'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
+Plug 'github/copilot.vim'
 Plug 'henrik/vim-indexed-search'
 Plug 'honza/vim-snippets'
 Plug 'itchyny/vim-cursorword'
@@ -31,7 +32,7 @@ Plug 'mitsuhiko/vim-jinja'
 Plug 'moll/vim-bbye'
 Plug 'myusuf3/numbers.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'phaazon/hop.nvim'
 Plug 'qpkorr/vim-bufkill'
 Plug 'ryanoasis/vim-webdevicons'
@@ -176,6 +177,12 @@ let g:which_key_map.t = {
         \ 't' : 'which_key_ignore',
         \ '|' : 'which_key_ignore',
         \ '~' : 'which_key_ignore',
+        \ 's<' : 'which_key_ignore',
+        \ 's=' : 'which_key_ignore',
+        \ 's;' : 'which_key_ignore',
+        \ 's:' : 'which_key_ignore',
+        \ 'sq' : 'which_key_ignore',
+        \ 's,' : 'which_key_ignore',
         \ }
 let g:which_key_map.t.a = { 'name' : 'which_key_ignore' }
 let g:which_key_map.t.W = { 'name' : 'which_key_ignore' }
@@ -252,7 +259,7 @@ let g:which_key_map.j = {
 let g:which_key_map.c = {
       \ 'name' : '+comment',
       \ '$' : 'to-EOL',
-      \ 'a' : 'append',
+      \ 'A' : 'append',
       \ 'b' : 'align-both',
       \ 'c' : 'comment',
       \ 'i' : 'invert',
@@ -262,6 +269,7 @@ let g:which_key_map.c = {
       \ 's' : 'sexy',
       \ 'u' : 'uncomment',
       \ 'y' : 'yank',
+      \ 'a' : 'which_key_ignore',
       \}
 
 let g:which_key_map.s = {
@@ -335,7 +343,7 @@ nnoremap j gj
 set mouse=a
 
 " Remap terminal escape keys
-tnoremap <Esc> <c-\> <c-n>
+tnoremap <Esc> <C-\><C-n>
 
 " Force Saving Files that Require Root Permission ('w!!')
 cmap w!! %!sudo tee > /dev/null %
@@ -460,11 +468,11 @@ let g:html_indent_tags = 'li\|p'
 
 " Fugitive Plugin (git) Mappings----------------------------
 nnoremap <silent><leader>gs :Git<CR>
-nnoremap <silent><leader>gS :Gw<CR>
+nnoremap <silent><leader>gS :Gwrite<CR>
 nnoremap <silent><leader>gb :Git blame<CR>
 nnoremap <silent><leader>gl :Glogg<CR>
-nnoremap <silent><leader>gd :Gdiff<CR>
-nnoremap <silent><leader>gv :Gvdiff<CR>
+nnoremap <silent><leader>gd :Gdiffsplit<CR>
+nnoremap <silent><leader>gv :Gvdiffsplit<CR>
 
 " Hop Plugin Mappings---------------------------------------
 nnoremap <silent><leader>jj :HopChar1<CR>
@@ -498,7 +506,8 @@ noremap <silent><leader>mpp :Glow<CR>
 
 " NerdCommenter Plugin config----------------------------
 nmap <silent><leader>; <Plug>NERDCommenterToggle
-nmap <silent><leader>ca <Plug>NERDCommenterAppend
+vmap <silent><leader>; <Plug>NERDCommenterToggle
+nmap <silent><leader>cA <Plug>NERDCommenterAppend
 let g:NERDSpaceDelims = 1
 
 " Indentline Plugin settings------------------------------
@@ -521,6 +530,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 
 " FZF Plugin settings--------------------------------------
 let g:fzf_command_prefix = 'Fzf'
+" let g:fzf_tags_command = 'ctags'
 
 " fzf statusline mapping
 function! s:fzf_statusline()
@@ -537,12 +547,6 @@ au! User FzfStatusLine call <SID>fzf_statusline()
 " turn off ultisnips and let COC-snippets handle
 " use ultisnips for only fzfsnippets buffer
 let g:UltiSnipsExpandTrigger = "<nop>"
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -595,6 +599,7 @@ let g:vista_sidebar_width = 40
 let g:vista_finder_alternative_executives = ['ctags']
 let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
 
+
 " Undotree Plugin-----------------------------------------------
 nnoremap <silent><leader>tm :UndotreeToggle<CR>
 let g:undotree_SplitWidth = 37
@@ -603,7 +608,7 @@ let g:undotree_SetFocusWhenToggle = 1
 " Treesitter Plugin--------------------------------------------------
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   -- ignore_install = { "javascript" }, -- List of parsers to ignore installing
   highlight = {
     enable = true,              -- false will disable the whole extension
@@ -638,10 +643,11 @@ set signcolumn=yes
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+ 
+inoremap <expr><S-TAB> coc#pum#visible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -657,7 +663,7 @@ endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Command Line auto-completion
@@ -734,8 +740,8 @@ augroup mygroup
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <silent><leader>ma  <Plug>(coc-codeaction-selected)
-nmap <silent><leader>ma  <Plug>(coc-codeaction-selected)
+xmap <silent><leader>ma  <Plug>(coc-codeaction-selected)<cr>
+nmap <silent><leader>ma  <Plug>(coc-codeaction-selected)<cr>
 
 " Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 nmap <silent><TAB> <Plug>(coc-range-select)
@@ -780,6 +786,8 @@ augroup PythonMappings
   au BufEnter,Filetype python nnoremap <silent><leader>mxx :Pyexecute<CR>
   au BufEnter,Filetype python nnoremap <silent><leader>mc :PyLineCount<CR>
 augroup END
+
+let g:python3_host_prog = expand('/Users/heathballard/.pyenv/shims/python')
 
 " Rust settings--------------------------------------------------
 :command! RustExecute write | vsplit term://cargo run %
@@ -835,8 +843,9 @@ let g:tmuxline_powerline_separators = 0
 syntax on
 syntax enable
 set background=dark
-let g:onedark_color_overrides = {
-\ "background": {"gui": "#1F2329", "cterm": "235", "cterm16": "0" },
-\}
+autocmd ColorScheme * hi CocMenuSel ctermbg=237 guibg=#13354A
+" let g:onedark_color_overrides = {
+" \ "background": {"gui": "#1F2329", "cterm": "235", "cterm16": "0" },
+" \}
 let g:onedark_terminal_italics = 1
 colorscheme onedark
