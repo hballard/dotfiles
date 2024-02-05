@@ -66,6 +66,10 @@ plugins=(git
   npm
   pip
   python
+  golang
+  nvm
+  node
+  rust
 )
 
 # User configuration
@@ -102,11 +106,6 @@ else
 fi
 
 # User configuraation
-
-# zsh-completions
-# if type brew &>/dev/null; then
-  # FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-# fi
 
 # Rust config and completions
 fpath+=~/.zfunc

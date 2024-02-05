@@ -787,7 +787,7 @@ augroup PythonMappings
   au BufEnter,Filetype python nnoremap <silent><leader>mc :PyLineCount<CR>
 augroup END
 
-" let g:python3_host_prog = expand('/Users/heath/.pyenv/shims/python')
+let g:python3_host_prog = expand('/Users/heath/.pyenv/shims/python')
 
 " Rust settings--------------------------------------------------
 :command! RustExecute write | vsplit term://cargo run %
