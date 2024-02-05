@@ -7,5 +7,9 @@
 	excludesfile = /Users/heath/.gitignore
 [credential]
 	helper = store
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
 [init]
 	defaultBranch = master
+[credential "https://dev.azure.com"]
+	useHttpPath = true

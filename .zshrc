@@ -62,10 +62,6 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git
-  zsh-nvm
-  zsh-completions
-  zsh-autosuggestions
-  zsh-syntax-highlighting
   colored-man-pages
   npm
   pip
@@ -107,15 +103,24 @@ fi
 
 # User configuraation
 
+# zsh-completions
+# if type brew &>/dev/null; then
+  # FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+# fi
+
 # Rust config and completions
 fpath+=~/.zfunc
 
 autoload -Uz compinit
 compinit -i
 
+
 source $ZSH/oh-my-zsh.sh
 
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
+
+# export HOMEBREW_NO_INSTALL_CLEANUP=TRUE
+export HOMEBREW_NO_ENV_HINTS=TRUE
 
 # Go config and completions
 export GOPATH=$HOME/Code/libraries/go
@@ -129,12 +134,6 @@ cdf() {
   [ -n "$dir" ] && cd "$dir"
 }
 
-# qt settings
-export QTPATH=$HOME/Code/libraries/Qt/6.1.1/clang_64
-export PATH="$QTPATH/bin:$PATH"
-export LDFLAGS="-L$QTPATH/lib"
-export CPPFLAGS="-I$QTPATH/include"
-
 # Python config and completions
 
 eval "$(pyenv init -)"
@@ -142,14 +141,11 @@ eval "$(pyenv init --path)"
 
 eval "$(register-python-argcomplete pipx)"
 
-# fix for pipenv shell when opening another tmux window while in venv
-if [[ -n "$VIRTUAL_ENV" ]]; then
-  export PATH="$VIRTUAL_ENV/bin:$PATH"
-fi
+# Install nvm
+ export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
 
-# Created by `pipx` on 2022-09-03 04:04:08
-export PATH="$PATH:/Users/heathballard/.local/bin"
-
-# bun
-export BUN_INSTALL="$HOME/Library/Application Support/reflex/bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+# Zsh completions and other goodies
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
