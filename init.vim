@@ -8,10 +8,6 @@ Plug 'alvan/vim-closetag'
 Plug 'ap/vim-css-color'
 Plug 'bentayloruk/vim-react-es6-snippets'
 Plug 'chrisbra/csv.vim'
-Plug 'dyng/ctrlsf.vim'
-Plug 'edkolev/tmuxline.vim'
-Plug 'ellisonleao/glow.nvim'
-Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 Plug 'github/copilot.vim'
 Plug 'henrik/vim-indexed-search'
 Plug 'honza/vim-snippets'
@@ -21,6 +17,10 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'jodosha/vim-godebug'
 Plug 'joshdick/onedark.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'edkolev/tmuxline.vim'
+Plug 'ellisonleao/glow.nvim'
+Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'liuchengxu/vim-which-key'
@@ -34,6 +34,7 @@ Plug 'myusuf3/numbers.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'phaazon/hop.nvim'
+Plug 'nvim-lua/plenary.nvim'
 Plug 'qpkorr/vim-bufkill'
 Plug 'ryanoasis/vim-webdevicons'
 Plug 'scrooloose/nerdcommenter'
@@ -55,6 +56,10 @@ Plug 'vim-scripts/ScrollColors'
 Plug 'vim-scripts/loremipsum'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
+Plug 'stevearc/dressing.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'MeanderingProgrammer/render-markdown.nvim'
+Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 
 call plug#end()
 
@@ -71,16 +76,20 @@ autocmd! FileType which_key
 autocmd  FileType which_key set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 let g:which_key_map = {}
-
-let g:which_key_map['!'] = { 'name' : 'which_key_ignore' }
+let g:which_key_ignore_outside_mappings = 1
 let g:which_key_map["'"] = 'open-terminal'
 let g:which_key_map[';'] = 'toggle-comment'
 let g:which_key_map['q'] = 'quit'
 let g:which_key_map['S'] = 'save'
 let g:which_key_map['/'] = 'rgrep-project'
-let g:which_key_map.a = { 'name' : 'which_key_ignore' }
-let g:which_key_map.h = { 'name' : 'which_key_ignore' }
-let g:which_key_map.H = { 'name' : 'which_key_ignore' }
+
+let g:which_key_map.A = {
+      \ 'name': '+avante',
+      \ 'a': 'show-sidebar',
+      \ 'e': 'edit-selected-block',
+      \ 'r': 'refresh-sidebar',
+      \ 'f': 'switch-sidebar-focus',
+      \ }
 
 let g:which_key_map.m = {
       \ 'name' : '+major-mode',
@@ -94,7 +103,6 @@ let g:which_key_map.m = {
       \ 'a' : 'suggest-code-action',
       \ 'K' : 'show-documentation',
       \ 'c' : 'project-LOC-count',
-      \ '=' : 'which_key_ignore',
       \}
 
 let g:which_key_map.m.t = {
@@ -144,7 +152,6 @@ let g:which_key_map.w = {
       \ 'd' : 'delete',
       \ 's' : 'horizontal-split',
       \ 'v' : 'vertical-split',
-      \ '=' : 'which_key_ignore',
       \ }
 
 let g:which_key_map.f = {
@@ -164,28 +171,7 @@ let g:which_key_map.t = {
         \ 's' : 'symbols',
         \ 'f' : 'file-tree',
         \ 'r' : 'project-search-results',
-        \ 'ml' : 'which_key_ignore',
-        \ 'sp' : 'which_key_ignore',
-        \ '#' : 'which_key_ignore',
-        \ '=' : 'which_key_ignore',
-        \ ',' : 'which_key_ignore',
-        \ ';' : 'which_key_ignore',
-        \ ':' : 'which_key_ignore',
-        \ '<' : 'which_key_ignore',
-        \ '?' : 'which_key_ignore',
-        \ '@' : 'which_key_ignore',
-        \ 't' : 'which_key_ignore',
-        \ '|' : 'which_key_ignore',
-        \ '~' : 'which_key_ignore',
-        \ 's<' : 'which_key_ignore',
-        \ 's=' : 'which_key_ignore',
-        \ 's;' : 'which_key_ignore',
-        \ 's:' : 'which_key_ignore',
-        \ 'sq' : 'which_key_ignore',
-        \ 's,' : 'which_key_ignore',
         \ }
-let g:which_key_map.t.a = { 'name' : 'which_key_ignore' }
-let g:which_key_map.t.W = { 'name' : 'which_key_ignore' }
 
 let g:which_key_map.T = {
         \ 'name' : '+tab',
@@ -194,21 +180,7 @@ let g:which_key_map.T = {
         \ 'N' : 'new-tab',
         \ 's' : 'split-tab',
         \ 'd' : 'delete-tab',
-        \ '#' : 'which_key_ignore',
-        \ '=' : 'which_key_ignore',
-        \ ',' : 'which_key_ignore',
-        \ ';' : 'which_key_ignore',
-        \ ':' : 'which_key_ignore',
-        \ '<' : 'which_key_ignore',
-        \ '?' : 'which_key_ignore',
-        \ '@' : 'which_key_ignore',
-        \ 't' : 'which_key_ignore',
-        \ '|' : 'which_key_ignore',
-        \ '~' : 'which_key_ignore',
-        \ 'sp' : 'which_key_ignore',
         \ }
-let g:which_key_map.T.a = { 'name' : 'which_key_ignore' }
-let g:which_key_map.T.W = { 'name' : 'which_key_ignore' }
 
 let g:which_key_map.b = {
         \ 'name' : '+buffer',
@@ -216,10 +188,6 @@ let g:which_key_map.b = {
         \ 'p' : 'previous-buffer',
         \ 'd' : 'delete-buffer',
         \ 'o' : 'delete-all-buffers',
-        \ 'a' : 'which_key_ignore',
-        \ 'f' : 'which_key_ignore',
-        \ 'w' : 'which_key_ignore',
-        \ 'b' : 'which_key_ignore',
         \ }
 
 let g:which_key_map.r = {
@@ -269,7 +237,6 @@ let g:which_key_map.c = {
       \ 's' : 'sexy',
       \ 'u' : 'uncomment',
       \ 'y' : 'yank',
-      \ 'a' : 'which_key_ignore',
       \}
 
 let g:which_key_map.s = {
@@ -288,7 +255,6 @@ let g:which_key_map.s = {
       \ 'g' : 'project-search-prompt',
       \ 'G' : 'project-search-noprompt',
       \}
-let g:which_key_map.s.w = { 'name' : 'which_key_ignore' }
 
 let g:which_key_map.e = {
       \ 'name' : '+errors/warnings',
@@ -460,6 +426,22 @@ endif
 
 " PLUGIN SETTINGS AND MAPPINGS================================================
 
+" Avante Plugin settings--------------------------------
+autocmd! User avante.nvim 
+lua << EOF
+require('avante_lib').load()
+require('avante').setup({
+  provider = 'openai',
+})
+EOF
+
+" Avante Mappings----------------------------
+nnoremap <leader>Aa :AvanteAsk<CR>
+nnoremap <leader>Ae :AvanteEdit<CR>
+nnoremap <leader>Ar :AvanteRefresh<CR>
+nnoremap <leader>Af :AvanteFocus<CR>
+
+
 " Closetag plugin settings----------------------------------
 let g:closetag_filenames = '*.html,*.xhtml,*.xml,*.phtml,*.jsx,*.tsx,*.jinja'
 
@@ -627,8 +609,8 @@ let g:NERDTreeShowHidden=1
 let g:NERDTreeWinSize=40
 
 " Open NerdTree upon startup if no input provided
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 map <silent><leader>tf <Plug>NERDTreeTabsToggle<CR>
 
@@ -844,8 +826,8 @@ syntax on
 syntax enable
 set background=dark
 autocmd ColorScheme * hi CocMenuSel ctermbg=237 guibg=#13354A
-" let g:onedark_color_overrides = {
-" \ "background": {"gui": "#1F2329", "cterm": "235", "cterm16": "0" },
-" \}
+let g:onedark_color_overrides = {
+\ "background": {"gui": "#1F2329", "cterm": "235", "cterm16": "0" },
+\}
 let g:onedark_terminal_italics = 1
 colorscheme onedark

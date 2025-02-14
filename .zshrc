@@ -63,11 +63,15 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git
   colored-man-pages
+  command-not-found
+  copypath
   npm
   pip
   python
   golang
   nvm
+  tmux
+  colorize
   node
   rust
 )
@@ -110,6 +114,9 @@ fi
 # Rust config and completions
 fpath+=~/.zfunc
 
+# Brew completions
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
 autoload -Uz compinit
 compinit -i
 
@@ -138,7 +145,10 @@ cdf() {
 eval "$(pyenv init -)"
 eval "$(pyenv init --path)"
 
-eval "$(register-python-argcomplete pipx)"
+# eval "$(register-python-argcomplete pipx)"
+#
+
+export OPENAI_API_KEY=sk-JTKmlfXcogGcxLRkQlRL4X6C_G-iPNORVtCrN7TDF7T3BlbkFJf50t4dS5EhmUsiSOoCH_45LtZ8w88oAw2u21cGydEA
 
 # Install nvm
  export NVM_DIR="$HOME/.nvm"
@@ -148,3 +158,7 @@ eval "$(register-python-argcomplete pipx)"
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+# plugin comfig for zsh-autocomplete
+# zstyle ':autocomplete:*' widget-style menu-select
+# bindkey -M menuselect '\r' accept-line
