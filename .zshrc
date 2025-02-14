@@ -148,7 +148,6 @@ eval "$(pyenv init --path)"
 # eval "$(register-python-argcomplete pipx)"
 #
 
-export OPENAI_API_KEY=sk-JTKmlfXcogGcxLRkQlRL4X6C_G-iPNORVtCrN7TDF7T3BlbkFJf50t4dS5EhmUsiSOoCH_45LtZ8w88oAw2u21cGydEA
 
 # Install nvm
  export NVM_DIR="$HOME/.nvm"
