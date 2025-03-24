@@ -292,7 +292,7 @@ nnoremap <silent><leader>ws :sp<CR>
 nnoremap <silent><leader>wv :vs<CR>
 
 " Keymap to open default shell
-nnoremap <silent><leader>' :5sp term://zsh<CR>i
+nnoremap <silent><leader>' :10sp term://zsh<CR>i
 
 " Keymap to edit init.vim / .vimrc
 nnoremap <silent><leader>fed :e $MYVIMRC<CR>
